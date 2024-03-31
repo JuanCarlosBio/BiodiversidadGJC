@@ -1,0 +1,128 @@
+---
+title: Especies de animales invertebrados
+author: Juan Carlos García Estupiñán
+output: 
+    html_document:
+        theme: cerulean
+        toc: true
+        toc_float: true
+email_adress: jcge97@gmail.com
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{css, echo = FALSE}
+.author, .title {
+    display: none;
+}
+#.main-container {
+        #width: 100%;
+        #height: 100vh;
+#}
+#body{
+#    font-size: 1.2vw;
+#}
+```
+
+## Especies de INVERTEBRADOS.
+
+Estas son las especies de vertebrados que he ido encontrando.
+
+- Por un lado se pueden ver los espacios protegidos.
+- Por otro los puntos son las especies coloreadas por los ordenes.
+- Al colocar el ratón encima puedes ver de que especie se trata.
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+library(tidyverse)
+library(glue)
+library(sf)
+library(plotly)
+
+map <- read_sf("data/gran_canaria_shp/gc_muni.shp") %>%
+    st_transform(map, crs = 4326) 
+
+enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") %>%
+    st_transform(map, crs = 4326) %>%
+    mutate(categoria = factor(categoria,
+                               levels = c("Monumento Natural", 
+                                          "Paisaje Protegido",
+                                          "Parque Natural", 
+                                          "Parque Rural", 
+                                          "Reserva Natural Especial",
+                                          "Reserva Natural Integral", 
+                                          "Sitio de Interés Científico")))
+
+enp_map2 <- enp_map %>%
+    filter(codigo %in% c("C-14", "C-15", "C-20", "C-21"))
+
+species <- read_tsv("data/coord_species.tsv") %>%
+    mutate(endemic_genus = case_when(endemic_genus == TRUE ~ "SI",
+                                     endemic_genus == FALSE ~ "NO",
+                                     is.na(endemic_genus) ~ "SIN IDENTIFICAR"),
+           endemic_specie = case_when(endemic_specie == TRUE ~ "SI",
+                                      endemic_specie == FALSE ~ "NO",
+                                      is.na(endemic_specie) ~ "SIN IDENTIFICAR"),
+           family = str_to_title(family),
+           order = str_to_title(order),
+           phylo = str_to_title(phylo))
+
+species %>%
+ggplot() +
+    geom_sf(data = map, fill = "#edd393") +
+    geom_sf(data = enp_map, aes(fill = categoria,  
+                                text = paste0("\nEspacio Natural Protegido (ENP): ", nombre,
+                                             "\nCategoría del ENP: ", codigo, " ", categoria)),
+            alpha = .75) +
+    geom_sf(data = enp_map2, aes(fill = categoria,  
+                                text = paste0("\nEspacio Natural Protegido (ENP): ", nombre,
+                                             "\nCategoría del ENP: ", codigo, " ", categoria)),
+                                             
+    alpha = .75) +
+    geom_point(data = species, aes(longitude, 
+                                   latitude, 
+                                   color = order,
+                                   text = paste0("Filo: ", phylo,
+                                                "\nOrden: ", order,
+                                                "\nFamilia: ", family,
+                                                "\nEspecie: ", specie,
+                                                "\nEndémico (Género): ", endemic_genus,
+                                                "\nEndémico (Especie): ", endemic_specie,
+                                                "\t\nFecha y hora: ", gpsdatetime)),
+               size=4) +
+    coord_sf() +
+    scale_fill_manual(
+        breaks = c("Monumento Natural", 
+                   "Paisaje Protegido",
+                   "Parque Natural", 
+                   "Parque Rural", 
+                   "Reserva Natural Especial",
+                   "Reserva Natural Integral", 
+                   "Sitio de Interés Científico"),
+        values = c("#004078", "#80a0bd", 
+                   "#f78000", "#e60000", 
+                   "#00913f", "#034a31", 
+                   "#BADBCA")) +
+    theme_test() +
+    theme(
+        panel.background = element_rect(color="#cfe8fc", fill = "#cfe8fc")
+    ) +
+    labs(
+        x = NULL, y = NULL,
+        fill = NULL, color = NULL
+    ) -> p
+
+ggplotly(p, tooltip = "text") %>%
+    layout(showlegend=FALSE,
+           width = 900,
+           height = 500) %>% 
+    config(scrollZoom = TRUE)
+
+```
+
+## Apartado 2
+
+Última actualización el `r format(today(), "%d/%m/%Y")`  
+Sitio [desarrollado](`r rmarkdown::metadata$github_repo`) por [Juan Carlos García Estupiñán](mailto:`r rmarkdown::metadata$email_adress`)

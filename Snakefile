@@ -6,7 +6,7 @@ rule targets:
         "data/gran_canaria_shp/gc_muni.shp",
         "data/gran_canaria_shp/gc_pne.shp",
         "data/coord_species.tsv",
-        "species.html"
+        "index.html"
 
 rule download_images:
     input:
@@ -64,12 +64,12 @@ rule process_exif_images:
 
 rule interactive_map_arthropods:
     input:
-        rmd = "species.Rmd",
+        rmd = "index.Rmd",
         gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
         gc_pne_shp = "data/gran_canaria_shp/gc_pne.shp", 
         species_founded = "data/coord_species.tsv"
     output:
-        "species.html"
+        "index.html"
     conda:
         "code/enviroments/env.yml"
     shell:
