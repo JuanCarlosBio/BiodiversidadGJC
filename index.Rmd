@@ -73,12 +73,12 @@ species %>%
 ggplot() +
     geom_sf(data = map, fill = "#edd393") +
     geom_sf(data = enp_map, aes(fill = categoria,  
-                                text = paste0("\nEspacio Natural Protegido (ENP): ", nombre,
-                                             "\nCategoría del ENP: ", codigo, " ", categoria)),
+                                text = paste0("\nENP: ", codigo, " ", nombre,
+                                              "\nCategoría del ENP: ", categoria)),
             alpha = .75) +
     geom_sf(data = enp_map2, aes(fill = categoria,  
-                                text = paste0("\nEspacio Natural Protegido (ENP): ", nombre,
-                                             "\nCategoría del ENP: ", codigo, " ", categoria)),
+                                text = paste0("\nENP: ", codigo, " ", nombre,
+                                             "\nCategoría del ENP: ", categoria)),
                                              
     alpha = .75) +
     geom_point(data = species, aes(longitude, 
