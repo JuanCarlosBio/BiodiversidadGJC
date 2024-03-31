@@ -13,6 +13,8 @@ rule download_images:
         bash_script = "code/01download_images.bash"
     output:
         "images/arthropoda.zip"
+    conda:
+        "code/enviroments/env.yml"
     shell:
         """
         bash {input.bash_script}
@@ -24,6 +26,8 @@ rule download_canary_islands_shp:
     output:
         "data/islands_shp/municipios.shp",
         "data/islands_shp/eennpp.shp"
+    conda:
+        "code/enviroments/env.yml"
     shell:
         """
         bash {input.bash_script}
@@ -37,6 +41,8 @@ rule process_canary_islands_shp:
     output:
         "data/gran_canaria_shp/gc_muni.shp",
         "data/gran_canaria_shp/gc_pne.shp"
+    conda:
+        "code/enviroments/env.yml"
     shell:
         """
         mkdir -p data/gran_canaria_shp/
@@ -49,6 +55,8 @@ rule process_exif_images:
         files = "images/arthropoda.zip"
     output:
         "data/coord_species.tsv"
+    conda:
+        "code/enviroments/env.yml"
     shell:
         """
         Rscript {input.r_script}
@@ -62,6 +70,8 @@ rule interactive_map_arthropods:
         species_founded = "data/coord_species.tsv"
     output:
         "species.html"
+    conda:
+        "code/enviroments/env.yml"
     shell:
         """
         R -e "library(rmarkdown); render('{input.rmd}')"

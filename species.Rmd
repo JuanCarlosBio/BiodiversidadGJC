@@ -40,7 +40,6 @@ library(tidyverse)
 library(glue)
 library(sf)
 library(plotly)
-library(htmlwidgets)
 
 map <- read_sf("data/gran_canaria_shp/gc_muni.shp") %>%
     st_transform(map, crs = 4326) 
