@@ -1,9 +1,9 @@
-name: Ejecutar las precipitaciones en Canarias (NOAA)
+name: Ejecutar Snakemake workflow de especies de Gran Canaria
 run-name: ${{ github.actor }} Está ejecutando Snakemake workflow 🚀
 on: 
   [push]
 jobs:
-  Correr-las-precipitaciones-en-Canarias-NOAA:
+  ejecutar--snakemake-workflow-especies-gc:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 Esta acción es activada automáticamente por ${{ github.event_name }} event."
@@ -32,7 +32,7 @@ jobs:
           git config --local user.name "GitHub"
       - name: Commit changes to repository
         run: |
-          git add species.html
+          git add index.html
           git commit -m "New day's rendering"
           git push origin main
       - run: echo "🍏 This job's status is ${{ job.status }}."
