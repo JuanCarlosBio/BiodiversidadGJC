@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-data="https://www.dropbox.com/scl/fo/6bddzqt7yi0twjqrsgr1m/h?rlkey=eui3kgyezs5a1jrchodb4ywn0&dl"
+data="https://www.dropbox.com/scl/fo/2ulwoyqfjcje7ucmirbus/h?rlkey=4t6oljbwu6t90wuqz4m559yxc&dl=1"
 
 wget -P images/ -O images/arthropoda.zip $data -N

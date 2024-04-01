@@ -5,7 +5,7 @@ library(exifr)
 library(glue)
 
 zip_files <- list.files("images/", pattern = "\\.zip$", full.names = TRUE)
-lapply(zip_files, unzip, exdir = "images/")
+lapply(zip_files, unzip, exdir = "images/arthropoda")
 
 files <- list.files("images/arthropoda/", 
                     full.names = TRUE)
@@ -22,7 +22,9 @@ exif_data %>%
     mutate(latitude = as.numeric(latitude),
            longitude = as.numeric(longitude)) %>%
     separate_wider_delim(filename, delim = "-",
-                         names = c("specie", "family", "order", "phylo", 
+                         names = c("specie", "author",
+                                   "family", "order", 
+                                   "class", "phylo", 
                                    "endemic_genus", "endemic_specie")) %>%
     mutate(endemic_genus = case_when(endemic_genus == "end_gen_no" ~ FALSE,
                                      endemic_genus == "end_gen_si" ~ TRUE),

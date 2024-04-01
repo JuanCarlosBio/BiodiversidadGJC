@@ -62,9 +62,10 @@ rule process_exif_images:
         Rscript {input.r_script}
         """  
 
-rule interactive_map_arthropods:
+rule interactive_map_invertebrates:
     input:
         rmd = "index.Rmd",
+        r_script = "code/05plot_invertebrates.R",
         gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
         gc_pne_shp = "data/gran_canaria_shp/gc_pne.shp", 
         species_founded = "data/coord_species.tsv"
