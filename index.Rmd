@@ -115,9 +115,11 @@ ggplot() +
     ) -> p
 
 ggplotly(p, tooltip = "text") %>%
-    layout(showlegend=FALSE,
-           width = 900,
-           height = 500) %>% 
+    layout(
+showlegend=FALSE #,
+#width = 900,
+#height = 500
+) %>% 
     config(scrollZoom = TRUE)
 
 ```
