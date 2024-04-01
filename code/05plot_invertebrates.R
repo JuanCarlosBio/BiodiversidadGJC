@@ -46,9 +46,11 @@ species %>%
                                                  "\nCategoría del ENP: ", categoria)),
 
         alpha = .75) +
+        geom_point(data = species, aes(longitude, latitude),
+                   color="black", size = 4) +
         geom_point(data = species, aes(longitude, 
                                        latitude, 
-                                       color = order,
+                                       color = class,
                                        text = paste0("Filo: ", phylo,
                                                      "\nClase: ", class,
                                                      "\nOrden: ", order,
@@ -57,7 +59,7 @@ species %>%
                                                      "\nEndémico (Género): ", endemic_genus,
                                                      "\nEndémico (Especie): ", endemic_specie,
                                                      "\t\nFecha y hora: ", gpsdatetime)),
-                   size=4) +
+                   size=3) +
         coord_sf() +
         scale_fill_manual(
             breaks = c("Monumento Natural", 
