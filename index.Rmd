@@ -7,6 +7,7 @@ output:
         toc: true
         toc_float: true
 email_adress: jcge97@gmail.com
+github_repo: https://github.com/Juankkar/Especies_Encontradas_GC
 ---
 
 ```{r setup, include=FALSE}
