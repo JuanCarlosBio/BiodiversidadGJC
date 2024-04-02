@@ -21,13 +21,7 @@ enp_map2 <- enp_map %>%
     filter(codigo %in% c("C-14", "C-15", "C-20", "C-21"))
 
 species <- read_tsv("data/coord_species.tsv") %>%
-    mutate(endemic_genus = case_when(endemic_genus == TRUE ~ "SI",
-                                     endemic_genus == FALSE ~ "NO",
-                                     is.na(endemic_genus) ~ "SIN IDENTIFICAR"),
-           endemic_specie = case_when(endemic_specie == TRUE ~ "SI",
-                                      endemic_specie == FALSE ~ "NO",
-                                      is.na(endemic_specie) ~ "SIN IDENTIFICAR"),
-           author = case_when(author == "NULL" ~ "",
+    mutate(author = case_when(author == "NULL" ~ "",
                               author != "NULL" ~ as.character(author)),
            family = str_to_title(family),
            order = str_to_title(order),

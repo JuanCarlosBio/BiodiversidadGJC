@@ -26,8 +26,12 @@ exif_data %>%
                                    "family", "order", 
                                    "class", "phylo", 
                                    "endemic_genus", "endemic_specie")) %>%
-    mutate(endemic_genus = case_when(endemic_genus == "end_gen_no" ~ FALSE,
-                                     endemic_genus == "end_gen_si" ~ TRUE),
-           endemic_specie = case_when(endemic_specie == "end_esp_no" ~ FALSE,
-                                      endemic_specie == "end_esp_si" ~ TRUE)) %>%
+    mutate(endemic_genus = case_when(endemic_genus == "end_gen_no" ~ "NO",
+                                     endemic_genus == "end_gen_si" ~ "SI",
+                                     endemic_genus == "invasora" ~ "Invasora",
+                                     endemic_genus == "SIN CLASIFICAR" ~ "SIN CLASIFICAR"),
+           endemic_specie = case_when(endemic_specie == "end_esp_no" ~ "NO",
+                                      endemic_specie == "end_esp_si" ~ "SI",
+                                      endemic_specie == "invasora" ~ "Invasora",
+                                      endemic_specie == "SIN CLASIFICAR" ~ "SIN CLASIFICAR")) %>%
     write_tsv("data/coord_species.tsv")
