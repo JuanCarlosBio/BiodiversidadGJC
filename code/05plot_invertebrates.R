@@ -40,8 +40,6 @@ species %>%
                                                  "\nCategoría del ENP: ", categoria)),
 
         alpha = .75) +
-        geom_point(data = species, aes(longitude, latitude),
-                   color="black", size = 4) +
         geom_point(data = species, aes(longitude, 
                                        latitude, 
                                        color = class,
@@ -78,7 +76,7 @@ species %>%
         ) -> p
 
 p1 <- ggplotly(p, tooltip = "text") %>%
-    layout(showlegend=FALSE,
+    layout(showlegend=T,
            width = 900,
            height = 500) %>% 
     config(scrollZoom = TRUE)
