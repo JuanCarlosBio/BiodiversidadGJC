@@ -7,7 +7,9 @@ rule targets:
         "data/gran_canaria_shp/gc_pne.shp",
         "data/coord_invertebrates.tsv",
         "data/coord_plantae.tsv",
-        "index.html"
+        "index.html",
+        "invertebrates.html",
+        "flora.html"
 
 rule download_images:
     input:
@@ -66,16 +68,22 @@ rule process_exif_images:
 
 rule webpage_html:
     input:
-        rmd = "index.Rmd",
+        rmd_index = "index.Rmd",
+        rmd_invertebrates = "invertebrates.Rmd",
+        rmd_flora = "flora.Rmd",
         r_script = "code/05plot_invertebrates.R",
         gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
         gc_pne_shp = "data/gran_canaria_shp/gc_pne.shp", 
         species_founded = "data/coord_invertebrates.tsv"
     output:
-        "index.html"
+        "index.html",
+        "invertebrates.html",
+        "flora.html"
     conda:
         "code/enviroments/env.yml"
     shell:
         """
-        R -e "library(rmarkdown); render('{input.rmd}')"
+        R -e "library(rmarkdown); render('{input.rmd_index}')"
+        R -e "library(rmarkdown); render('{input.rmd_invertebrates}')"
+        R -e "library(rmarkdown); render('{input.rmd_flora}')"
         """  

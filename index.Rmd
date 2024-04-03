@@ -4,8 +4,6 @@ author: Juan Carlos García Estupiñán
 output: 
     html_document:
         theme: cerulean
-        toc: true
-        toc_float: true
 email_adress: jcge97@gmail.com
 github_repo: https://github.com/Juankkar/Especies_Encontradas_GC
 ---
@@ -13,7 +11,6 @@ github_repo: https://github.com/Juankkar/Especies_Encontradas_GC
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
 
 ```{css, echo = FALSE}
 .author, .title {
@@ -28,32 +25,23 @@ body{
     #font-size: 1.2vw;
 }
 ```
-## Especies de INVERTEBRADOS.
+# Bienvenido a mi intento de página web!!! 👨‍💻
 
-Estas son las especies de vertebrados que he ido encontrando.
+Humildes comienzos de aprender a desarrllar páginas web con Pages.
 
-- Por un lado se pueden ver los espacios protegidos.
-- Por otro los puntos son las especies coloreadas por nivel de **Clases** de las especies.
-- Al colocar el ratón encima puedes ver de que especie se trata.
+Mi idea es subir por el momento mapas interactivos de especies de flora y fauna que me voy encontrando por la isla de Gran Canaria 🏝️ 
 
-```{r, echo = FALSE, message = FALSE, warning=FALSE}
-source("code/05plot_invertebrates.R")
-invertebrates_plotly
-```
+## Mapa de especies de INVERTEBRADOS. 🐌 🐜
 
+Aquí están las especies de invertebrados que he ido encontrando en Gran Canaria.
 
-## Especies de Flora
+* Clica en: <a href="invertebrates.html"> MAPA INVERTEBRADOS GC</a> para verlo!
 
-- Se colorean por nivel de División.
+## Mapa de especies de FLORA. 🌺 🌱
 
-```{r, echo = FALSE, message = FALSE, warning=FALSE}
-source("code/06plot_flora.R")
-flora_plotly
-```
+Aquí están las especies de invertebrados que he ido encontrando en Gran Canaria.
 
-## Apartado 3
+* Clica en: <a href="flora.html"> MAPA FLORA GC</a> para verlo!
 
-Última actualización el `r format(today(), "%d/%m/%Y")`  
+Última actualización el `r format(lubridate::today(), "%d/%m/%Y")`  
 Sitio [desarrollado](`r rmarkdown::metadata$github_repo`) por [Juan Carlos García Estupiñán](mailto:`r rmarkdown::metadata$email_adress`)
-
-Humildes comienzos.

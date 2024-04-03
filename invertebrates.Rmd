@@ -1,0 +1,42 @@
+---
+title: Especies de animales invertebrados
+author: Juan Carlos García Estupiñán
+output: 
+    html_document:
+        theme: cerulean
+email_adress: jcge97@gmail.com
+github_repo: https://github.com/Juankkar/Especies_Encontradas_GC
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{css, echo = FALSE}
+.author, .title {
+    display: none;
+}
+#.main-container {
+        #width: 100%;
+        #height: 100vh;
+#}
+body{
+    background-color: #ffeed2;
+    #font-size: 1.2vw;
+}
+```
+## Mapa de especies de INVERTEBRADOS.
+
+- Por un lado se pueden ver los espacios protegidos.
+- Por otro los puntos son las especies coloreadas por nivel de **Clases** de las especies.
+- Al colocar el ratón encima puedes ver de que especie se trata.
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+source("code/05plot_invertebrates.R")
+invertebrates_plotly
+```
+
+<a href="index.html">Volver hacia atrás</a>
+
+Última actualización el `r format(today(), "%d/%m/%Y")`  
+Sitio [desarrollado](`r rmarkdown::metadata$github_repo`) por [Juan Carlos García Estupiñán](mailto:`r rmarkdown::metadata$email_adress`)
