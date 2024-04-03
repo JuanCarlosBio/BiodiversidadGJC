@@ -38,10 +38,20 @@ Estas son las especies de vertebrados que he ido encontrando.
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 source("code/05plot_invertebrates.R")
-p1
+invertebrates_plotly
 ```
 
-## Apartado 2
+
+## Especies de Flora
+
+- Se colorean por nivel de División.
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+source("code/06plot_flora.R")
+flora_plotly
+```
+
+## Apartado 3
 
 Última actualización el `r format(today(), "%d/%m/%Y")`  
 Sitio [desarrollado](`r rmarkdown::metadata$github_repo`) por [Juan Carlos García Estupiñán](mailto:`r rmarkdown::metadata$email_adress`)

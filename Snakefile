@@ -5,7 +5,8 @@ rule targets:
         "data/islands_shp/eennpp.shp",
         "data/gran_canaria_shp/gc_muni.shp",
         "data/gran_canaria_shp/gc_pne.shp",
-        "data/coord_species.tsv",
+        "data/coord_invertebrates.tsv",
+        "data/coord_plantae.tsv",
         "index.html"
 
 rule download_images:
@@ -54,7 +55,8 @@ rule process_exif_images:
         r_script = "code/04process_exif.R",
         files = "images/arthropoda.zip"
     output:
-        "data/coord_species.tsv"
+        "data/coord_invertebrates.tsv",
+        "data/coord_plantae.tsv"
     conda:
         "code/enviroments/env.yml"
     shell:
@@ -68,7 +70,7 @@ rule interactive_map_invertebrates:
         r_script = "code/05plot_invertebrates.R",
         gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
         gc_pne_shp = "data/gran_canaria_shp/gc_pne.shp", 
-        species_founded = "data/coord_species.tsv"
+        species_founded = "data/coord_invertebrates.tsv"
     output:
         "index.html"
     conda:

@@ -20,7 +20,7 @@ enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") %>%
 enp_map2 <- enp_map %>%
     filter(codigo %in% c("C-14", "C-15", "C-20", "C-21"))
 
-species <- read_tsv("data/coord_species.tsv") %>%
+species <- read_tsv("data/coord_invertebrates.tsv") %>%
     mutate(author = case_when(author == "NULL" ~ "",
                               author != "NULL" ~ as.character(author)),
            family = str_to_title(family),
@@ -68,14 +68,15 @@ species %>%
         theme_test() +
         theme(
             plot.background = element_rect(color = "#ffeed2", fill = "#ffeed2"),
-            panel.background = element_rect(color="#cfe8fc", fill = "#cfe8fc")
+            panel.background = element_rect(color="#cfe8fc", fill = "#cfe8fc"),
+            legend.background = element_rect(color = "black")
         ) +
         labs(
             x = NULL, y = NULL,
             fill = NULL, color = NULL
-        ) -> p
+        ) -> invertebrates_plot
 
-p1 <- ggplotly(p, tooltip = "text") %>%
+invertebrates_plotly <- ggplotly(invertebrates_plot, tooltip = "text") %>%
     layout(showlegend=T,
            width = 900,
            height = 500) %>% 
