@@ -64,7 +64,7 @@ rule process_exif_images:
         Rscript {input.r_script}
         """  
 
-rule interactive_map_invertebrates:
+rule webpage_html:
     input:
         rmd = "index.Rmd",
         r_script = "code/05plot_invertebrates.R",
