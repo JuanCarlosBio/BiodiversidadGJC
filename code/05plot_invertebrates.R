@@ -48,9 +48,10 @@ species %>%
                                                      "\nOrden: ", order,
                                                      "\nFamilia: ", family,
                                                      "\nEspecie: ", specie, " ", author,
-                                                     "\nEndémico (Género): ", endemic_genus,
-                                                     "\nEndémico (Especie): ", endemic_specie,
-                                                     "\t\nFecha y hora: ", gpsdatetime)),
+                                                     "\nGénero Endémico: ", endemic_genus, ",", "Especie Endémico: ", endemic_specie,
+                                                     "\nFecha y hora: ", gpsdatetime),
+                                                     "\nLatitud = ", latitude, 
+                                                     "\nLongitud = ", longitude),
                    size=3) +
         coord_sf() +
         scale_fill_manual(
