@@ -50,7 +50,7 @@ species %>%
                                                      "\nOrden: ", order,
                                                      "\nFamilia: ", family,
                                                      "\nEspecie: ", specie, " ", author,
-                                                     "\nGénero Endémico: ", endemic_genus, "Especie Endémica: ", endemic_specie,
+                                                     "\nGénero Endémico: ", endemic_genus, ", Especie Endémica: ", endemic_specie,
                                                      "\nFecha y hora: ", gpsdatetime,
                                                      "\nLat = ", latitude, 
                                                      "\nLong = ", longitude)),
