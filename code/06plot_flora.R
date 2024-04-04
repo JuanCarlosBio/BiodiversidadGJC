@@ -69,7 +69,7 @@ species %>%
                        "#BADBCA")) +
         theme_test() +
         theme(
-            plot.background = element_rect(color = "#ffeed2", fill = "#ffeed2"),
+            plot.background = element_rect(color = "#f9eed3", fill = "#f9eed3"),
             panel.background = element_rect(color="#cfe8fc", fill = "#cfe8fc")
         ) +
         labs(

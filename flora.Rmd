@@ -22,12 +22,12 @@ knitr::opts_chunk$set(echo = TRUE)
         #height: 100vh;
 #}
 body{
-    background-color: #ffeed2;
+    background-color: #fff3d8;
     #font-size: 1.2vw;
 }
 ```
 
-## Mapa de especies de FLORA
+## Mapa de especies de FLORA Y VEGETACIÓN
 
 - Se colorean por nivel de División.
 

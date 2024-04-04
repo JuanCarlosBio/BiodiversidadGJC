@@ -21,27 +21,27 @@ knitr::opts_chunk$set(echo = TRUE)
         #height: 100vh;
 #}
 body{
-    background-color: #ffeed2;
+    background-color: #fff3d8;
     #font-size: 1.2vw;
 }
 ```
-# Bienvenido a mi intento de página web!!! 👨‍💻
+# Bienvenid@ a mi intento de página web!!! 👨‍💻
 
-Humildes comienzos de aprender a desarrllar páginas web con Pages.
+Humildes comienzos para aprender a desarrllar páginas web con **Github Pages**.
 
 Mi idea es subir por el momento mapas interactivos de especies de flora y fauna que me voy encontrando por la isla de Gran Canaria 🏝️ 
 
 ## Mapa de especies de INVERTEBRADOS. 🐌 🐜
 
-Aquí están las especies de invertebrados que he ido encontrando en Gran Canaria.
+Aquí documento las especies de invertebrados que he encontrando en Gran Canaria.
 
 * Clica en: <a href="./invertebrates"> MAPA INVERTEBRADOS GC</a> para verlo!
 
-## Mapa de especies de FLORA. 🌺 🌱
+## Mapa de especies de FLORA y VEGETACIÓN. 🌺 🌱
 
-Aquí están las especies de invertebrados que he ido encontrando en Gran Canaria.
+Aquí documento las especies de invertebrados que he encontrando en Gran Canaria.
 
-* Clica en: <a href="./flora"> MAPA FLORA GC</a> para verlo!
+* Clica en: <a href="./flora"> MAPA FLORA Y VEGETACIÓN GC</a> para verlo!
 
 Última actualización el `r format(lubridate::today(), "%d/%m/%Y")`  
 Sitio [desarrollado](`r rmarkdown::metadata$github_repo`) por [Juan Carlos García Estupiñán](mailto:`r rmarkdown::metadata$email_adress`)
