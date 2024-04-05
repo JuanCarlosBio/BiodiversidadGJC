@@ -29,7 +29,9 @@ body{
 
 ## Mapa de especies de FLORA Y VEGETACIÓN
 
-- Se colorean por nivel de División.
+- Por un lado se pueden ver los espacios protegidos.
+- Por otro los puntos son las especies coloreadas por nivel de **Clases** de las especies.
+- Al colocar el ratón encima puedes ver de que especie se trata.
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 source("code/06plot_flora.R")

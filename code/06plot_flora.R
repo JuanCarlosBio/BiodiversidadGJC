@@ -27,7 +27,7 @@ species <- read_tsv("data/coord_plantae.tsv") %>%
            order = str_to_title(order),
            class = str_to_title(class), 
            division = str_to_title(division),
-           subdivision = str_to_title(division))
+           subdivision = str_to_title(subdivision))
 
 species %>%
     ggplot() +
