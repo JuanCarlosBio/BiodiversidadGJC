@@ -52,8 +52,8 @@ species %>%
                                                      "\nEspecie: ", specie, " ", author,
                                                      "\nGénero Endémico: ", endemic_genus, ", Especie Endémica: ", endemic_specie,
                                                      "\nFecha y hora: ", gpsdatetime,
-                                                     "\nLat = ", latitude, 
-                                                     "\nLong = ", longitude)),
+                                                     "\nLat = ", sprintf("%.3f", latitude), 
+                                                     ", Lon = ", sprintf("%.3f", longitude))),
                    size=3) +
         coord_sf() +
         scale_fill_manual(

@@ -71,7 +71,8 @@ rule webpage_html:
         rmd_index = "index.Rmd",
         rmd_invertebrates = "invertebrates.Rmd",
         rmd_flora = "flora.Rmd",
-        r_script = "code/05plot_invertebrates.R",
+        r_script_invertebrates = "code/05plot_invertebrates.R",
+        r_script_flora = "code/06plot_flora.R",
         gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
         gc_pne_shp = "data/gran_canaria_shp/gc_pne.shp", 
         species_founded = "data/coord_invertebrates.tsv"
