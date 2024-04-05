@@ -37,7 +37,7 @@ species %>%
                 alpha = .75) +
         geom_sf(data = enp_map2, aes(fill = categoria,  
                                     text = paste0("\nENP: ", codigo, " ", nombre,
-                                                 "\nCategoría del ENP: ", categoria)),
+                                                  "\nCategoría del ENP: ", categoria)),
 
         alpha = .75) +
         geom_point(data = species, aes(longitude, 
@@ -72,6 +72,7 @@ species %>%
             panel.background = element_rect(color="#cfe8fc", fill = "#cfe8fc"),
             legend.background = element_rect(color = "black")
         ) +
+        #guides(color = FALSE) +
         labs(
             x = NULL, y = NULL,
             fill = NULL, color = NULL
@@ -81,4 +82,13 @@ invertebrates_plotly <- ggplotly(invertebrates_plot, tooltip = "text") %>%
     layout(showlegend=T,
            width = 900,
            height = 500) %>% 
+    style(trace = 0, traces = 1, legendgroup = 'Species', name = 'Species') %>%
     config(scrollZoom = TRUE)
+
+## credit to stack overflow page to solve legend ggplot bug:
+## https://stackoverflow.com/questions/49133395/strange-formatting-of-legend-in-ggplotly-in-r
+for (i in 1:length(invertebrates_plotly$x$data)){
+  if (!is.null(invertebrates_plotly$x$data[[i]]$name)){
+    invertebrates_plotly$x$data[[i]]$name =  gsub("\\(","",str_split(invertebrates_plotly$x$data[[i]]$name,",")[[1]][1])
+  }
+}

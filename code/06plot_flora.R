@@ -83,3 +83,12 @@ flora_plotly <- ggplotly(flora_plot, tooltip = "text") %>%
            width = 900,
            height = 500) %>% 
     config(scrollZoom = TRUE)
+
+## credit to stack overflow page to solve legend ggplot bug:
+## https://stackoverflow.com/questions/49133395/strange-formatting-of-legend-in-ggplotly-in-r
+for (i in 1:length(flora_plotly$x$data)){
+  if (!is.null(flora_plotly$x$data[[i]]$name)){
+    flora_plotly$x$data[[i]]$name =  gsub("\\(","",str_split(flora_plotly$x$data[[i]]$name,",")[[1]][1])
+  }
+}
+flora_plotly
