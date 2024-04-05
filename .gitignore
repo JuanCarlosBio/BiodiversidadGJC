@@ -5,7 +5,7 @@ figures/*
 !figures/README.txt
 
 images/*
-!images/README.txt
+!images/GC_mapa.png
 
 # History files
 .Rhistory
