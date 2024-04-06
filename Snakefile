@@ -1,6 +1,6 @@
 rule targets:
     input:
-        "images/arthropoda.zip",
+        "images/especies.zip",
         "data/islands_shp/municipios.shp",
         "data/islands_shp/eennpp.shp",
         "data/gran_canaria_shp/gc_muni.shp",
@@ -15,7 +15,7 @@ rule download_images:
     input:
         bash_script = "code/01download_images.bash"
     output:
-        "images/arthropoda.zip"
+        "images/especies.zip"
     conda:
         "code/enviroments/env.yml"
     shell:
@@ -55,7 +55,7 @@ rule process_canary_islands_shp:
 rule process_exif_images:
     input:
         r_script = "code/04process_exif.R",
-        files = "images/arthropoda.zip"
+        files = "images/especies.zip"
     output:
         "data/coord_invertebrates.tsv",
         "data/coord_plantae.tsv"
