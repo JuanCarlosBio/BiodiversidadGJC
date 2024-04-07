@@ -2,10 +2,10 @@ data/*
 !data/README.txt
 
 figures/*
-!figures/README.txt
+!figures/GC_mapa.png
 
 images/*
-!images/GC_mapa.png
+!images/README.txt
 
 # History files
 .Rhistory
