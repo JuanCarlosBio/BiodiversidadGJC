@@ -44,12 +44,14 @@ species %>%
         geom_point(data = species, aes(longitude, 
                                        latitude, 
                                        color = class,
-                                       text = paste0("División: ", division,
+                                       text = paste0("Identificador (ID): ", id,
+                                                     "\nDivisión: ", division,
                                                      "\nSubdivision: ", subdivision,
                                                      "\nClase: ", class,
                                                      "\nOrden: ", order,
                                                      "\nFamilia: ", family,
                                                      "\nEspecie: ", specie, " ", author,
+                                                     "\nNomb. común: ", name,
                                                      "\nGénero Endémico: ", endemic_genus, ", Especie Endémica: ", endemic_specie,
                                                      "\nFecha y hora: ", gpsdatetime,
                                                      "\nLat = ", sprintf("%.3f", latitude), 
@@ -91,4 +93,3 @@ for (i in 1:length(flora_plotly$x$data)){
     flora_plotly$x$data[[i]]$name =  gsub("\\(","",str_split(flora_plotly$x$data[[i]]$name,",")[[1]][1])
   }
 }
-flora_plotly

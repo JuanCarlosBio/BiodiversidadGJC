@@ -43,15 +43,17 @@ species %>%
         geom_point(data = species, aes(longitude, 
                                        latitude, 
                                        color = class,
-                                       text = paste0("Filo: ", phylo,
+                                       text = paste0("Identificador (ID): ", id,
+                                                     "\nFilo: ", phylo,
                                                      "\nClase: ", class,
                                                      "\nOrden: ", order,
                                                      "\nFamilia: ", family,
                                                      "\nEspecie: ", specie, " ", author,
+                                                     "\nNomb. Común: ", name, 
                                                      "\nGénero Endémico: ", endemic_genus, "/ Especie Endémica: ", endemic_specie,
                                                      "\nFecha y hora: ", gpsdatetime,
                                                      "\nLat = ", sprintf("%.3f", latitude, 3), 
-                                                     ", Lon = ", sprintf("%.3f", longitude, 3))),
+                                                     ", Lon = ", sprintf("%.3f", longitude, 3), parse=T)),
                    size=3) +
         coord_sf() +
         scale_fill_manual(

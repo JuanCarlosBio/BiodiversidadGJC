@@ -1,6 +1,7 @@
 rule targets:
     input:
-        "images/especies.zip",
+        "images/flora_vascular.zip",
+        "images/invertebrados.zip",
         "data/islands_shp/municipios.shp",
         "data/islands_shp/eennpp.shp",
         "data/gran_canaria_shp/gc_muni.shp",
@@ -9,13 +10,15 @@ rule targets:
         "data/coord_plantae.tsv",
         "index.html",
         "invertebrates.html",
-        "flora.html"
+        "flora.html",
+        "data.html"
 
 rule download_images:
     input:
         bash_script = "code/01download_images.bash"
     output:
-        "images/especies.zip"
+        "images/flora_vascular.zip",
+        "images/invertebrados.zip"
     conda:
         "code/enviroments/env.yml"
     shell:
@@ -55,7 +58,8 @@ rule process_canary_islands_shp:
 rule process_exif_images:
     input:
         r_script = "code/04process_exif.R",
-        files = "images/especies.zip"
+        fv_files = "images/flora_vascular.zip",
+        ai_files = "images/flora_vascular.zip"
     output:
         "data/coord_invertebrates.tsv",
         "data/coord_plantae.tsv"
@@ -71,6 +75,7 @@ rule webpage_html:
         rmd_index = "index.Rmd",
         rmd_invertebrates = "invertebrates.Rmd",
         rmd_flora = "flora.Rmd",
+        rmd_data = "data.Rmd",
         r_script_invertebrates = "code/05plot_invertebrates.R",
         r_script_flora = "code/06plot_flora.R",
         gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
@@ -79,7 +84,8 @@ rule webpage_html:
     output:
         "index.html",
         "invertebrates.html",
-        "flora.html"
+        "flora.html",
+        "data.html"
     conda:
         "code/enviroments/env.yml"
     shell:
@@ -87,4 +93,5 @@ rule webpage_html:
         R -e "library(rmarkdown); render('{input.rmd_index}')"
         R -e "library(rmarkdown); render('{input.rmd_invertebrates}')"
         R -e "library(rmarkdown); render('{input.rmd_flora}')"
+        R -e "library(rmarkdown); render('{input.rmd_data}')"
         """  

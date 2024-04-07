@@ -33,7 +33,7 @@ Mi idea es subir por el momento mapas interactivos de especies de flora y fauna 
 
 <center>
 
-<img src="images/GC_mapa.png" alt="drawing"/>
+<img src="figures/GC_mapa.png" alt="drawing"/>
 
 </center>
 
@@ -50,10 +50,6 @@ Aquí documento las especies de invertebrados que he encontrando en Gran Canaria
 * Clica en: <a href="./flora"> MAPA FLORA Y VEGETACIÓN GC</a> para verlo!
 
 ## Obtener las fotografías de las especies en los mapas
-
-Por el momento dejaré un link para descargar las fotografías con las especies.
-
-* Clica en: [DESCARGAR IMÁGENES DE DROPBOX](https://www.dropbox.com/scl/fo/2ulwoyqfjcje7ucmirbus/h?rlkey=4t6oljbwu6t90wuqz4m559yxc&dl=1)
 
 Última actualización el `r format(lubridate::today(), "%d/%m/%Y")`  
 Sitio [desarrollado](`r rmarkdown::metadata$github_repo`) por [Juan Carlos García Estupiñán](mailto:`r rmarkdown::metadata$email_adress`)

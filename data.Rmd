@@ -1,0 +1,52 @@
+---
+title: Especies de animales invertebrados
+author: Juan Carlos García Estupiñán
+output: 
+    html_document:
+        theme: cerulean
+email_adress: jcge97@gmail.com
+github_repo: https://github.com/Juankkar/Especies_Encontradas_GC
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{css, echo = FALSE}
+.author, .title {
+    display: none;
+}
+#.main-container {
+        #width: 100%;
+        #height: 100vh;
+#}
+body{
+    background-color: #fff3d8;
+    #font-size: 1.2vw;
+}
+```
+
+# Obtener los datos de las especies
+
+## Descarga las fotografias de las especies colocadas en los mapas interativo.
+
+* Clica en: [DESCARGAR IMÁGENES INVERTEBRADOS](https://www.dropbox.com/scl/fo/j8wy15nzlrpn98dkpsu6e/h?rlkey=27la6qjalew06kc9wy3cgundv&dl=1) o [DESCARGAR IMÁGENES de FLORA Y VEGETACIÓN](https://www.dropbox.com/scl/fo/z9ad8tcbh02d2zy7g7xf0/h?rlkey=yvu3gii63sfvpicsgplvbty88&dl=1) 
+
+Las fotografías en formato JPG están nombradas con la información de las especies usando guiones altos ("-") para separar la información.
+
+* Las imágenes de invertebrados tienen la siguiente información: ```ID-Especie-Autor-Nombre común-Familia-Orden-Clase-Filo-Género Endémico de canarias-Especie Endémica de canarias-Invertebrado-Reino Animalia``` 
+
+* La información de la flora y vegetación: ```ID-Especie-Autor-Nombre común-Familia-Orden-Clase-Subdivisión-División-Género Endémico de canarias-Especie Endémica de canarias-Reino Plantae``` 
+
+Ejemplo de la de especie invertebrado:
+
+```
+AI0001-Hemicycla ethelema-(J. Mabille, 1882)--helicidae-stylommatophora-gastropoda-mollusca-end_gen_si-end_esp_si-invertebrata-animalia.jpg
+```
+
+En un futuro mi idea usar esta página para añadir estadísticas de las especies que voy encontrando.
+
+<a href="./">&#9664; Volver al índice</a>
+
+Última actualización el `r format(lubridate::today(), "%d/%m/%Y")`  
+Sitio [desarrollado](`r rmarkdown::metadata$github_repo`) por [Juan Carlos García Estupiñán](mailto:`r rmarkdown::metadata$email_adress`)
