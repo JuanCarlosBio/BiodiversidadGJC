@@ -4,7 +4,7 @@ La idea es hacer una web con ***GitHub Pages***, para clocar especies en mapas, 
 
 * Para ello usaré ***snakemake*** y ***GitHub Actions***.
 * Las imágenes se descargarán desde mi cuenta de ***roblox***.
-* Por el momento lo haré de invertebrados, pero la idea es de más organismos, tanto flora como fauna. 
+* Los datos pertenecen hasta el momento a invertebrados, flora y vegetación (no descarto otros organismos en un futuro). 
 
 ### **WEB:** [juankkar.github.io/Especies_Encontradas_GC](https://juankkar.github.io/Especies_Encontradas_GC/)
 

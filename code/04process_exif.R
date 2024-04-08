@@ -18,11 +18,13 @@ fv_files <- list.files("images/flora_vascular/",
 exif_data_ai <- read_exif(ai_files)
 exif_data_fv <- read_exif(fv_files)
 
+t_replacement <- c("_ta_" = "á","_te_" = "é","_ti_" = "í", "_to_" = "ó", "_tu_" = "ú", "_enie_" = "ñ")
+
 exif_data_ai %>%
     rename_all(tolower) %>%
     select(filename, gpsdatetime, gpsposition) %>%
     mutate(filename = str_replace(filename, pattern = ".jpg", replacement = "")) %>%
-    filter(!(str_detect(filename,  "NO CLASIFICADO")) & str_detect(filename, "invertebrata")) %>% 
+    filter(!(str_detect(filename,  "NO CLASIFICADO")) & str_detect(filename, "^AI")) %>% 
     separate_wider_delim(gpsposition, delim = " ",
                          names = c("latitude", "longitude")) %>%
     mutate(latitude = as.numeric(latitude),
@@ -31,10 +33,8 @@ exif_data_ai %>%
                          names = c("id", "specie", 
                                    "author","name", "family", 
                                    "order", "class", 
-                                   "phylo", "endemic_genus", 
-                                   "endemic_specie", 
-                                   "in_verte_brates", "reino")) %>% 
-    select(-in_verte_brates, -reino) %>%
+                                   "phylo", "domain", 
+                                   "endemic_genus", "endemic_specie")) %>% 
     mutate(endemic_genus = case_when(endemic_genus == "end_gen_no" ~ "NO",
                                      endemic_genus == "end_gen_si" ~ "SI",
                                      endemic_genus == "invasora" ~ "Invasora",
@@ -43,25 +43,15 @@ exif_data_ai %>%
                                       endemic_specie == "end_esp_si" ~ "SI",
                                       endemic_specie == "invasora" ~ "Invasora",
                                       endemic_specie == "SIN CLASIFICAR" ~ "SIN CLASIFICAR"),
-            name = str_replace_all(name, pattern = "_ta_", replacement = "á"),
-            name = str_replace_all(name, pattern = "_te_", replacement = "é"),
-            name = str_replace_all(name, pattern = "_ti_", replacement = "í"),
-            name = str_replace_all(name, pattern = "_to_", replacement = "ó"),
-            name = str_replace_all(name, pattern = "_tu_", replacement = "ú"),
-            name = str_replace_all(name, pattern = "_enie_", replacement = "ñ"),
-            author = str_replace_all(author, pattern = "_ta_", replacement = "á"),
-            author = str_replace_all(author, pattern = "_te_", replacement = "é"),
-            author = str_replace_all(author, pattern = "_ti_", replacement = "í"),
-            author = str_replace_all(author, pattern = "_to_", replacement = "ó"),
-            author = str_replace_all(author, pattern = "_tu_", replacement = "ú"),
-            author = str_replace_all(author, pattern = "_enie_", replacement = "ñ")) %>%
+           name = str_replace_all(name, t_replacement),
+           author = str_replace_all(author, t_replacement)) %>%    
     write_tsv("data/coord_invertebrates.tsv")
 
 exif_data_fv %>%
     rename_all(tolower) %>%
     select(filename, gpsdatetime, gpsposition) %>%
     mutate(filename = str_replace(filename, pattern = ".jpg", replacement = "")) %>%
-    filter(filename != "NO CLASIFICADO" & str_detect(filename, "plantae")) %>%
+    filter(!(str_detect(filename,  "NO CLASIFICADO")) & str_detect(filename, "^FV")) %>%
     separate_wider_delim(gpsposition, delim = " ",
                          names = c("latitude", "longitude")) %>%
     mutate(latitude = as.numeric(latitude),
@@ -70,8 +60,8 @@ exif_data_fv %>%
                          names = c("id", "specie", "author",
                                    "name", "family", "order", 
                                    "class", "subdivision", 
-                                   "division", "endemic_genus", 
-                                   "endemic_specie", "reino")) %>%
+                                   "division", "domain", 
+                                   "endemic_genus", "endemic_specie")) %>%
     mutate(endemic_genus = case_when(endemic_genus == "end_gen_no" ~ "NO",
                                      endemic_genus == "end_gen_si" ~ "SI",
                                      endemic_genus == "invasora" ~ "Invasora",
@@ -80,17 +70,6 @@ exif_data_fv %>%
                                       endemic_specie == "end_esp_si" ~ "SI",
                                       endemic_specie == "invasora" ~ "Invasora",
                                       endemic_specie == "SIN CLASIFICAR" ~ "SIN CLASIFICAR"),
-            name = str_replace_all(name, pattern = "_ta_", replacement = "á"),
-            name = str_replace_all(name, pattern = "_te_", replacement = "é"),
-            name = str_replace_all(name, pattern = "_ti_", replacement = "í"),
-            name = str_replace_all(name, pattern = "_to_", replacement = "ó"),
-            name = str_replace_all(name, pattern = "_tu_", replacement = "ú"),
-            name = str_replace_all(name, pattern = "_enie_", replacement = "ñ"),
-            author = str_replace_all(author, pattern = "_ta_", replacement = "á"),
-            author = str_replace_all(author, pattern = "_te_", replacement = "é"),
-            author = str_replace_all(author, pattern = "_ti_", replacement = "í"),
-            author = str_replace_all(author, pattern = "_to_", replacement = "ó"),
-            author = str_replace_all(author, pattern = "_tu_", replacement = "ú"),
-            author = str_replace_all(author, pattern = "_enie_", replacement = "ñ")) %>%
-    select(-reino) %>%
+           name = str_replace_all(name, t_replacement),
+           author = str_replace_all(author, t_replacement)) %>%
     write_tsv("data/coord_plantae.tsv")

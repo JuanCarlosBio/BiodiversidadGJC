@@ -26,27 +26,31 @@ body{
 }
 ```
 
-# Obtener los datos de las especies
+# **Obtener los datos de las especies**
 
 ## Descarga las fotografias de las especies colocadas en los mapas interativo.
 
 * Clica en: [DESCARGAR IMÁGENES INVERTEBRADOS](https://www.dropbox.com/scl/fo/j8wy15nzlrpn98dkpsu6e/h?rlkey=27la6qjalew06kc9wy3cgundv&dl=1) o [DESCARGAR IMÁGENES de FLORA Y VEGETACIÓN](https://www.dropbox.com/scl/fo/z9ad8tcbh02d2zy7g7xf0/h?rlkey=yvu3gii63sfvpicsgplvbty88&dl=1) 
 
-Las fotografías en formato JPG están nombradas con la información de las especies usando guiones altos ("-") para separar la información.
+Las fotografías en formato JPG están nombradas con la información de las especies, mediante el uso guiones altos ("```-```") para separar la información.
 
-* Las imágenes de invertebrados tienen la siguiente información: ```ID-Especie-Autor-Nombre común-Familia-Orden-Clase-Filo-Género Endémico de canarias-Especie Endémica de canarias-Invertebrado-Reino Animalia``` 
+* Las imágenes de invertebrados tienen la siguiente información: ```ID-Especie-Autor-Nombre común-Familia-Orden-Clase-Filo-Reino Metazoa-Género Endémico de canarias-Especie Endémica de canarias``` 
 
-* La información de la flora y vegetación: ```ID-Especie-Autor-Nombre común-Familia-Orden-Clase-Subdivisión-División-Género Endémico de canarias-Especie Endémica de canarias-Reino Plantae``` 
+* La información de la flora y vegetación: ```ID-Especie-Autor-Nombre común-Familia-Orden-Clase-Subdivisión-División-Reino Plantae-Género Endémico de canarias-Especie Endémica de canarias``` 
 
 Ejemplo de la de especie invertebrado:
 
 ```
-AI0001-Hemicycla ethelema-(J. Mabille, 1882)--helicidae-stylommatophora-gastropoda-mollusca-end_gen_si-end_esp_si-invertebrata-animalia.jpg
+AI0001-Hemicycla ethelema-(J. Mabille, 1882)--helicidae-stylommatophora-gastropoda-mollusca-metazoa-end_gen_si-end_esp_si
 ```
+
+##### **Nota:** en caso de no identificar un parámetro en concreto no se añade nada entre los guiones (ej. AI0001 no tiene nombre común identificado: ```AI0001-...-autor--familia-...```). En caso de no identificarse la especie se anota como: ```"Su ID"-NO CLASIFICADO.jpg```.
 
 En un futuro mi idea usar esta página para añadir estadísticas de las especies que voy encontrando.
 
-<a href="./">&#9664; Volver al índice</a>
+<a href="./invertebrates">&#9664; Volver al mapa de invertebrados</a>  
+<a href="./flora">&#9664; Volver al mapa de flora</a>  
+<a href="./">&#9664;&#9664; Volver al índice</a>  
 
 Última actualización el `r format(lubridate::today(), "%d/%m/%Y")`  
 Sitio [desarrollado](`r rmarkdown::metadata$github_repo`) por [Juan Carlos García Estupiñán](mailto:`r rmarkdown::metadata$email_adress`)
