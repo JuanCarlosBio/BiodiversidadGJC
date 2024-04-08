@@ -28,7 +28,7 @@ body{
 
 # **Obtener los datos de las especies**
 
-## Descarga las fotografias de las especies colocadas en los mapas interativo.
+## Descarga las fotografías de las especies en los mapas interativos.
 
 * Clica en: [DESCARGAR IMÁGENES INVERTEBRADOS](https://www.dropbox.com/scl/fo/j8wy15nzlrpn98dkpsu6e/h?rlkey=27la6qjalew06kc9wy3cgundv&dl=1) o [DESCARGAR IMÁGENES de FLORA Y VEGETACIÓN](https://www.dropbox.com/scl/fo/z9ad8tcbh02d2zy7g7xf0/h?rlkey=yvu3gii63sfvpicsgplvbty88&dl=1) 
 
@@ -38,13 +38,15 @@ Las fotografías en formato JPG están nombradas con la información de las espe
 
 * La información de la flora y vegetación: ```ID-Especie-Autor-Nombre común-Familia-Orden-Clase-Subdivisión-División-Reino Plantae-Género Endémico de canarias-Especie Endémica de canarias``` 
 
-Ejemplo de la de especie invertebrado:
+Ejemplo de una de especie invertebrado:
 
 ```
 AI0001-Hemicycla ethelema-(J. Mabille, 1882)--helicidae-stylommatophora-gastropoda-mollusca-metazoa-end_gen_si-end_esp_si
 ```
 
-##### **Nota:** en caso de no identificar un parámetro en concreto no se añade nada entre los guiones (ej. AI0001 no tiene nombre común identificado: ```AI0001-...-autor--familia-...```). En caso de no identificarse la especie se anota como: ```"Su ID"-NO CLASIFICADO.jpg```.
+**Nota: **   
+* En caso de no identificar un parámetro en concreto no se añade nada entre los guiones (ej. AI0001 no tiene nombre común identificado: ```AI0001-...-autor--familia-...```). 
+* En caso de no identificarse la especie se anota como: ```"Su ID"-NO CLASIFICADO.jpg```.
 
 En un futuro mi idea usar esta página para añadir estadísticas de las especies que voy encontrando.
 
