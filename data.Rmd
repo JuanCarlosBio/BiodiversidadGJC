@@ -50,7 +50,6 @@ En un futuro mi idea usar esta página para añadir estadísticas de las especie
 
 <a href="./invertebrates">&#9664; Volver al mapa de invertebrados</a>  
 <a href="./flora">&#9664; Volver al mapa de flora</a>  
-<a href="./">&#9664;&#9664; Volver al índice</a>  
 
 Última actualización el `r format(lubridate::today(), "%d/%m/%Y")`  
 Sitio [desarrollado](`r rmarkdown::metadata$github_repo`) por [Juan Carlos García Estupiñán](mailto:`r rmarkdown::metadata$email_adress`)
