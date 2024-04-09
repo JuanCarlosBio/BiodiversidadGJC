@@ -1,8 +1,7 @@
 data/*
 !data/README.txt
 
-figures/*
-!figures/GC_mapa.png
+Rplots.pdf
 
 images/*
 !images/README.txt

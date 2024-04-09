@@ -11,7 +11,9 @@ rule targets:
         "index.html",
         "invertebrates.html",
         "flora.html",
-        "data.html"
+        "data.html",
+        "figures/GC_mapa.png",
+        "figures/n_plantae_metazoa.png"
 
 rule download_images:
     input:
@@ -69,6 +71,22 @@ rule process_exif_images:
         """
         Rscript {input.r_script}
         """  
+rule figures_and_stats:
+    input:
+        script_r = "code/07statistics.R",
+        gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
+        gc_pne_shp = "data/gran_canaria_shp/gc_pne.shp",
+        invertebrates = "data/coord_invertebrates.tsv",
+        plantae = "data/coord_plantae.tsv" 
+    output:
+        "figures/GC_mapa.png",
+        "figures/n_plantae_metazoa.png"
+    conda:
+        "code/enviroments/env.yml"
+    shell:
+        """
+        Rscript {input.script_r}
+        """
 
 rule webpage_html:
     input:
@@ -80,7 +98,10 @@ rule webpage_html:
         r_script_flora = "code/06plot_flora.R",
         gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
         gc_pne_shp = "data/gran_canaria_shp/gc_pne.shp", 
-        species_founded = "data/coord_invertebrates.tsv"
+        invertebrates = "data/coord_invertebrates.tsv",
+        plantae = "data/coord_plantae.tsv", 
+        gc_map_png = "figures/GC_mapa.png",
+        n_plantae_metazoa_png = "figures/n_plantae_metazoa.png"
     output:
         "index.html",
         "invertebrates.html",
@@ -95,3 +116,4 @@ rule webpage_html:
         R -e "library(rmarkdown); render('{input.rmd_flora}')"
         R -e "library(rmarkdown); render('{input.rmd_data}')"
         """  
+

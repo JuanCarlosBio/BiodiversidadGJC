@@ -1,0 +1,165 @@
+#!/usr/bin/env Rscript
+
+library(tidyverse)
+library(ggtext)
+library(sf)
+
+##----------------------------------------------------------------------------#
+## Datos ##
+invertebrates <- read_tsv("data/coord_invertebrates.tsv")
+plantae <- read_tsv("data/coord_plantae.tsv") 
+enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp")
+map <- read_sf("data/gran_canaria_shp/gc_muni.shp") %>%
+  st_transform(map, crs = 4326) 
+
+# Procesado de datos
+enp_map_processed <- enp_map %>%
+  st_transform(map, crs = 4326) %>%
+  mutate(categoria = factor(categoria,
+                            levels = c("Monumento Natural", 
+                                       "Paisaje Protegido",
+                                       "Parque Natural", 
+                                       "Parque Rural", 
+                                       "Reserva Natural Especial",
+                                       "Reserva Natural Integral", 
+                                       "Sitio de Interés Científico")))
+
+invertebrates_processed <- invertebrates %>%
+  mutate(author = case_when(author == "NULL" ~ "",
+                            author != "NULL" ~ as.character(author)),
+         family = str_to_title(family),
+         order = str_to_title(order),
+         class = str_to_title(class), 
+         phylo = str_to_title(phylo))
+
+plantae_processed <- plantae %>%
+  mutate(author = case_when(author == "NULL" ~ "",
+                            author != "NULL" ~ as.character(author)),
+         family = str_to_title(family),
+         order = str_to_title(order),
+         class = str_to_title(class), 
+         division = str_to_title(division),
+         subdivision = str_to_title(subdivision))
+
+##----------------------------------------------------------------------------#
+## Primer gráfico nº 1 mapa de portada
+##----------------------------------------------------------------------------#
+
+coord_invertebrates <- invertebrates_processed %>%
+  select(domain, latitude, longitude) 
+
+coord_plantae <- plantae_processed %>%
+  select(domain, latitude, longitude)
+
+coord_invert_plantae <- rbind(coord_invertebrates, coord_plantae)
+
+species_plot <- coord_invert_plantae %>%
+  ggplot() +
+  geom_sf(data = map, fill = "#edd393") +
+  geom_sf(data = enp_map_processed, aes(fill = categoria),
+          alpha = .5, show.legend = FALSE) +
+  geom_point(data = coord_invert_plantae, 
+             aes(longitude, latitude, color = domain),
+             size = .5, show.legend = FALSE) +
+  coord_sf() +
+  scale_color_manual(
+    breaks = c("metazoa", "plantae"),
+    labels = c("Metazoa", "Plantae"),
+    values = c("red", "forestgreen")) +  
+  scale_fill_manual(
+    breaks = c("Monumento Natural", 
+               "Paisaje Protegido",
+               "Parque Natural", 
+               "Parque Rural", 
+               "Reserva Natural Especial",
+               "Reserva Natural Integral", 
+               "Sitio de Interés Científico"),
+    values = c("#004078", "#80a0bd", 
+               "#f78000", "#e60000", 
+               "#00913f", "#034a31", 
+               "#BADBCA")) +
+  labs(
+    title = "<span style = 'color: red'>ANIMALES</span> Y <span style = 'color: forestgreen'>PLANTAS</span> IDENTIFICADOS!!!"
+  ) +
+  theme_test() +
+  theme(
+    plot.title = element_markdown(size = 4, face = "bold", hjust = .5),
+    plot.background = element_rect(color = "#fff3d8", fill = "#fff3d8"),
+    panel.background = element_rect(color= "#cfe8fc", fill = "#cfe8fc"),
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
+  ) +
+  #guides(color = FALSE) +
+  labs(
+    x = NULL, y = NULL,
+    fill = NULL, color = NULL
+  );species_plot
+
+ggsave(plot= species_plot, 
+       "figures/GC_mapa.png",
+       width = 1.5, height = 1.5)  
+##----------------------------------------------------------------------------#
+## Primer gráfico nº 2 de metazoos y plantae
+##----------------------------------------------------------------------------#
+invertebrates_domain <- invertebrates %>%
+  select(domain, latitude, longitude)
+
+plantae_domain <- plantae %>%
+  select(domain, latitude, longitude)
+
+plantaed_invertebratesd <- rbind(invertebrates_domain, plantae_domain)
+
+plad_invdp <- plantaed_invertebratesd %>%
+  group_by(domain) %>%
+  count() %>%
+  mutate(domain = factor(domain,
+                         levels = c("metazoa", "plantae"),
+                         labels = c("Metazoa", "Plantae"))) 
+
+y_domain_axis <- max(plad_invdp$n) + (max(plad_invdp$n) * 0.2)
+n_metazoa <- as.integer(plad_invdp[1,2])
+n_plantae <- as.integer(plad_invdp[2,2])
+
+y_n_metazoa <- n_metazoa + 1
+y_n_plantae <- n_plantae + 1
+
+metazoa_plantae_plot <- plad_invdp %>%
+  ggplot(aes(domain, n, fill = domain)) +
+  geom_col(color = "black", size = 2,width = .3, show.legend = FALSE) +
+  geom_text(aes(y = c(y_n_metazoa, y_n_plantae), 
+                 x = c(1, 2), 
+                 label = c(as.character(n_metazoa),
+                           as.character(n_plantae))),
+             color = "black", fontface = "bold",
+             size=7, show.legend = FALSE) +
+  scale_fill_manual(values = c("#870909", "forestgreen")) +
+  scale_y_continuous(expand = expansion(0),
+                     limits = c(0, y_domain_axis)) +
+  scale_x_discrete(breaks = c("Metazoa", "Plantae"),
+                   labels = c("<span style = 'color: #870909'>Metazoa</span>", "<span style = 'color: forestgreen'>Plantae</span>")) +
+   labs(
+     title = "Especies de <span style = 'color: #870909'>*ANIMALES*</span> y <span style = 'color: forestgreen'>*PLANTAS*</span>",
+     y = "Nº de especies",
+     x = "Reino"
+  ) + 
+  theme_classic() +
+  theme(
+    plot.background = element_rect(fill = "transparent", color = "transparent"),
+    panel.background = element_rect(fill = "transparent", color = "transparent"),
+    plot.title = element_markdown(face = "bold", size = 18, hjust = .5, 
+                                  margin = margin(b = .75, unit = "cm")),
+    axis.title = element_text(face = "bold", size = 18),
+    axis.title.x = element_text(margin = margin(t = .5, unit = "cm")), 
+    axis.title.y = element_text(margin = margin(r = .5, unit = "cm")),     
+    axis.text = element_text(face = "bold", size = 14),
+    axis.text.x = element_markdown(),
+    axis.line = element_line(linewidth = 1.5), 
+    axis.ticks = element_blank(),
+  );metazoa_plantae_plot  
+
+ggsave(plot= metazoa_plantae_plot, 
+       "figures/n_plantae_metazoa.png",
+       width = 8, height = 5)  
+
+
+

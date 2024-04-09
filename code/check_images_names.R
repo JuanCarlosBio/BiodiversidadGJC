@@ -1,4 +1,5 @@
 library(tidyverse)
+library(exifr)
 
 flora_vascular <- list.files("images/flora_vascular", full.names = TRUE)
 invertebrados <- list.files("images/invertebrados", full.names = TRUE)

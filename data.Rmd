@@ -4,6 +4,12 @@ author: Juan Carlos García Estupiñán
 output: 
     html_document:
         theme: cerulean
+        toc: yes
+        toc_depth: 2
+        number_sections: yes
+        toc_float: 
+            collapsed: true
+            smootg_scroll: true
 email_adress: jcge97@gmail.com
 github_repo: https://github.com/Juankkar/Especies_Encontradas_GC
 ---
@@ -26,9 +32,17 @@ body{
 }
 ```
 
-# **Obtener los datos de las especies**
+# **Estadísticas de las especies**
 
-## Descarga las fotografías de las especies en los mapas interativos.
+## Número de especies de Metazoos y Plantas encontradas:
+
+<center>
+
+![](figures/n_plantae_metazoa.png)
+
+</center>
+
+# Descarga las fotografías de las especies en los mapas interativos.
 
 * Clica en: [DESCARGAR IMÁGENES INVERTEBRADOS](https://www.dropbox.com/scl/fo/j8wy15nzlrpn98dkpsu6e/h?rlkey=27la6qjalew06kc9wy3cgundv&dl=1) o [DESCARGAR IMÁGENES de FLORA Y VEGETACIÓN](https://www.dropbox.com/scl/fo/z9ad8tcbh02d2zy7g7xf0/h?rlkey=yvu3gii63sfvpicsgplvbty88&dl=1) 
 
@@ -57,8 +71,6 @@ AI0001-Hemicycla ethelema-(J. Mabille, 1882)--helicidae-stylommatophora-gastropo
 - En caso de no identificar un parámetro en concreto no se añade nada entre los guiones (ej. AI0001 no tiene nombre común identificado: ```AI0001-...-autor--familia-...```).
 
 - En caso de no identificarse la especie se anota como: ```"Su ID"-NO CLASIFICADO.jpg```.
-
-En un futuro mi idea usar esta página para añadir estadísticas de las especies que voy encontrando.
 
 <a href="./invertebrates">&#9664; Volver al mapa de invertebrados</a>  
 <a href="./flora">&#9664; Volver al mapa de flora</a>  

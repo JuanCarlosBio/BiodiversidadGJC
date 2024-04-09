@@ -53,7 +53,7 @@ species %>%
                                                      "\nGénero Endémico: ", endemic_genus, "/ Especie Endémica: ", endemic_specie,
                                                      "\nFecha y hora: ", gpsdatetime,
                                                      "\nLat = ", sprintf("%.3f", latitude, 3), 
-                                                     ", Lon = ", sprintf("%.3f", longitude, 3), parse=T)),
+                                                     ", Lon = ", sprintf("%.3f", longitude, 3))),
                    size=3) +
         coord_sf() +
         scale_fill_manual(
