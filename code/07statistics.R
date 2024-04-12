@@ -120,8 +120,8 @@ y_domain_axis <- max(plad_invdp$n) + (max(plad_invdp$n) * 0.2)
 n_metazoa <- as.integer(plad_invdp[1,2])
 n_plantae <- as.integer(plad_invdp[2,2])
 
-y_n_metazoa <- n_metazoa + 1
-y_n_plantae <- n_plantae + 1
+y_n_metazoa <- n_metazoa + 2
+y_n_plantae <- n_plantae + 2
 
 metazoa_plantae_plot <- plad_invdp %>%
   ggplot(aes(domain, n, fill = domain)) +
