@@ -6,6 +6,7 @@ output:
         theme: cerulean
 email_adress: jcge97@gmail.com
 github_repo: https://github.com/Juankkar/Especies_Encontradas_GC
+documentation: https://github.com/Juankkar/Especies_Encontradas_GC/blob/main/documents/info.md 
 ---
 
 ```{r setup, include=FALSE}
@@ -32,6 +33,7 @@ body{
 - Por un lado se pueden ver los espacios protegidos.
 - Por otro los puntos son las especies coloreadas por nivel de **Clases** de las especies.
 - Al colocar el ratón encima puedes ver de que especie se trata.
+- Para obtener ayuda sobre funcionamiento las opciones más importantes del mapa interactivo, se puede consultar la [documentación](`r rmarkdown::metadata$documentation`).
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 source("code/06plot_flora.R")

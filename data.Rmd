@@ -12,6 +12,7 @@ output:
             smootg_scroll: true
 email_adress: jcge97@gmail.com
 github_repo: https://github.com/Juankkar/Especies_Encontradas_GC
+documentation: https://github.com/Juankkar/Especies_Encontradas_GC/blob/main/documents/info.md 
 ---
 
 ```{r setup, include=FALSE}
@@ -35,7 +36,7 @@ body{
 
 * Clica en: [DESCARGAR IMÁGENES INVERTEBRADOS](https://www.dropbox.com/scl/fo/j8wy15nzlrpn98dkpsu6e/h?rlkey=27la6qjalew06kc9wy3cgundv&dl=1) o [DESCARGAR IMÁGENES de FLORA Y VEGETACIÓN](https://www.dropbox.com/scl/fo/z9ad8tcbh02d2zy7g7xf0/h?rlkey=yvu3gii63sfvpicsgplvbty88&dl=1) 
 
-* Se puede ver información sobre las imágenes de las fotografías en la carpeta de [documentos](docs/info.md).
+* Se puede ver información sobre las imágenes de las fotografías en la carpeta de [documentación](`r rmarkdown::metadata$documentation`).
 
 # **Estadísticas de las especies**
 
