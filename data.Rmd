@@ -31,46 +31,21 @@ body{
     #font-size: 1.2vw;
 }
 ```
+# **Descarga las fotografías de las especies en los mapas interativos**
+
+* Clica en: [DESCARGAR IMÁGENES INVERTEBRADOS](https://www.dropbox.com/scl/fo/j8wy15nzlrpn98dkpsu6e/h?rlkey=27la6qjalew06kc9wy3cgundv&dl=1) o [DESCARGAR IMÁGENES de FLORA Y VEGETACIÓN](https://www.dropbox.com/scl/fo/z9ad8tcbh02d2zy7g7xf0/h?rlkey=yvu3gii63sfvpicsgplvbty88&dl=1) 
+
+* Se puede ver información sobre las imágenes de las fotografías en la carpeta de [documentos](docs/info.md).
 
 # **Estadísticas de las especies**
 
-## Número de especies de Metazoos y Plantas encontradas:
+## Número de especies de Metazoos y Plantas identificadas:
 
 <center>
 
 ![](figures/n_plantae_metazoa.png)
 
 </center>
-
-# Descarga las fotografías de las especies en los mapas interativos.
-
-* Clica en: [DESCARGAR IMÁGENES INVERTEBRADOS](https://www.dropbox.com/scl/fo/j8wy15nzlrpn98dkpsu6e/h?rlkey=27la6qjalew06kc9wy3cgundv&dl=1) o [DESCARGAR IMÁGENES de FLORA Y VEGETACIÓN](https://www.dropbox.com/scl/fo/z9ad8tcbh02d2zy7g7xf0/h?rlkey=yvu3gii63sfvpicsgplvbty88&dl=1) 
-
-Las fotografías en formato JPG están nombradas con la información de las especies, mediante el uso guiones altos ("```-```") para separar la información.
-
-* Las imágenes de invertebrados tienen la siguiente información: 
-
-```
-ID-Especie-Autor-Nombre común-Familia-Orden-Clase-Filo-Reino Metazoa-Género Endémico de canarias-Especie Endémica de canarias
-``` 
-
-* La información de la flora y vegetación: 
-
-```
-ID-Especie-Autor-Nombre común-Familia-Orden-Clase-Subdivisión-División-Reino Plantae-Género Endémico de canarias-Especie Endémica de canarias
-``` 
-
-* Ejemplo de una de especie invertebrado:
-
-```
-AI0001-Hemicycla ethelema-(J. Mabille, 1882)--helicidae-stylommatophora-gastropoda-mollusca-metazoa-end_gen_si-end_esp_si
-```
-
-**Nota: ** 
-
-- En caso de no identificar un parámetro en concreto no se añade nada entre los guiones (ej. AI0001 no tiene nombre común identificado: ```AI0001-...-autor--familia-...```).
-
-- En caso de no identificarse la especie se anota como: ```"Su ID"-NO CLASIFICADO.jpg```.
 
 <a href="./invertebrates">&#9664; Volver al mapa de invertebrados</a>  
 <a href="./flora">&#9664; Volver al mapa de flora</a>  

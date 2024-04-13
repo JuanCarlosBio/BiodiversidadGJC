@@ -57,7 +57,7 @@ species_plot <- coord_invert_plantae %>%
   ggplot() +
   geom_sf(data = map, fill = "#edd393") +
   geom_sf(data = enp_map_processed, aes(fill = categoria),
-          alpha = .5, show.legend = FALSE) +
+          alpha = .3, show.legend = FALSE) +
   geom_point(data = coord_invert_plantae, 
              aes(longitude, latitude, color = domain),
              size = .5, show.legend = FALSE) +

@@ -35,11 +35,10 @@ read_exif(invertebrados) %>%
     filter(!(str_detect(filename,  "NO CLASIFICADO"))) %>% 
     select(filename) %>%
     separate_wider_delim(filename, delim = "-",
-                         names = c("id", "specie", 
-                                   "author","name", "family", 
-                                   "order", "class", 
-                                   "phylo", "domain", 
-                                   "endemic_genus", "endemic_specie"),
+                         names = c("id", "specie", "author","name", 
+                                   "family", "order", "class", "phylo", "domain", 
+                                   "endemic_genus", "endemic_specie", "endemic_subspecie",
+                                   "origin", "category"),
     too_few = "debug",
     too_many = "debug") %>% 
     select(id, filename_ok, filename_pieces) %>%

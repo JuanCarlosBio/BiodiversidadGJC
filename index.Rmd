@@ -49,7 +49,5 @@ Aquí documento las especies de flora y vegetación que he encontrando en Gran C
 
 * Clica en: <a href="./flora"> MAPA FLORA Y VEGETACIÓN GC</a> para verlo!
 
-## Obtener las fotografías de las especies en los mapas
-
 Última actualización el `r format(lubridate::today(), "%d/%m/%Y")`  
 Sitio [desarrollado](`r rmarkdown::metadata$github_repo`) por [Juan Carlos García Estupiñán](mailto:`r rmarkdown::metadata$email_adress`)
