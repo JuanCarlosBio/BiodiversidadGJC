@@ -1,4 +1,4 @@
-# Página web de especies que encuentro por Gran Canaria.
+# ***Página web de especies que encuentro por Gran Canaria***.
 
 La idea es hacer una web con ***GitHub Pages***, para clocar especies en mapas, gráficas con estadísticas etc...
 
