@@ -6,6 +6,9 @@ library(sf)
 
 ##----------------------------------------------------------------------------#
 ## Datos ##
+
+source("code/04process_exif.R")
+
 invertebrates <- read_tsv("data/coord_invertebrates.tsv")
 plantae <- read_tsv("data/coord_plantae.tsv") 
 enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp")
@@ -40,6 +43,26 @@ plantae_processed <- plantae %>%
          class = str_to_title(class), 
          division = str_to_title(division),
          subdivision = str_to_title(subdivision))
+
+##----------------------------------------------------------------------------#
+## Nº de Especies clasificadas y sin clasificar
+##----------------------------------------------------------------------------#
+
+exif_data_ai %>%
+  rename_all(tolower) %>%
+  select(filename) %>%
+  mutate(clasificados = case_when(str_detect(filename, pattern = "NO CLASIFICADO") ~ "no clasificada",
+                                  !(str_detect(filename, pattern = "NO CLASIFICADO")) ~ "clasificada")) %>%
+  group_by(clasificados) %>%
+  count() -> tabla_n_ai
+
+exif_data_fv %>%
+  rename_all(tolower) %>%
+  select(filename) %>%
+  mutate(clasificados = case_when(str_detect(filename, pattern = "NO CLASIFICADO") ~ "no clasificada",
+                                  !(str_detect(filename, pattern = "NO CLASIFICADO")) ~ "clasificada")) %>%
+  group_by(clasificados) %>%
+  count() -> tabla_n_fv
 
 ##----------------------------------------------------------------------------#
 ## Primer gráfico nº 1 mapa de portada

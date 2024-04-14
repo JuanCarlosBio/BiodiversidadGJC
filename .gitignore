@@ -1,5 +1,9 @@
+# Data files
 data/*
 !data/README.txt
+
+# reset program
+reset.bash
 
 Rplots.pdf
 

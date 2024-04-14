@@ -34,7 +34,22 @@ body{
 ```
 # **Descarga las fotografías de las especies en los mapas interativos**
 
-* Clica en: [DESCARGAR IMÁGENES INVERTEBRADOS](https://www.dropbox.com/scl/fo/j8wy15nzlrpn98dkpsu6e/h?rlkey=27la6qjalew06kc9wy3cgundv&dl=1) o [DESCARGAR IMÁGENES de FLORA Y VEGETACIÓN](https://www.dropbox.com/scl/fo/z9ad8tcbh02d2zy7g7xf0/h?rlkey=yvu3gii63sfvpicsgplvbty88&dl=1) 
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+source("code/07statistics.R")
+```
+
+[link ai]: https://www.dropbox.com/scl/fo/j8wy15nzlrpn98dkpsu6e/h?rlkey=27la6qjalew06kc9wy3cgundv&dl=1
+
+[link fv]: https://www.dropbox.com/scl/fo/z9ad8tcbh02d2zy7g7xf0/h?rlkey=yvu3gii63sfvpicsgplvbty88&dl=1
+
+<center>
+
+  |         **MAPA**             | **Nº CLASIFICADAS** | **Nº NO CLASIFICADAS** | **DESCARGA**      | 
+  | :--------------------------: | :-----------------: | :--------------------: | :---------------: |
+  | *Mapa de invertebrados*      | `r tabla_n_ai$n[1]`  | `r tabla_n_ai$n[2]`   |   [link imágenes de invertebrados](https://www.dropbox.com/scl/fo/z9ad8tcbh02d2zy7g7xf0/h?rlkey=yvu3gii63sfvpicsgplvbty88&dl=1) | 
+  | *Mapa de flora y vegetación* | `r tabla_n_fv$n[1]`  | `r tabla_n_fv$n[2]`   |   [link imágenes de flora y vegetación](https://www.dropbox.com/scl/fo/z9ad8tcbh02d2zy7g7xf0/h?rlkey=yvu3gii63sfvpicsgplvbty88&dl=1) |
+
+</center>
 
 * Se puede ver información sobre las imágenes de las fotografías en la carpeta de [documentación](`r rmarkdown::metadata$documentation`).
 
