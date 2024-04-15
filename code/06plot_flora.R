@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 library(tidyverse)
 library(glue)
 library(sf)
@@ -29,6 +31,8 @@ species <- read_tsv("data/coord_plantae.tsv") %>%
            division = str_to_title(division),
            subdivision = str_to_title(subdivision))
 
+jardin_botanico <- read_sf("data/gran_canaria_shp/jardin_botanico.shp") 
+
 species %>%
     ggplot() +
         geom_sf(data = map, fill = "#edd393") +
@@ -41,6 +45,7 @@ species %>%
                                                  "\nCategoría del ENP: ", categoria)),
 
         alpha = .75) +
+        geom_sf(data = jardin_botanico, fill = "yellow", aes(text = Name)) +
         geom_point(data = species, aes(longitude, 
                                        latitude, 
                                        color = class,

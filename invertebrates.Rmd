@@ -31,7 +31,7 @@ body{
 - Por un lado se pueden ver los espacios protegidos.
 - Por otro los puntos son las especies coloreadas por nivel de **Clases** de las especies.
 - Al colocar el ratón encima puedes ver de que especie se trata.
-- Para obtener ayuda sobre funcionamiento las opciones más importantes del mapa interactivo, se puede consultar la [documentación](`r rmarkdown::metadata$documentation`).
+-  Ayuda para el manejo del mapa &#10132; [documentación](`r rmarkdown::metadata$documentation`).
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 source("code/05plot_invertebrates.R")

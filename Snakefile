@@ -4,8 +4,10 @@ rule targets:
         "images/invertebrados.zip",
         "data/islands_shp/municipios.shp",
         "data/islands_shp/eennpp.shp",
+        "data/jardin_botanico.kml",
         "data/gran_canaria_shp/gc_muni.shp",
         "data/gran_canaria_shp/gc_pne.shp",
+        "data/gran_canaria_shp/jardin_botanico.shp",
         "data/coord_invertebrates.tsv",
         "data/coord_plantae.tsv",
         "index.html",
@@ -41,11 +43,23 @@ rule download_canary_islands_shp:
         bash {input.bash_script}
         """
 
+rule download_jardin_botanico:
+    input:
+        bash_script = "code/08download_jarbot.bash"
+    output:
+        "data/jardin_botanico.kml"
+    conda:
+        "code/enviroments/env.yml"
+    shell:
+        """
+        bash {input.bash_script}
+        """
+
 rule process_canary_islands_shp:
     input:
         python_script = "code/03process_canary_island.py",
         shp_muni = "data/islands_shp/municipios.shp",
-        shp_pne = "data/islands_shp/eennpp.shp"
+        shp_pne = "data/islands_shp/eennpp.shp",
     output:
         "data/gran_canaria_shp/gc_muni.shp",
         "data/gran_canaria_shp/gc_pne.shp"
@@ -55,6 +69,19 @@ rule process_canary_islands_shp:
         """
         mkdir -p data/gran_canaria_shp/
         python {input.python_script}
+        """
+
+rule process_jardin_botanico_kml:
+    input:
+        r_script = "code/09process_jardin_botanico.R",
+        kml_jarbot = "data/jardin_botanico.kml"
+    output:
+        "data/gran_canaria_shp/jardin_botanico.shp"
+    conda:
+        "code/enviroments/env.yml"
+    shell:
+        """
+        Rscript {input.r_script}
         """
 
 rule process_exif_images:
@@ -98,6 +125,7 @@ rule webpage_html:
         r_script_flora = "code/06plot_flora.R",
         gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
         gc_pne_shp = "data/gran_canaria_shp/gc_pne.shp", 
+        jarbot = "data/gran_canaria_shp/jardin_botanico.shp",
         invertebrates = "data/coord_invertebrates.tsv",
         plantae = "data/coord_plantae.tsv", 
         gc_map_png = "figures/GC_mapa.png",
