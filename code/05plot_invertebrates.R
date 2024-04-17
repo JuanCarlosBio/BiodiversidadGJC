@@ -44,6 +44,11 @@ species %>%
                                                   "\nCategoría del ENP: ", categoria)),
 
         alpha = .75) +
+        geom_sf_text(data = enp_map, aes(label = "", 
+                            fill = categoria,
+                            text = paste0("\nENP: ", codigo, " ", nombre,
+                                          "\nCategoría del ENP: ", categoria)),
+        alpha = 0) +
         geom_sf(data = jardin_botanico, fill = "yellow", aes(text = Name)) +
         geom_point(data = species, aes(longitude, 
                                        latitude, 
