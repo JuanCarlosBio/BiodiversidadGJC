@@ -22,13 +22,13 @@ enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") %>%
 enp_map2 <- enp_map %>%
     filter(codigo %in% c("C-14", "C-15", "C-20", "C-21"))
 
-species <- read_tsv("data/coord_invertebrates.tsv") %>%
-    mutate(author = case_when(author == "NULL" ~ "",
-                              author != "NULL" ~ as.character(author)),
-           family = str_to_title(family),
+species <- read_tsv("data/coord_invertebrates.tsv",na ="") %>%
+    mutate(family = str_to_title(family),
            order = str_to_title(order),
            class = str_to_title(class), 
            phylo = str_to_title(phylo))
+
+species[is.na(species)] <- "-"  
 
 jardin_botanico <- read_sf("data/gran_canaria_shp/jardin_botanico.shp") 
 
@@ -63,7 +63,9 @@ species %>%
                                                      "\nEspecie: ", specie, " ", author,
                                                      "\nNomb. Común: ", name, 
                                                      "\n=========================",
-                                                     "\nGénero Endémico: ", endemic_genus, ", Especie Endémica: ", endemic_specie,
+                                                     "\nGénero Endémico: ", endemic_genus, 
+                                                     "\nEspecie Endémica: ", endemic_specie,
+                                                     "\nSubespecie Endémica: ", endemic_subspecie,
                                                      "\nOrigen: ", origin, 
                                                      "\nCategoría: ", category,
                                                      "\n=========================",

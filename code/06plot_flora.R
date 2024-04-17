@@ -23,9 +23,7 @@ enp_map2 <- enp_map %>%
     filter(codigo %in% c("C-14", "C-15", "C-20", "C-21"))
 
 species <- read_tsv("data/coord_plantae.tsv") %>%
-    mutate(author = case_when(author == "NULL" ~ "",
-                              author != "NULL" ~ as.character(author)),
-           family = str_to_title(family),
+    mutate(family = str_to_title(family),
            order = str_to_title(order),
            class = str_to_title(class), 
            division = str_to_title(division),
@@ -60,7 +58,9 @@ species %>%
                                                      "\nEspecie: ", specie, " ", author,
                                                      "\nNomb. común: ", name,
                                                      "\n=========================",
-                                                     "\nGénero Endémico: ", endemic_genus, ", Especie Endémica: ", endemic_specie,
+                                                     "\nGénero Endémico: ", endemic_genus, 
+                                                     "\nEspecie Endémica: ", endemic_specie,
+                                                     "\nSubespecie Endémica: ", endemic_subspecie,
                                                      "\nOrigen: ", origin,
                                                      "\nCategoría: ", category,
                                                      "\n=========================",
