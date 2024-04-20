@@ -35,6 +35,6 @@ jobs:
       - name: Commit changes to repository
         run: |
           git add index.html flora.html invertebrates.html data.html
-          git commit -m "New day's rendering"
+          git commit -m "Actualización semanal completada"
           git push origin main
       - run: echo "🍏 This job's status is ${{ job.status }}."
