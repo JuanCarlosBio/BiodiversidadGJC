@@ -63,6 +63,16 @@ source("code/07statistics.R")
 
 </center>
 
+## Endemicidad de las especies de plantas y animales:
+
+<center>
+
+![](figures/endemicidad.png)
+
+</center>
+
+# **Volver a los mapas interactivos**
+
 <a href="./invertebrates">&#9664; Volver al mapa de invertebrados</a>  
 <a href="./flora">&#9664; Volver al mapa de flora</a>  
 

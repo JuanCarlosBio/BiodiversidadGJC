@@ -15,7 +15,8 @@ rule targets:
         "flora.html",
         "data.html",
         "figures/GC_mapa.png",
-        "figures/n_plantae_metazoa.png"
+        "figures/n_plantae_metazoa.png",
+        "figures/endemicidad.png"
 
 rule download_images:
     input:
@@ -107,7 +108,8 @@ rule figures_and_stats:
         plantae = "data/coord_plantae.tsv" 
     output:
         "figures/GC_mapa.png",
-        "figures/n_plantae_metazoa.png"
+        "figures/n_plantae_metazoa.png",
+        "figures/endemicidad.png"
     conda:
         "code/enviroments/env.yml"
     shell:
@@ -129,7 +131,8 @@ rule webpage_html:
         invertebrates = "data/coord_invertebrates.tsv",
         plantae = "data/coord_plantae.tsv", 
         gc_map_png = "figures/GC_mapa.png",
-        n_plantae_metazoa_png = "figures/n_plantae_metazoa.png"
+        n_plantae_metazoa_png = "figures/n_plantae_metazoa.png",
+        endemicidad = "figures/endemicidad.png"
     output:
         "index.html",
         "invertebrates.html",

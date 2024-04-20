@@ -121,9 +121,11 @@ species_plot <- coord_invert_plantae %>%
 ggsave(plot= species_plot, 
        "figures/GC_mapa.png",
        width = 1.5, height = 1.5)  
+
 ##----------------------------------------------------------------------------#
 ## Primer gráfico nº 2 de metazoos y plantae
 ##----------------------------------------------------------------------------#
+
 invertebrates_domain <- invertebrates %>%
   select(domain, latitude, longitude)
 
@@ -184,5 +186,79 @@ ggsave(plot= metazoa_plantae_plot,
        "figures/n_plantae_metazoa.png",
        width = 8, height = 5)  
 
+##----------------------------------------------------------------------------#
+## Segundo gráfico nº 2 de metazoos y plantae
+##----------------------------------------------------------------------------#
 
+endemic_invertebrates <- invertebrates %>%
+  select(endemic_genus, endemic_specie, endemic_subspecie, latitude, longitude, specie) 
 
+n_endemic_invertebrates <- endemic_invertebrates %>%
+  group_by(endemic_genus, endemic_specie, endemic_subspecie, specie) %>%
+  count() %>%
+  mutate(organism = "invertebrates") %>%
+  ungroup() %>%
+  pivot_longer(-c(organism, specie, n)) 
+
+endemic_plantae <- plantae %>%
+  select(endemic_genus, endemic_specie, endemic_subspecie, latitude, longitude, specie) 
+
+n_endemic_plantae <- endemic_plantae %>%
+  group_by(endemic_genus, endemic_specie, endemic_subspecie, specie) %>%
+  count() %>%
+  mutate(organism = "plantae") %>%
+  ungroup() %>%
+  pivot_longer(-c(organism, specie, n))
+
+endemic_organisms <- rbind(n_endemic_invertebrates, n_endemic_plantae)
+
+endemic_organisms_count <- expand.grid(organism=as.character(unique(as.character(endemic_organisms$organism))),
+                                       name=as.character(unique(as.character(endemic_organisms$name))),
+                                       value=as.character(unique(as.character(endemic_organisms$value)))) %>% 
+  left_join(endemic_organisms %>% group_by(organism,name,value) %>% summarize(n=(n())),
+            by=c("organism","name","value")) %>% 
+  mutate(n=ifelse(is.na(n),0,n)) %>%
+  ungroup()
+
+y_max_axis_endemic <- max(endemic_organisms_count$n)
+
+endemic_organisms_plot <- endemic_organisms_count %>%
+  mutate(name = factor(name,
+                       levels = c("endemic_genus", "endemic_specie", "endemic_subspecie"),
+                       labels = c("Nº Género", "Nº Especie", "Nº Subespecie"))) %>%
+  ggplot(aes(value, n, fill = organism)) +
+  geom_col(position = "dodge", width = .4, color = "black") +
+  facet_wrap(~name, nrow = 3, strip.position = "left") +
+  labs(
+    title = "Endemicidad (Canarias) de las especies según:\ngénero, especie y subespecie",
+    y = NULL,
+    x = "Endemicidad (Canarias)",
+    fill = "Organismo:" 
+  ) +
+  scale_y_continuous(expand = expansion(0),
+                     limits = c(0, y_max_axis_endemic + 2),
+                     breaks = seq(0, y_max_axis_endemic, round((y_max_axis_endemic * .25),0))) +
+  scale_x_discrete(breaks = c("-", "SI", "NO"), 
+                   labels = c("NO CLASIFICADO", "ENDÉMICO", "NO ENDÉMICO")) +
+  scale_fill_manual(breaks = c("invertebrates", "plantae"), 
+                    labels = c("Metazoa", "Plantae"),
+                    values = c("#870909", "forestgreen")) +  
+  theme_test() +
+  theme(
+    plot.background = element_blank(),
+    panel.background = element_blank(),
+    panel.grid.major = element_line(color = "gray", linetype = "dashed"),
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold"),
+    axis.title = element_text(face = "bold"),
+    legend.title = element_text(face = "bold"), 
+    legend.position = "top",
+    legend.background = element_blank(),
+    strip.placement  = "outside",
+    strip.background = element_blank(),
+    axis.title.x = element_text(margin = margin(t = .5, unit = "cm")) 
+  );endemic_organisms_plot 
+  
+ggsave(plot= endemic_organisms_plot, 
+       "figures/endemicidad.png",
+       width = 6, height = 6)  
