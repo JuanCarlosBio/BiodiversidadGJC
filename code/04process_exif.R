@@ -4,9 +4,6 @@ library(tidyverse)
 library(exifr)
 library(glue)
 
-#zip_flora <- list.files("images/", pattern = "\\.zip$", full.names = TRUE)
-#lapply(zip_files, unzip, exdir = "images/especies")
-
 unzip("images/flora_vascular.zip", exdir = "images/flora_vascular")
 unzip("images/invertebrados.zip", exdir = "images/invertebrados")
 
@@ -22,7 +19,7 @@ t_replacement <- c("_ta_" = "á","_te_" = "é","_ti_" = "í", "_to_" = "ó", "_t
 
 exif_data_ai %>%
     rename_all(tolower) %>%
-    select(filename, gpsdatetime, gpsposition) %>%
+    select(filename, gpsdatetime, gpsposition,gpsaltitude) %>%
     mutate(filename = str_replace(filename, pattern = ".jpg", replacement = "")) %>%
     filter(!(str_detect(filename,  "NO CLASIFICADO")) & str_detect(filename, "^AI")) %>% 
     separate_wider_delim(gpsposition, delim = " ",
@@ -49,13 +46,14 @@ exif_data_ai %>%
            category = case_when(category == "ep" ~ "Especie protegida",
                                 category == "ei" ~ "Especie introducida",
                                 !(category == "ep") | !(category == "ei") ~ "-"),
-           name = str_replace_all(name, t_replacement)) %>% 
+           name = str_replace_all(name, t_replacement),
+           author = str_replace_all(author, t_replacement)) %>% 
     write_tsv("data/coord_invertebrates.tsv")
 
 
 exif_data_fv %>%
     rename_all(tolower) %>%
-    select(filename, gpsdatetime, gpsposition) %>%
+    select(filename, gpsdatetime, gpsposition, gpsaltitude) %>%
     mutate(filename = str_replace(filename, pattern = ".jpg", replacement = "")) %>%
     filter(!(str_detect(filename,  "NO CLASIFICADO")) & str_detect(filename, "^FV")) %>%
     separate_wider_delim(gpsposition, delim = " ",
