@@ -62,10 +62,11 @@ exif_data_fv %>%
            longitude = as.numeric(longitude)) %>%
     separate_wider_delim(filename, delim = "-",
                          names = c("id", "specie", "author", "name", "family", 
-                                   "order", "class", "subdivision", "division", "domain", 
+                                   "order", "class", "subdivision", "division",
                                    "endemic_genus", "endemic_specie", "endemic_subspecie",
-                                   "origin", "category")) %>%
-    mutate(endemic_genus = case_when(endemic_genus == "eg_no" ~ "NO",
+                                   "origin", "category", "habitat")) %>%
+    mutate(domain = "Plantae",
+           endemic_genus = case_when(endemic_genus == "eg_no" ~ "NO",
                                      endemic_genus == "eg_si" ~ "SI",
                                      !(endemic_genus == "eg_no") | !(endemic_genus == "eg_no") ~ "-"),
            endemic_specie = case_when(endemic_specie == "ee_no" ~ "NO",

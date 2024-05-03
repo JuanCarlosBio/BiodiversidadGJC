@@ -20,9 +20,9 @@ read_exif(flora_vascular) %>%
     select(filename) %>%
     separate_wider_delim(filename, delim = "-",
                          names = c("id", "specie", "author", "name", "family", 
-                                   "order", "class", "subdivision", "division", "domain", 
+                                   "order", "class", "subdivision", "division",  
                                    "endemic_genus", "endemic_specie", "endemic_subspecie",
-                                   "origin", "category"),
+                                   "origin", "category", "habitat"),
     too_few = "debug",
     too_many = "debug") %>% 
     select(id, filename_ok, filename_pieces) %>%
