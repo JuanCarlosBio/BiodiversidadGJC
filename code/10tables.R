@@ -49,7 +49,10 @@ gt_invertebrates <- table_invertebrates %>%
     ) %>%
     tab_options(
         table.background.color = "#fff3d8"
-    ) 
+    ) %>%
+    opt_interactive(
+        use_search = TRUE
+    )
 
 table_plantae <- plantae %>%
     drop_na(author) %>%
@@ -91,4 +94,7 @@ gt_plantae <- table_plantae %>%
     ) %>%
     tab_options(
         table.background.color = "#fff3d8"
-    ) 
+    ) %>%
+    opt_interactive(
+        use_search = TRUE
+    )

@@ -38,6 +38,15 @@ source("code/05plot_invertebrates.R")
 invertebrates_plotly
 ```
 
+## Tabla de las especies de metazoos (invertebrados):
+
+* Busca la especie que estés interesado!!!
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+source("code/10tables.R")
+gt_invertebrates
+```
+
 <a href="./">&#9664; Volver hacia atrás</a>     <a href="./data"> Descargar datos &#9654;</a> 
 
 Última actualización el `r format(today(), "%d/%m/%Y")`  
