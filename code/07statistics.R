@@ -41,8 +41,7 @@ plantae_processed <- plantae %>%
          family = str_to_title(family),
          order = str_to_title(order),
          class = str_to_title(class), 
-         division = str_to_title(division),
-         subdivision = str_to_title(subdivision))
+         division = str_to_title(division))
 
 ##----------------------------------------------------------------------------#
 ## Nº de Especies clasificadas y sin clasificar

@@ -30,7 +30,7 @@ exif_data_ai %>%
                          names = c("id", "specie", "author","name", 
                                    "family", "order", "class", "phylo", "domain", 
                                    "endemic_genus", "endemic_specie", "endemic_subspecie",
-                                   "origin", "category")) %>% 
+                                   "origin", "category", "id_biota")) %>% 
     mutate(endemic_genus = case_when(endemic_genus == "eg_no" ~ "NO",
                                      endemic_genus == "eg_si" ~ "SI",
                                      !(endemic_subspecie == "eg_no") | !(endemic_subspecie == "eg_no") ~ "-"),
@@ -62,10 +62,10 @@ exif_data_fv %>%
            longitude = as.numeric(longitude)) %>%
     separate_wider_delim(filename, delim = "-",
                          names = c("id", "specie", "author", "name", "family", 
-                                   "order", "class", "subdivision", "division",
+                                   "order", "class", "division",
                                    "endemic_genus", "endemic_specie", "endemic_subspecie",
-                                   "origin", "category", "habitat")) %>%
-    mutate(domain = "Plantae",
+                                   "origin", "category", "habitat", "id_biota")) %>%
+    mutate(domain = "plantae",
            endemic_genus = case_when(endemic_genus == "eg_no" ~ "NO",
                                      endemic_genus == "eg_si" ~ "SI",
                                      !(endemic_genus == "eg_no") | !(endemic_genus == "eg_no") ~ "-"),
