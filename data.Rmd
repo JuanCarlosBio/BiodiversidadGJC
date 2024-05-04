@@ -53,26 +53,27 @@ source("code/07statistics.R")
 
 * Se puede ver información sobre las imágenes de las fotografías en la carpeta de [documentación](`r rmarkdown::metadata$documentation`).
 
-# **Estadísticas de los organismos**
+# **Tablas de las especies identificadas**
 
-## Número de los organismos Metazoos y Plantas Clasificados (almenos hasta su género o familia):
+Las tablas tienen links que reconducen a biota.
 
-<center>
-
-![](figures/n_plantae_metazoa.png)
-
-</center>
-
-## Estudio de la endemicidad de las especies de plantas y animales identificadas:
+## Tabla de las especies de metazoos (invertebrados):
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
-gt_endemism
+source("code/10tables.R")
+gt_invertebrates
+```
+
+## Tabla de las especies de plantas:
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+source("code/10tables.R")
+gt_plantae
 ```
 
 # **Volver a los mapas interactivos**
 
-<a href="./invertebrates">&#9664; Volver al mapa de invertebrados</a>  
-<a href="./flora">&#9664; Volver al mapa de flora</a>  
+<a href="./invertebrates">&#9664; Volver al mapa de invertebrados</a> o <a href="./flora">mapa de flora</a>
 
 Última actualización el `r format(lubridate::today(), "%d/%m/%Y")`  
 Sitio [desarrollado](`r rmarkdown::metadata$github_repo`) por [Juan Carlos García Estupiñán](mailto:`r rmarkdown::metadata$email_adress`)

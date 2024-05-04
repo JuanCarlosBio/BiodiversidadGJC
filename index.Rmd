@@ -37,13 +37,15 @@ Mi idea es subir por el momento mapas interactivos de especies de flora y fauna 
 
 </center>
 
-## Mapa de especies de INVERTEBRADOS 🐌 🐜
+## **MAPAS INTERACTIVOS CON LOS ORGANISMOS 🗺️️
+
+### Mapa de especies de INVERTEBRADOS 🐌 🐜
 
 Aquí documento las especies de invertebrados que he encontrando en Gran Canaria.
 
 * Clica en: <a href="./invertebrates"> MAPA INVERTEBRADOS GC</a> para verlo!
 
-## Mapa de especies de FLORA y VEGETACIÓN 🌺 🌱
+### Mapa de especies de FLORA y VEGETACIÓN 🌺 🌱
 
 Aquí documento las especies de flora y vegetación que he encontrando en Gran Canaria.
 

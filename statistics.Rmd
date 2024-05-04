@@ -1,0 +1,59 @@
+---
+title: Especies de animales invertebrados
+author: Juan Carlos García Estupiñán
+output: 
+    html_document:
+        theme: cerulean
+        toc: yes
+        toc_depth: 2
+        number_sections: yes
+        toc_float: 
+            collapsed: true
+            smootg_scroll: true
+email_adress: jcge97@gmail.com
+github_repo: https://github.com/Juankkar/Especies_Encontradas_GC
+documentation: https://github.com/Juankkar/Especies_Encontradas_GC/blob/main/documents/info.md 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{css, echo = FALSE}
+.author, .title {
+    display: none;
+}
+#.main-container {
+        #width: 100%;
+        #height: 100vh;
+#}
+body{
+    background-color: #fff3d8;
+    #font-size: 1.2vw;
+}
+```
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+source("code/07statistics.R")
+```
+
+# **Estadísticas de los organismos**
+
+## Número de los organismos Metazoos y Plantas Clasificados (almenos hasta su género o familia):
+
+<center>
+
+![](figures/n_plantae_metazoa.png)
+
+</center>
+
+## Estudio de la endemicidad de las especies de plantas y animales identificadas:
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+gt_endemism
+```
+
+# **Volver a los mapas interactivos**
+
+Última actualización el `r format(lubridate::today(), "%d/%m/%Y")`  
+Sitio [desarrollado](`r rmarkdown::metadata$github_repo`) por [Juan Carlos García Estupiñán](mailto:`r rmarkdown::metadata$email_adress`)
