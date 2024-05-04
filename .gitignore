@@ -1,3 +1,6 @@
+# Code files
+
+code/*.jl
 # Data files
 data/*
 !data/README.txt

@@ -53,9 +53,9 @@ source("code/07statistics.R")
 
 * Se puede ver información sobre las imágenes de las fotografías en la carpeta de [documentación](`r rmarkdown::metadata$documentation`).
 
-# **Estadísticas de las especies**
+# **Estadísticas de los organismos**
 
-## Número de especies de Metazoos y Plantas identificadas:
+## Número de los organismos Metazoos y Plantas Clasificados (almenos hasta su género o familia):
 
 <center>
 
@@ -63,13 +63,11 @@ source("code/07statistics.R")
 
 </center>
 
-## Endemicidad de las especies de plantas y animales:
+## Estudio de la endemicidad de las especies de plantas y animales identificadas:
 
-<center>
-
-![](figures/endemicidad.png)
-
-</center>
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+gt_endemism
+```
 
 # **Volver a los mapas interactivos**
 
