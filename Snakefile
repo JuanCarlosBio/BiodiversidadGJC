@@ -130,6 +130,7 @@ rule webpage_html:
         plantae = "data/coord_plantae.tsv", 
         gc_map_png = "figures/GC_mapa.png",
         n_plantae_metazoa_png = "figures/n_plantae_metazoa.png",
+        tables = "code/10tables.R"
     output:
         "index.html",
         "invertebrates.html",
