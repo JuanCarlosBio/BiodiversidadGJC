@@ -32,7 +32,7 @@ body{
     #font-size: 1.2vw;
 }
 ```
-# **Descarga las fotografías de las especies en los mapas interativos**
+# <strong>Descarga las fotografías de las especies en los mapas interativos</strong> 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 source("code/07statistics.R")
