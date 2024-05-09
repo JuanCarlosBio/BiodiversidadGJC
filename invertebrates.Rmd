@@ -33,10 +33,14 @@ body{
 - Al colocar el ratón encima puedes ver de que especie se trata.
 -  Ayuda para el manejo del mapa &#10132; [documentación](`r rmarkdown::metadata$documentation`).
 
+<center>
+
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 source("code/05plot_invertebrates.R")
-invertebrates_plotly
+map
 ```
+
+</center>
 
 ## Tabla de las especies de metazoos (invertebrados):
 
