@@ -90,8 +90,7 @@ species_plot <- coord_invert_plantae |>
              size = .5, show.legend = FALSE) +
   coord_sf() +
   scale_color_manual(
-    breaks = c("metazoa", "plantae"),
-    labels = c("Metazoa", "Plantae"),
+    breaks = c("Metazoa", "Plantae"),
     values = c("red", "forestgreen")) +  
   scale_fill_manual(
     breaks = c("Monumento Natural", 
@@ -144,9 +143,7 @@ plad_invdp <- plantaed_invertebratesd |>
   ungroup() |>
   group_by(domain) |>
   count() |>
-  mutate(domain = factor(domain,
-                         levels = c("metazoa", "plantae"),
-                         labels = c("Metazoa", "Plantae"))) 
+  mutate(domain = factor(domain, levels = c("Metazoa", "Plantae"))) 
 
 y_domain_axis <- max(plad_invdp$n) + (max(plad_invdp$n) * 0.2)
 n_metazoa <- as.integer(plad_invdp[1,2])
