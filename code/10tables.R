@@ -19,29 +19,25 @@ url_biota <- "https://www.biodiversidadcanarias.es/biota/especie/"
 table_invertebrates <- invertebrates %>%
     drop_na(author) %>%
     mutate(name = ifelse(is.na(name), "-", as.character(name)),
-           phylo = str_to_title(phylo),
-           class = str_to_title(class),
-           family = str_to_title(family)) %>%
-    group_by(specie, author, name,
-             family, class, phylo,  
-             endemic_genus, endemic_specie, endemic_subspecie, 
-             origin, category, id_biota) %>%
+           class = str_to_title(class)) %>%
+    group_by(specie, author, name, id_biota,
+             family, class, order, phylo, endemic_genus, 
+             endemic_specie, endemic_subspecie, 
+             origin, category) %>%
     count() %>%
-    arrange(phylo, class, family, specie) %>%
+    arrange(family, , order, class, phylo, specie) %>%
     select(-n)
 
 table_plantae <- plantae %>%
     drop_na(author) %>%
     mutate(name = ifelse(is.na(name), "-", as.character(name)),
-           division = str_to_title(division),
-           class = str_to_title(class),
-           family = str_to_title(family)) %>%
-    group_by(specie, author, name,
-             family, class, division,  
+           division = str_to_title(division)) %>%
+    group_by(specie, author, name, id_biota, 
+             family, order, class, division,
              endemic_genus, endemic_specie, endemic_subspecie, 
-             origin, category, id_biota) %>%
+             origin, category) %>%
     count() %>%
-    arrange(division, class, family, specie) %>%
+    arrange(class, specie) %>%
     select(-n)
 
 #----------------------------------------------------------------------#
@@ -62,7 +58,9 @@ gt_invertebrates <- table_invertebrates %>%
         specie = md("**ESPECIE**"),
         author = md("**AUTOR**"),
         name = md("**NOMBRE COMÚN**"),
+        id_biota = md("**LINK BIOTA**"),
         family = md("**FAMILIA**"),
+        order = md("**ORDEN**"),
         class = md("**CLASE**"),
         phylo = md("**FILO**"),
         endemic_genus = md("**ENDEMISMO<br>GÉNERO**"),
@@ -70,13 +68,11 @@ gt_invertebrates <- table_invertebrates %>%
         endemic_subspecie = md("**ENDEMISMO<br>SUBESPECIE**"), 
         origin = md("**ORIGEN**"),
         category = md("**CATEGORÍA**"),
-        id_biota = md("**LINK BIOTA**"),
     ) %>%
     tab_options(
         table.background.color = "#fff3d8"
     ) %>% 
     opt_stylize(
-        color = "blue"
     ) %>%
     opt_interactive(
         use_search = TRUE,
@@ -99,15 +95,16 @@ gt_plantae <- table_plantae %>%
         specie = md("**ESPECIE**"),
         author = md("**AUTOR**"),
         name = md("**NOMBRE COMÚN**"),
+        id_biota = md("**LINK BIOTA**"),
         family = md("**FAMILIA**"),
+        order = md("**ORDEN**"),
         class = md("**CLASE**"),
-        division = md("**DIVISION**"),
+        division = md("**DIVISIÓN**"),
         endemic_genus = md("**ENDEMISMO<br>GÉNERO**"),
         endemic_specie = md("**ENDEMISMO<br>ESPECIE**"), 
         endemic_subspecie = md("**ENDEMISMO<br>SUBESPECIE**"), 
         origin = md("**ORIGEN**"),
         category = md("**CATEGORÍA**"),
-        id_biota = md("**LINK BIOTA**"),
     ) %>%
     tab_options(
         table.background.color = "#fff3d8"

@@ -1,5 +1,7 @@
 #!/usr/bin/env Rscript
 
+data_biota <- readr::read_tsv("data/biota_data_processed.tsv")
+
 unzip("images/flora_vascular.zip", exdir = "images/flora_vascular")
 unzip("images/invertebrados.zip", exdir = "images/invertebrados")
 
@@ -23,8 +25,7 @@ exif_data_ai |>
     dplyr::mutate(latitude = as.numeric(latitude),
                   longitude = as.numeric(longitude)) |>
     tidyr::separate_wider_delim(filename, delim = "-",
-                                names = c("id", "specie", "author","name", 
-                                          "family", "order", "class", "phylo", "domain", 
+                                names = c("id", "specie", "author", 
                                           "endemic_genus", "endemic_specie", "endemic_subspecie",
                                           "origin", "category", "id_biota")) |>
     dplyr::mutate(endemic_genus = dplyr::case_when(endemic_genus == "eg_no" ~ "NO",
@@ -42,8 +43,9 @@ exif_data_ai |>
                   category = dplyr::case_when(category == "ep" ~ "Especie protegida",
                                               category == "ei" ~ "Especie introducida",
                                               !(category == "ep") | !(category == "ei") ~ "-"),
-                  name = stringr::str_replace_all(name, t_replacement),
-                  author = stringr::str_replace_all(author, t_replacement)) |>
+                  author = stringr::str_replace_all(author, t_replacement)) |> 
+    dplyr::inner_join(data_biota, ., by="id_biota") |> 
+    dplyr::select(-subdivision, division) |> 
     readr::write_tsv("data/coord_invertebrates.tsv")
 
 
@@ -57,12 +59,10 @@ exif_data_fv |>
     dplyr::mutate(latitude = as.numeric(latitude),
                   longitude = as.numeric(longitude)) |>
     tidyr::separate_wider_delim(filename, delim = "-",
-                                names = c("id", "specie", "author", "name", "family", 
-                                          "order", "class", "division",
+                                names = c("id", "specie", "author",
                                           "endemic_genus", "endemic_specie", "endemic_subspecie",
                                           "origin", "category", "habitat", "id_biota")) |>
-    dplyr::mutate(domain = "plantae",
-                  endemic_genus = dplyr::case_when(endemic_genus == "eg_no" ~ "NO",
+    dplyr::mutate(endemic_genus = dplyr::case_when(endemic_genus == "eg_no" ~ "NO",
                                                    endemic_genus == "eg_si" ~ "SI",
                                                    !(endemic_genus == "eg_no") | !(endemic_genus == "eg_no") ~ "-"),
                   endemic_specie = dplyr::case_when(endemic_specie == "ee_no" ~ "NO",
@@ -77,6 +77,7 @@ exif_data_fv |>
                   category = dplyr::case_when(category == "ep" ~ "Especie protegida",
                                               category == "ei" ~ "Especie introducida",
                                               !(endemic_subspecie == "ep") | !(endemic_subspecie == "ei") ~ "-"),    
-                  name = stringr::str_replace_all(name, t_replacement),
                   author = stringr::str_replace_all(author, t_replacement)) |> 
+    dplyr::inner_join(data_biota, ., by="id_biota") |> 
+    dplyr::select(-subdivision, division) |> 
     readr::write_tsv("data/coord_plantae.tsv")

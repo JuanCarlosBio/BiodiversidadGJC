@@ -83,6 +83,7 @@ map <- leaflet() %>%
                    lat = ~latitude, lng = ~longitude,
                    popup = pop_up_species, 
                    fillOpacity = 1, 
-                   fillColor = ~pal_species(class), weight = .3) 
+                   fillColor = ~pal_species(class), weight = .3,
+                   radius = 7) 
   
   

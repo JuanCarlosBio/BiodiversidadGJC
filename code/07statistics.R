@@ -1,6 +1,10 @@
 #!/usr/bin/env Rscript
 
-library(tidyverse)
+library(dplyr)
+library(stringr)
+library(readr)
+library(ggplot2)
+library(tidyr)
 library(ggtext)
 library(sf)
 library(gt)
@@ -13,12 +17,12 @@ source("code/04process_exif.R")
 invertebrates <- read_tsv("data/coord_invertebrates.tsv")
 plantae <- read_tsv("data/coord_plantae.tsv") 
 enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp")
-map <- read_sf("data/gran_canaria_shp/gc_muni.shp") %>%
+map <- read_sf("data/gran_canaria_shp/gc_muni.shp") |>
   st_transform(map, crs = 4326) 
 
 # Procesado de datos
-enp_map_processed <- enp_map %>%
-  st_transform(map, crs = 4326) %>%
+enp_map_processed <- enp_map |>
+  st_transform(map, crs = 4326) |>
   mutate(categoria = factor(categoria,
                             levels = c("Monumento Natural", 
                                        "Paisaje Protegido",
@@ -28,7 +32,7 @@ enp_map_processed <- enp_map %>%
                                        "Reserva Natural Integral", 
                                        "Sitio de Interés Científico")))
 
-invertebrates_processed <- invertebrates %>%
+invertebrates_processed <- invertebrates |>
   mutate(author = case_when(author == "NULL" ~ "",
                             author != "NULL" ~ as.character(author)),
          family = str_to_title(family),
@@ -36,7 +40,7 @@ invertebrates_processed <- invertebrates %>%
          class = str_to_title(class), 
          phylo = str_to_title(phylo))
 
-plantae_processed <- plantae %>%
+plantae_processed <- plantae |> 
   mutate(author = case_when(author == "NULL" ~ "",
                             author != "NULL" ~ as.character(author)),
          family = str_to_title(family),
@@ -48,35 +52,35 @@ plantae_processed <- plantae %>%
 ## Nº de Especies clasificadas y sin clasificar
 ##----------------------------------------------------------------------------#
 
-exif_data_ai %>%
-  rename_all(tolower) %>%
-  select(filename) %>%
+exif_data_ai |>
+  rename_all(tolower) |>
+  select(filename) |>
   mutate(clasificados = case_when(str_detect(filename, pattern = "NO CLASIFICADO") ~ "no clasificada",
-                                  !(str_detect(filename, pattern = "NO CLASIFICADO")) ~ "clasificada")) %>%
-  group_by(clasificados) %>%
+                                  !(str_detect(filename, pattern = "NO CLASIFICADO")) ~ "clasificada")) |>
+  group_by(clasificados) |>
   count() -> tabla_n_ai
 
-exif_data_fv %>%
-  rename_all(tolower) %>%
-  select(filename) %>%
+exif_data_fv |>
+  rename_all(tolower) |>
+  select(filename) |>
   mutate(clasificados = case_when(str_detect(filename, pattern = "NO CLASIFICADO") ~ "no clasificada",
-                                  !(str_detect(filename, pattern = "NO CLASIFICADO")) ~ "clasificada")) %>%
-  group_by(clasificados) %>%
+                                  !(str_detect(filename, pattern = "NO CLASIFICADO")) ~ "clasificada")) |>
+  group_by(clasificados) |>
   count() -> tabla_n_fv
 
 ##----------------------------------------------------------------------------#
 ## Primer gráfico nº 1 mapa de portada
 ##----------------------------------------------------------------------------#
 
-coord_invertebrates <- invertebrates_processed %>%
+coord_invertebrates <- invertebrates_processed |>
   select(domain, latitude, longitude) 
 
-coord_plantae <- plantae_processed %>%
+coord_plantae <- plantae_processed |>
   select(domain, latitude, longitude)
 
 coord_invert_plantae <- rbind(coord_invertebrates, coord_plantae)
 
-species_plot <- coord_invert_plantae %>%
+species_plot <- coord_invert_plantae |>
   ggplot() +
   geom_sf(data = map, fill = "#edd393") +
   geom_sf(data = enp_map_processed, aes(fill = categoria),
@@ -126,17 +130,20 @@ ggsave(plot= species_plot,
 ## Primer gráfico nº 2 de metazoos y plantae
 ##----------------------------------------------------------------------------#
 
-invertebrates_domain <- invertebrates %>%
-  select(domain, latitude, longitude)
+invertebrates_domain <- invertebrates |>
+  select(domain, id_biota)
 
-plantae_domain <- plantae %>%
-  select(domain, latitude, longitude)
+plantae_domain <- plantae |>
+  select(domain,id_biota)
 
 plantaed_invertebratesd <- rbind(invertebrates_domain, plantae_domain)
 
-plad_invdp <- plantaed_invertebratesd %>%
-  group_by(domain) %>%
-  count() %>%
+plad_invdp <- plantaed_invertebratesd |>
+  group_by(domain, id_biota) |>
+  count() |>
+  ungroup() |>
+  group_by(domain) |>
+  count() |>
   mutate(domain = factor(domain,
                          levels = c("metazoa", "plantae"),
                          labels = c("Metazoa", "Plantae"))) 
@@ -145,13 +152,14 @@ y_domain_axis <- max(plad_invdp$n) + (max(plad_invdp$n) * 0.2)
 n_metazoa <- as.integer(plad_invdp[1,2])
 n_plantae <- as.integer(plad_invdp[2,2])
 
-y_n_metazoa <- n_metazoa + 2
-y_n_plantae <- n_plantae + 2
+y_n_metazoa <- n_metazoa + (n_metazoa * .1) 
+y_n_plantae <- n_plantae + (n_plantae * .1) 
+y_n_metazoa_plantae <-c(y_n_metazoa, y_n_plantae) + max(n_metazoa, n_plantae) * 0.025
 
-metazoa_plantae_plot <- plad_invdp %>%
+metazoa_plantae_plot <- plad_invdp |>
   ggplot(aes(domain, n, fill = domain)) +
   geom_col(color = "black", size = 2,width = .3, show.legend = FALSE) +
-  geom_text(aes(y = c(y_n_metazoa, y_n_plantae), 
+  geom_text(aes(y = y_n_metazoa_plantae, 
                  x = c(1, 2), 
                  label = c(as.character(n_metazoa),
                            as.character(n_plantae))),
@@ -190,55 +198,55 @@ ggsave(plot= metazoa_plantae_plot,
 ## Segundo gráfico nº 2 de metazoos y plantae
 ##----------------------------------------------------------------------------#
 
-endemic_invertebrates <- invertebrates %>%
+endemic_invertebrates <- invertebrates |>
   select(endemic_genus, endemic_specie, endemic_subspecie, latitude, longitude, specie) 
 
-n_endemic_invertebrates <- endemic_invertebrates %>%
-  group_by(endemic_genus, endemic_specie, endemic_subspecie, specie) %>%
-  count() %>%
-  mutate(organism = "invertebrates") %>%
-  ungroup() %>%
+n_endemic_invertebrates <- endemic_invertebrates |>
+  group_by(endemic_genus, endemic_specie, endemic_subspecie, specie) |>
+  count() |>
+  mutate(organism = "invertebrates") |>
+  ungroup() |>
   pivot_longer(-c(organism, specie, n)) 
 
-endemic_plantae <- plantae %>%
+endemic_plantae <- plantae |>
   select(endemic_genus, endemic_specie, endemic_subspecie, latitude, longitude, specie) 
 
-n_endemic_plantae <- endemic_plantae %>%
-  group_by(endemic_genus, endemic_specie, endemic_subspecie, specie) %>%
-  count() %>%
-  mutate(organism = "plantae") %>%
-  ungroup() %>%
+n_endemic_plantae <- endemic_plantae |>
+  group_by(endemic_genus, endemic_specie, endemic_subspecie, specie) |>
+  count() |>
+  mutate(organism = "plantae") |>
+  ungroup() |>
   pivot_longer(-c(organism, specie, n))
 
 endemic_organisms <- rbind(n_endemic_invertebrates, n_endemic_plantae)
 
 endemic_organisms_count <- expand.grid(organism=as.character(unique(as.character(endemic_organisms$organism))),
                                        name=as.character(unique(as.character(endemic_organisms$name))),
-                                       value=as.character(unique(as.character(endemic_organisms$value)))) %>% 
-  left_join(endemic_organisms %>% group_by(organism,name,value) %>% summarize(n=(n())),
-            by=c("organism","name","value")) %>% 
-  mutate(n=ifelse(is.na(n),0,n)) %>%
+                                       value=as.character(unique(as.character(endemic_organisms$value)))) |> 
+  left_join(endemic_organisms |> group_by(organism,name,value) %>% summarize(n=(n())),
+            by=c("organism","name","value")) |> 
+  mutate(n=ifelse(is.na(n),0,n)) |>
   ungroup()
 
-endemism_table <- endemic_organisms_count %>%
-  filter(value != "-") %>% 
+endemism_table <- endemic_organisms_count |>
+  filter(value != "-") |> 
   mutate(name = case_when(name == "endemic_genus" ~ "Genero",
                           name == "endemic_specie" ~ "Especie",
                           name == "endemic_subspecie" ~ "Subespecie"),
         organism = case_when(organism == "plantae" ~ "Plantae",
                              organism == "invertebrates" ~ "Metazoa"), 
-        name_value = paste0(name, "_", value)) %>%
-        select(-name, -value) %>%
+        name_value = paste0(name, "_", value)) |>
+        select(-name, -value) |>
   pivot_wider(organism, names_from=name_value, values_from=n)
 
-gt_endemism <- endemism_table %>%
-  gt(rowname_col = "organism") %>%
+gt_endemism <- endemism_table |>
+  gt(rowname_col = "organism") |>
   cols_align(
     align = "center"
-  ) %>%
+  ) |>
   tab_header(
     title = md("**Endemicidad de los organismos (Canarias) según:\ngénero, especie y subespecie**")
-  ) %>%
+  ) |>
   cols_label(
     Genero_NO = "NO",
     Genero_SI = "SI",
@@ -246,19 +254,19 @@ gt_endemism <- endemism_table %>%
     Especie_SI = "SI",
     Subespecie_NO = "NO",
     Subespecie_SI = "SI",
-  ) %>%
+  ) |>
   tab_spanner(
     label = "Géneros",
     columns = c("Genero_NO", "Genero_SI") 
-  ) %>%
+  ) |>
   tab_spanner(
     label = "Especies",
     columns = c("Especie_NO", "Especie_SI") 
-  ) %>%
+  ) |>
   tab_spanner(
     label = "Subespecies",
     columns = c("Subespecie_NO", "Subespecie_SI") 
-  ) %>%
+  ) |>
   tab_options(
     table.background.color = "#fff3d8"
   )

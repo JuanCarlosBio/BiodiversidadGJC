@@ -5,11 +5,13 @@ rule targets:
         "data/islands_shp/municipios.shp",
         "data/islands_shp/eennpp.shp",
         "data/jardin_botanico.kml",
+        "data/biota_species.csv",
         "data/gran_canaria_shp/gc_muni.shp",
         "data/gran_canaria_shp/gc_pne.shp",
         "data/gran_canaria_shp/jardin_botanico.shp",
         "data/coord_invertebrates.tsv",
         "data/coord_plantae.tsv",
+        "data/biota_data_processed.tsv", 
         "index.html",
         "invertebrates.html",
         "flora.html",
@@ -55,6 +57,18 @@ rule download_jardin_botanico:
         bash {input.bash_script}
         """
 
+rule download_biota_data:
+    input:
+        bash_script = "code/11download_biota_data.sh"
+    output:
+        "data/biota_species.csv"
+    conda:
+        "code/enviroments/env.yml"
+    shell:
+        """
+        bash {input.bash_script}
+        """
+
 rule process_canary_islands_shp:
     input:
         python_script = "code/03process_canary_island.py",
@@ -83,12 +97,25 @@ rule process_jardin_botanico_kml:
         """
         Rscript {input.r_script}
         """
+rule process_biota_data:
+    input:
+        r_script = "code/12process_biota_data.R",
+        biota_file = "data/biota_species.csv"
+    output:
+        "data/biota_data_processed.tsv" 
+    conda:
+        "code/enviroments/env.yml"
+    shell:
+        """
+        Rscript {input.r_script}
+        """
 
 rule process_exif_images:
     input:
         r_script = "code/04process_exif.R",
         fv_files = "images/flora_vascular.zip",
-        ai_files = "images/flora_vascular.zip"
+        ai_files = "images/flora_vascular.zip",
+        biota_file = "data/biota_data_processed.tsv"
     output:
         "data/coord_invertebrates.tsv",
         "data/coord_plantae.tsv"
@@ -98,6 +125,7 @@ rule process_exif_images:
         """
         Rscript {input.r_script}
         """  
+
 rule figures_and_stats:
     input:
         script_r = "code/07statistics.R",

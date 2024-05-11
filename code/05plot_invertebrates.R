@@ -1,33 +1,25 @@
 #!/usr/bin/env Rscript
 
-## El visor que planteo en el futuro
-library(leaflet)
-library(sf)
-library(tidyverse)
-library(geojsonio)
-library(leaflet.extras)
-library(glue)
-
 seed <- 97
 
-enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") %>%
-  st_transform(map, crs = 4326) %>%
-  mutate(categoria = factor(categoria,
-                            levels = c("Monumento Natural", 
-                                       "Paisaje Protegido",
-                                       "Parque Natural", 
-                                       "Parque Rural", 
-                                       "Reserva Natural Especial",
-                                       "Reserva Natural Integral", 
-                                       "Sitio de Interés Científico")))
+enp_map <- sf::read_sf("data/gran_canaria_shp/gc_pne.shp") |>
+  sf::st_transform(map, crs = 4326) |>
+  dplyr::mutate(categoria = factor(categoria,
+                                   levels = c("Monumento Natural", 
+                                              "Paisaje Protegido",
+                                              "Parque Natural", 
+                                              "Parque Rural", 
+                                              "Reserva Natural Especial",
+                                              "Reserva Natural Integral", 
+                                              "Sitio de Interés Científico")))
 
-species <- read_tsv("data/coord_invertebrates.tsv",na ="") %>%
-    mutate(family = str_to_title(family),
-           order = str_to_title(order),
-           class = str_to_title(class), 
-           phylo = str_to_title(phylo))
+species <- readr::read_tsv("data/coord_invertebrates.tsv",na ="") |>
+    dplyr::mutate(family = stringr::str_to_title(family),
+                  order = stringr::str_to_title(order),
+                  class = stringr::str_to_title(class), 
+                  phylo = stringr::str_to_title(phylo))
 
-pal <- colorFactor(
+pal <- leaflet::colorFactor(
   palette = c("#004078", "#80a0bd", 
               "#f78000", "#e60000", 
               "#00913f", "#034a31", 
@@ -37,12 +29,12 @@ pal <- colorFactor(
 
 number_class <- length(unique(species$class))
 
-pal_species <- colorFactor(
+pal_species <- leaflet::colorFactor(
   palette = sample(colors(), number_class),
   domain = species$class
 )
 
-jardin_botanico <- read_sf("data/gran_canaria_shp/jardin_botanico.shp")
+jardin_botanico <- sf::read_sf("data/gran_canaria_shp/jardin_botanico.shp")
 
 pop_up <- paste0("ENP: ", enp_map$codigo, " ", enp_map$nombre, 
                 "<br>", 
@@ -66,21 +58,22 @@ pop_up_species <- paste0("=========================",
                          "<br>Categoría: ", species$category,
                          "<br>=========================",
                          "<br>Fecha y hora: ", species$gpsdatetime,
-                         "<br>Lat = ", sprintf("%.3f", species$latitude, 3), 
-                         ", Lon = ", sprintf("%.3f", species$longitude, 3),
+                         "<br>Latitud (GD) = ", as.character(round(species$latitude, 3)), 
+                         "<br>Longitud (GD) = ", as.character(round(species$longitude, 3)),
                          "<br>=========================")
 
-map <- leaflet() %>%
-  setView(-15.6, 27.95, zoom = 9) %>%
-  addTiles() %>%
-  addPolygons(data = enp_map, 
-              fillColor = ~pal(categoria), 
-              popup = pop_up, 
-              weight = 0, fillOpacity = .5) %>%
-  addPolygons(data = jardin_botanico, 
-              fillColor = "yellow", fillOpacity = .5, weight = 1) %>%
-  addCircleMarkers(data = species, 
-                   lat = ~latitude, lng = ~longitude,
-                   popup = pop_up_species, 
-                   fillOpacity = 1, 
-                   fillColor = ~pal_species(class), weight = .3) 
+map <- leaflet::leaflet() |>
+  leaflet::setView(-15.6, 27.95, zoom = 9) |>
+  leaflet::addTiles() |>
+  leaflet::addPolygons(data = enp_map, 
+                      fillColor = ~pal(categoria), 
+                      popup = pop_up, 
+                      weight = 0, fillOpacity = .5) |>
+  leaflet::addPolygons(data = jardin_botanico, 
+                       fillColor = "yellow", fillOpacity = .5, weight = 1) |>
+  leaflet::addCircleMarkers(data = species, 
+                            lat = ~latitude, lng = ~longitude,
+                            popup = pop_up_species, 
+                            fillOpacity = 1, 
+                            fillColor = ~pal_species(class), weight = .3,
+                            radius = 7) 
