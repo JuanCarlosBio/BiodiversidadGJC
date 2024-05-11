@@ -168,9 +168,9 @@ rule webpage_html:
         "code/enviroments/env.yml"
     shell:
         """
-        R -e "library(rmarkdown); render('{input.rmd_index}')"
-        R -e "library(rmarkdown); render('{input.rmd_invertebrates}')"
-        R -e "library(rmarkdown); render('{input.rmd_flora}')"
-        R -e "library(rmarkdown); render('{input.rmd_data}')"
+        R -e "rmarkdown::render('{input.rmd_index}')"
+        R -e "rmarkdown::render('{input.rmd_invertebrates}')"
+        R -e "rmarkdown::render('{input.rmd_flora}')"
+        R -e "rmarkdown::render('{input.rmd_data}')"
         """  
 

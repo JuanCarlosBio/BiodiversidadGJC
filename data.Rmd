@@ -55,7 +55,7 @@ source("code/07statistics.R")
 
 # **Estadísticas de los organismos**
 
-## Número de los organismos Metazoos y Plantas Clasificados (almenos hasta su género o familia):
+## Número de especies de Metazoos y Plantas Clasificadas:    
 
 <center>
 
@@ -63,7 +63,7 @@ source("code/07statistics.R")
 
 </center>
 
-## Estudio de la endemicidad de las especies de plantas y animales identificadas:
+## Tabla de la endemicidad de las especies de plantas y animales identificadas:
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 gt_endemism
