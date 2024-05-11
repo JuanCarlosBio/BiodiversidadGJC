@@ -76,4 +76,7 @@ map <- leaflet::leaflet() |>
                             popup = pop_up_species, 
                             fillOpacity = 1, 
                             fillColor = ~pal_species(class), weight = .3,
-                            radius = 7) 
+                            radius = 7) |>
+  leaflet::addLegend(data = species, "bottomright", pal = pal_species,
+                     values = ~class, title = "<strong>Leyenda</strong><br>Clases", 
+                     opacity=1, group = "Leyenda") 

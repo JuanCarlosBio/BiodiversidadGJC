@@ -66,8 +66,8 @@ pop_up_species <- paste0("=========================",
                          "<br>Categoría: ", species$category,
                          "<br>=========================",
                          "<br>Fecha y hora: ", species$gpsdatetime,
-                         "<br>Lat = ", sprintf("%.3f", species$latitude), 
-                         ", Lon = ", sprintf("%.3f", species$longitude),
+                         "<br>Latitud (GD) = ", as.character(round(species$latitude, 3)), 
+                         "<br>Longitud (GD) = ", as.character(round(species$longitude, 3)),
                          "<br>=========================")
 
 map <- leaflet() %>%
@@ -84,6 +84,9 @@ map <- leaflet() %>%
                    popup = pop_up_species, 
                    fillOpacity = 1, 
                    fillColor = ~pal_species(class), weight = .3,
-                   radius = 7) 
+                   radius = 7) |>
+  leaflet::addLegend(data = species, "bottomright", pal = pal_species,
+                     values = ~class, title = "<strong>Leyenda</strong><br>Clases", 
+                     opacity=1, group = "Leyenda")  
   
   
