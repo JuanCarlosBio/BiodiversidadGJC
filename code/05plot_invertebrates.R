@@ -55,7 +55,7 @@ pop_up_species <- paste0("=========================",
                          "<br>Clase: ", species$class,
                          "<br>Orden: ", species$order,
                          "<br>Familia: ", species$family,
-                         "<br>Especie: ", species$specie, " ", species$author,
+                         "<br>Especie: ", species$specie, " ", species$author, # No funciona unfortunately
                          "<br>Nomb. Común: ", species$name, 
                          "<br>=========================",
                          "<br>Género Endémico: ", species$endemic_genus, 

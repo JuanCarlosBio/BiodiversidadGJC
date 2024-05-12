@@ -44,9 +44,9 @@ map
 
 </center>
 
-## Tabla de las especies de plantas:
+## **Tabla de las especies de plantas:**
 
-* Busca la especie que estés interesado!!!
+* ### **Busca la especie que estés interesado!!!**
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 source("code/10tables.R")

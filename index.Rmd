@@ -25,7 +25,7 @@ body{
     #font-size: 1.2vw;
 }
 ```
-# Bienvenid@ a mi intento de página web!!! 👨‍💻
+# Bienvenid@ a mi página web!!! 👨‍💻
 
 Humildes comienzos para aprender a desarrllar páginas web con **Github Pages**.
 

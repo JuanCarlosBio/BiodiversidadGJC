@@ -21,9 +21,8 @@ table_invertebrates <- invertebrates %>%
     mutate(name = ifelse(is.na(name), "-", as.character(name)),
            class = str_to_title(class)) %>%
     group_by(specie, author, name, id_biota,
-             family, class, order, phylo, endemic_genus, 
-             endemic_specie, endemic_subspecie, 
-             origin, category) %>%
+             family, class, order, phylo, 
+             endemicity, origin, category) %>%
     count() %>%
     arrange(family, , order, class, phylo, specie) %>%
     select(-n)
@@ -34,8 +33,7 @@ table_plantae <- plantae %>%
            division = str_to_title(division)) %>%
     group_by(specie, author, name, id_biota, 
              family, order, class, division,
-             endemic_genus, endemic_specie, endemic_subspecie, 
-             origin, category) %>%
+             endemicity, origin, category) %>%
     count() %>%
     arrange(class, specie) %>%
     select(-n)
@@ -46,7 +44,8 @@ table_plantae <- plantae %>%
 gt_invertebrates <- table_invertebrates %>% 
     as_tibble() %>% 
     mutate(id_biota = glue("[Link Biota {id_biota}]({url_biota}{id_biota})"),
-           id_biota = map(id_biota, md)) %>%
+           id_biota = map(id_biota, md),
+           specie = map(glue("*{specie}*"), md)) %>%
     gt() %>%
     cols_align(
         align = "center"
@@ -63,9 +62,7 @@ gt_invertebrates <- table_invertebrates %>%
         order = md("**ORDEN**"),
         class = md("**CLASE**"),
         phylo = md("**FILO**"),
-        endemic_genus = md("**ENDEMISMO<br>GÉNERO**"),
-        endemic_specie = md("**ENDEMISMO<br>ESPECIE**"), 
-        endemic_subspecie = md("**ENDEMISMO<br>SUBESPECIE**"), 
+        endemicity = md("**ENDEMICIDAD**"),
         origin = md("**ORIGEN**"),
         category = md("**CATEGORÍA**"),
     ) %>%
@@ -83,7 +80,8 @@ gt_invertebrates <- table_invertebrates %>%
 gt_plantae <- table_plantae %>% 
     as_tibble() %>% 
     mutate(id_biota = glue("[Link Biota {id_biota}]({url_biota}{id_biota})"),
-           id_biota = map(id_biota, md)) %>%
+           id_biota = map(id_biota, md),
+           specie = map(glue("*{specie}*"), md)) %>%
     gt() %>%
     cols_align(
         align = "center"
@@ -100,9 +98,7 @@ gt_plantae <- table_plantae %>%
         order = md("**ORDEN**"),
         class = md("**CLASE**"),
         division = md("**DIVISIÓN**"),
-        endemic_genus = md("**ENDEMISMO<br>GÉNERO**"),
-        endemic_specie = md("**ENDEMISMO<br>ESPECIE**"), 
-        endemic_subspecie = md("**ENDEMISMO<br>SUBESPECIE**"), 
+        endemicity = md("**ENDEMICIDAD**"),
         origin = md("**ORIGEN**"),
         category = md("**CATEGORÍA**"),
     ) %>%
