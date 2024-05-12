@@ -27,8 +27,6 @@ body{
 ```
 # Bienvenid@ a mi página web!!! 👨‍💻
 
-Humildes comienzos para aprender a desarrllar páginas web con **Github Pages**.
-
 Mi idea es subir por el momento mapas interactivos de especies de flora y fauna que me voy encontrando por la isla de Gran Canaria 🏝️ 
 
 <center>
