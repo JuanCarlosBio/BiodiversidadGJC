@@ -8,7 +8,7 @@ library(geojsonio)
 library(leaflet.extras)
 library(glue)
 
-set.seed(101997)
+set.seed(1234)
 
 enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") %>%
   st_transform(map, crs = 4326) %>%
@@ -98,13 +98,20 @@ map <- leaflet() %>%
                    popup = pop_up_species, 
                    fillOpacity = 1, 
                    fillColor = ~pal_species(class), weight = .3,
-                   radius = 7,
+                   radius = 6,
                    group = "Especies") |>
   leaflet::addLegend(data = species, "bottomleft", pal = pal_species,
                      values = ~class, title = "<strong>Leyenda: </strong>Clases", 
                      opacity=1, group = "Leyenda") %>%
   leaflet::addLayersControl(baseGroups = c("ENP", "ZEC"), 
                             overlayGroups = c("Leyenda", "Especies"),
-                            options = leaflet::layersControlOptions(collapsed = T, autoZIndex = TRUE))  
+                            options = leaflet::layersControlOptions(collapsed = T, autoZIndex = TRUE))  %>%
+  htmlwidgets::onRender("
+    function(el, x) {
+      this.on('baselayerchange', function(e) {
+        e.layer.bringToBack();
+      })
+    }
+  ") 
   
   

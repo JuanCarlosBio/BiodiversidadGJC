@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-set.seed(101997)
+set.seed(1234)
 
 enp_map <- sf::read_sf("data/gran_canaria_shp/gc_pne.shp") |>
   sf::st_transform(map, crs = 4326) |>
@@ -89,10 +89,17 @@ map <- leaflet::leaflet() |>
                             popup = pop_up_species, 
                             fillOpacity = 1, 
                             fillColor = ~pal_species(class), weight = .3,
-                            radius = 7, group = "Especies") |>
+                            radius = 6, group = "Especies") |>
   leaflet::addLegend(data = species, "bottomleft", pal = pal_species,
                      values = ~class, title = "<strong>Leyenda: </strong>Clases", 
                      opacity=1, group = "Leyenda") |>
   leaflet::addLayersControl(baseGroups = c("ENP", "ZEC"), 
                             overlayGroups = c("Leyenda", "Especies"),
-                            options = leaflet::layersControlOptions(collapsed = T)) 
+                            options = leaflet::layersControlOptions(collapsed = T)) |>
+    htmlwidgets::onRender("
+    function(el, x) {
+      this.on('baselayerchange', function(e) {
+        e.layer.bringToBack();
+      })
+    }
+  ")
