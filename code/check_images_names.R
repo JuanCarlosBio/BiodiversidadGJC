@@ -19,8 +19,7 @@ read_exif(flora_vascular) %>%
     filter(!(str_detect(filename,  "NO CLASIFICADO"))) %>% 
     select(filename) %>%
     separate_wider_delim(filename, delim = "-",
-                         names = c("id", "specie", "author", "name", "family", 
-                                   "order", "class", "division",  
+                         names = c("id", "specie", "author",
                                    "endemic_genus", "endemic_specie", "endemic_subspecie",
                                    "origin", "category", "habitat", "id_biota"),
     too_few = "debug",
@@ -34,8 +33,7 @@ read_exif(invertebrados) %>%
     filter(!(str_detect(filename,  "NO CLASIFICADO"))) %>% 
     select(filename) %>%
     separate_wider_delim(filename, delim = "-",
-                         names = c("id", "specie", "author","name", 
-                                   "family", "order", "class", "phylo", "domain", 
+                         names = c("id", "specie", "author", 
                                    "endemic_genus", "endemic_specie", "endemic_subspecie",
                                    "origin", "category", "id_biota"),
     too_few = "debug",
