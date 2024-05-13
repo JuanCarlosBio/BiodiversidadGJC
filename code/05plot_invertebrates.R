@@ -93,5 +93,6 @@ map <- leaflet::leaflet() |>
   leaflet::addLegend(data = species, "bottomleft", pal = pal_species,
                      values = ~class, title = "<strong>Leyenda: </strong>Clases", 
                      opacity=1, group = "Leyenda") |>
-  leaflet::addLayersControl(overlayGroups = c("ENP", "ZEC", "Leyenda", "Especies"),
+  leaflet::addLayersControl(baseGroups = c("ENP", "ZEC"), 
+                            overlayGroups = c("Leyenda", "Especies"),
                             options = leaflet::layersControlOptions(collapsed = T)) 
