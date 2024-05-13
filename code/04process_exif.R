@@ -78,7 +78,7 @@ exif_data_fv |>
                                               category == "ei" ~ "Especie introducida",
                                               !(endemic_subspecie == "ep") | !(endemic_subspecie == "ei") ~ "-"),    
                   author = stringr::str_replace_all(author, t_replacement),
-                  specie = stringr::str_replace_all(author, pattern = "_", replacement = "-")) |> 
+                  specie = stringr::str_replace_all(specie, pattern = "_", replacement = "-")) |> 
     dplyr::inner_join(data_biota, ., by="id_biota") |> 
     dplyr::select(-subdivision, division) |> 
     readr::write_tsv("data/coord_plantae.tsv")
