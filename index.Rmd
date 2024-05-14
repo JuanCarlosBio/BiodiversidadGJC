@@ -27,7 +27,9 @@ body{
 ```
 # Bienvenid@ a mi página web!!! 👨‍💻
 
-Mi idea es subir por el momento mapas interactivos de especies de flora y fauna que me voy encontrando por la isla de Gran Canaria 🏝️ 
+Mi idea es subir por el momento mapas interactivos de especies de ***flora*** y ***fauna*** que me voy encontrando por la isla de **Gran Canaria** 🏝️ 
+
+* Las coordenadas se obtendrán a partir de **fotografías** &#128247; 
 
 <center>
 

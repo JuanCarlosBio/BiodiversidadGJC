@@ -4,6 +4,11 @@ author: Juan Carlos García Estupiñán
 output: 
     html_document:
         theme: cerulean
+        toc: no
+        toc_depth: 1
+        toc_float: 
+            collapsed: true
+            smootg_scroll: true
 email_adress: jcge97@gmail.com
 github_repo: https://github.com/Juankkar/Especies_Encontradas_GC
 documentation: https://github.com/Juankkar/Especies_Encontradas_GC/blob/main/documents/info.md 
@@ -26,12 +31,12 @@ body{
     #font-size: 1.2vw;
 }
 ```
-## Mapa de especies de INVERTEBRADOS.
 
-- Por un lado se pueden ver los espacios protegidos.
-- Por otro los puntos son las especies coloreadas por nivel de **Clases** de las especies.
-- Al colocar el ratón encima puedes ver de que especie se trata.
--  Ayuda para el manejo del mapa &#10132; [documentación](`r rmarkdown::metadata$documentation`).
+## **Mapa de especies de INVERTEBRADOS**
+
+- Mapa interactivo formado por varias capas, como los Espacios Naturales Protegidos (ENP) y las Zonas de Especial Conservación (ZEC).
+- Los puntos son las especies coloreadas según su **Clase**.
+- Ayuda para el manejo del mapa &#10132; [documentación](`r rmarkdown::metadata$documentation`).
 
 <center>
 
