@@ -37,6 +37,18 @@ body{
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 source("code/05plot_invertebrates.R")
+
+bscols(
+  widths = c(6, 3, 3),
+  "",
+  filter_select(
+    id = "species",
+    label = "BUSCA LA/s ESPECIES/s!!!",
+    sharedData = sd,
+    group = ~specie,
+    ""
+  ))
+
 map
 ```
 

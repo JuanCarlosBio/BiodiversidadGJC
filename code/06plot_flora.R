@@ -1,17 +1,17 @@
 #!/usr/bin/env Rscript
 
-## El visor que planteo en el futuro
 library(leaflet)
 library(sf)
 library(tidyverse)
 library(geojsonio)
 library(leaflet.extras)
 library(glue)
+library(crosstalk)
 
 set.seed(1234)
 
-enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") %>%
-  st_transform(map, crs = 4326) %>%
+enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") |>
+  st_transform(map, crs = 4326) |>
   mutate(categoria = factor(categoria,
                             levels = c("Monumento Natural", 
                                        "Paisaje Protegido",
@@ -25,7 +25,7 @@ zec_map <- sf::read_sf("data/gran_canaria_shp/gc_zec.shp") |>
   dplyr::rename_all(tolower) |>
   sf::st_transform(map, crs = 4326) 
 
-species <- read_tsv("data/coord_plantae.tsv") %>%
+species <- read_tsv("data/coord_plantae.tsv") |>
   mutate(family = str_to_title(family),
          order = str_to_title(order),
          class = str_to_title(class), 
@@ -74,38 +74,41 @@ pop_up_species <- paste0("=========================",
                          "<br>Categoría: ", species$category,
                          "<br>=========================",
                          "<br>Fecha y hora: ", species$gpsdatetime,
-                         "<br>Latitud (GD) = ", as.character(round(species$latitude, 3)), 
-                         "<br>Longitud (GD) = ", as.character(round(species$longitude, 3)),
+                         "<br>Latitud (GD) = ", species$latitude, 
+                         "<br>Longitud (GD) = ", species$longitude,
                          "<br>=========================")
 
-map <- leaflet() %>%
-  setView(-15.6, 27.95, zoom = 9) %>%
-  addTiles() %>%
+sd <- SharedData$new(data = species)
+
+map <- leaflet() |>
+  setView(-15.6, 27.95, zoom = 10) |>
+  addTiles() |>
   addPolygons(data = enp_map, 
               fillColor = ~pal(categoria), 
               popup = pop_up, 
               weight = 0, fillOpacity = .5,
-              group = "ENP") %>%
+              group = "ENP") |>
   leaflet::addPolygons(data = zec_map,  
                        fillColor = "#4ce600",
                       popup = pop_up_zec, 
                       weight = 0, fillOpacity = .5,
-                      group = "ZEC") %>%
+                      group = "ZEC") |>
   addPolygons(data = jardin_botanico, 
-              fillColor = "yellow", fillOpacity = .5, weight = 1) %>%
-  addCircleMarkers(data = species, 
+              fillColor = "yellow", fillOpacity = .5, weight = 1) |>
+  addCircleMarkers(data = sd, 
                    lat = ~latitude, lng = ~longitude,
                    popup = pop_up_species, 
                    fillOpacity = 1, 
                    fillColor = ~pal_species(class), weight = .3,
-                   radius = 6,
+                   radius = 8,
                    group = "Especies") |>
   leaflet::addLegend(data = species, "bottomleft", pal = pal_species,
                      values = ~class, title = "<strong>Leyenda: </strong>Clases", 
-                     opacity=1, group = "Leyenda") %>%
-  leaflet::addLayersControl(baseGroups = c("ENP", "ZEC"), 
+                     opacity=1, group = "Leyenda") |>
+  leaflet::addLayersControl(baseGroups = c("SIN CAPA", "ENP", "ZEC"), 
                             overlayGroups = c("Leyenda", "Especies"),
-                            options = leaflet::layersControlOptions(collapsed = T, autoZIndex = TRUE))  %>%
+                            options = leaflet::layersControlOptions(collapsed = T, autoZIndex = TRUE))  |>
+  leaflet.extras::addResetMapButton() |>
   htmlwidgets::onRender("
     function(el, x) {
       this.on('baselayerchange', function(e) {
@@ -113,5 +116,4 @@ map <- leaflet() %>%
       })
     }
   ") 
-  
-  
+

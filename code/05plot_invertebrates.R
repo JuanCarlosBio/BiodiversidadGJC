@@ -1,10 +1,18 @@
 #!/usr/bin/env Rscript
 
+library(leaflet)
+library(sf)
+library(tidyverse)
+library(geojsonio)
+library(leaflet.extras)
+library(glue)
+library(crosstalk)
+
 set.seed(1234)
 
-enp_map <- sf::read_sf("data/gran_canaria_shp/gc_pne.shp") |>
-  sf::st_transform(map, crs = 4326) |>
-  dplyr::mutate(categoria = factor(categoria,
+enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") |>
+  st_transform(map, crs = 4326) |>
+  mutate(categoria = factor(categoria,
                                    levels = c("Monumento Natural", 
                                               "Paisaje Protegido",
                                               "Parque Natural", 
@@ -13,19 +21,19 @@ enp_map <- sf::read_sf("data/gran_canaria_shp/gc_pne.shp") |>
                                               "Reserva Natural Integral", 
                                               "Sitio de Interés Científico")))
 
-zec_map <- sf::read_sf("data/gran_canaria_shp/gc_zec.shp") |> 
-  dplyr::rename_all(tolower) |>
-  sf::st_transform(map, crs = 4326) 
+zec_map <- read_sf("data/gran_canaria_shp/gc_zec.shp") |> 
+  rename_all(tolower) |>
+  st_transform(map, crs = 4326) 
 
 species <- readr::read_tsv("data/coord_invertebrates.tsv",na ="") |>
-    dplyr::mutate(family = stringr::str_to_title(family),
-                  order = stringr::str_to_title(order),
-                  class = stringr::str_to_title(class), 
-                  phylo = stringr::str_to_title(phylo))
+    mutate(family = str_to_title(family),
+                  order = str_to_title(order),
+                  class = str_to_title(class), 
+                  phylo = str_to_title(phylo))
 
-jardin_botanico <- sf::read_sf("data/gran_canaria_shp/jardin_botanico.shp")
+jardin_botanico <- read_sf("data/gran_canaria_shp/jardin_botanico.shp")
 
-pal <- leaflet::colorFactor(
+pal <- colorFactor(
   palette = c("#004078", "#80a0bd", 
               "#f78000", "#e60000", 
               "#00913f", "#034a31", 
@@ -35,7 +43,7 @@ pal <- leaflet::colorFactor(
 
 number_class <- length(unique(species$class))
 
-pal_species <- leaflet::colorFactor(
+pal_species <- colorFactor(
   palette = sample(colors(), number_class),
   domain = species$class
 )
@@ -69,33 +77,35 @@ pop_up_species <- paste0("=========================",
                          "<br>Longitud (GD) = ", as.character(round(species$longitude, 3)),
                          "<br>=========================")
 
-map <- leaflet::leaflet() |>
-  leaflet::setView(-15.6, 27.95, zoom = 9) |>
-  leaflet::addTiles() |>
-  leaflet::addPolygons(data = enp_map, 
+sd <- SharedData$new(data = species)
+
+map <- leaflet() |>
+  setView(-15.6, 27.95, zoom = 10) |>
+  addTiles() |>
+  addPolygons(data = enp_map, 
                       fillColor = ~pal(categoria), 
                       popup = pop_up, 
                       weight = 0, fillOpacity = .5,
                       group="ENP") |>
-  leaflet::addPolygons(data = zec_map,  
+  addPolygons(data = zec_map,  
                        fillColor = "#4ce600",
                       popup = pop_up_zec, 
                       weight = 0, fillOpacity = .5,
                       group = "ZEC") |>
-  leaflet::addPolygons(data = jardin_botanico, 
+  addPolygons(data = jardin_botanico, 
                        fillColor = "yellow", fillOpacity = .5, weight = 1) |>
-  leaflet::addCircleMarkers(data = species, 
-                            lat = ~latitude, lng = ~longitude,
-                            popup = pop_up_species, 
-                            fillOpacity = 1, 
-                            fillColor = ~pal_species(class), weight = .3,
-                            radius = 6, group = "Especies") |>
-  leaflet::addLegend(data = species, "bottomleft", pal = pal_species,
+  addCircleMarkers(data = sd, 
+                   lat = ~latitude, lng = ~longitude,
+                   popup = pop_up_species, 
+                   fillOpacity = 1, 
+                   fillColor = ~pal_species(class), weight = .3,
+                   radius = 8, group = "Especies") |>
+  addLegend(data = species, "bottomleft", pal = pal_species,
                      values = ~class, title = "<strong>Leyenda: </strong>Clases", 
                      opacity=1, group = "Leyenda") |>
-  leaflet::addLayersControl(baseGroups = c("ENP", "ZEC"), 
+  addLayersControl(baseGroups = c("SIN CAPA", "ENP", "ZEC"), 
                             overlayGroups = c("Leyenda", "Especies"),
-                            options = leaflet::layersControlOptions(collapsed = T)) |>
+                            options = layersControlOptions(collapsed = T)) |>
     htmlwidgets::onRender("
     function(el, x) {
       this.on('baselayerchange', function(e) {
