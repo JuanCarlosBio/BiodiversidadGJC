@@ -97,12 +97,12 @@ map <- leaflet() |>
                    lat = ~latitude, lng = ~longitude,
                    popup = pop_up_species, 
                    fillOpacity = 1, 
-                   fillColor = "green", weight = .3, # fillColor = ~pal_species(class)  
+                   fillColor = "#3fff00", weight = .3, # fillColor = ~pal_species(class)  
                    radius = 8,
                    group = "Especies") |>
-  addLegend(data = species, "bottomleft", pal = pal_species,
-            values = ~class, title = "<strong>Leyenda: </strong>Clases", 
-            opacity=1, group = "Leyenda") |>
+#  addLegend(data = species, "bottomleft", pal = pal_species,
+#            values = ~class, title = "<strong>Leyenda: </strong>Clases", 
+#            opacity=1, group = "Leyenda") |>
   addLayersControl(baseGroups = c("SIN CAPA", "ENP", "ZEC"), 
                    overlayGroups = c("Leyenda", "Especies"),
                    options = layersControlOptions(collapsed = T, autoZIndex = TRUE))  |>
