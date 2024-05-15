@@ -13,23 +13,23 @@ set.seed(1234)
 enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") |>
   st_transform(map, crs = 4326) |>
   mutate(categoria = factor(categoria,
-                                   levels = c("Monumento Natural", 
-                                              "Paisaje Protegido",
-                                              "Parque Natural", 
-                                              "Parque Rural", 
-                                              "Reserva Natural Especial",
-                                              "Reserva Natural Integral", 
-                                              "Sitio de Interés Científico")))
+                            levels = c("Monumento Natural", 
+                                       "Paisaje Protegido",
+                                       "Parque Natural", 
+                                       "Parque Rural", 
+                                       "Reserva Natural Especial",
+                                       "Reserva Natural Integral", 
+                                       "Sitio de Interés Científico")))
 
 zec_map <- read_sf("data/gran_canaria_shp/gc_zec.shp") |> 
   rename_all(tolower) |>
   st_transform(map, crs = 4326) 
 
-species <- readr::read_tsv("data/coord_invertebrates.tsv",na ="") |>
+species <- read_tsv("data/coord_invertebrates.tsv",na ="") |>
     mutate(family = str_to_title(family),
-                  order = str_to_title(order),
-                  class = str_to_title(class), 
-                  phylo = str_to_title(phylo))
+           order = str_to_title(order),
+           class = str_to_title(class), 
+           phylo = str_to_title(phylo))
 
 jardin_botanico <- read_sf("data/gran_canaria_shp/jardin_botanico.shp")
 
@@ -41,12 +41,12 @@ pal <- colorFactor(
   domain = enp_map$categoria
 )
 
-number_class <- length(unique(species$class))
-
-pal_species <- colorFactor(
-  palette = sample(colors(), number_class),
-  domain = species$class
-)
+# number_class <- length(unique(species$class))
+# 
+# pal_species <- colorFactor(
+#   palette = sample(colors(), number_class),
+#   domain = species$class
+# )
 
 pop_up <- paste0("ENP: ", enp_map$codigo, " ", enp_map$nombre, 
                 "<br>", 
@@ -73,8 +73,6 @@ pop_up_species <- paste0("=========================",
                          "<br>Categoría: ", species$category,
                          "<br>=========================",
                          "<br>Fecha y hora: ", species$gpsdatetime,
-                         "<br>Latitud (GD) = ", as.character(round(species$latitude, 3)), 
-                         "<br>Longitud (GD) = ", as.character(round(species$longitude, 3)),
                          "<br>=========================")
 
 sd <- SharedData$new(data = species)
@@ -83,33 +81,34 @@ map <- leaflet() |>
   setView(-15.6, 27.95, zoom = 10) |>
   addTiles() |>
   addPolygons(data = enp_map, 
-                      fillColor = ~pal(categoria), 
-                      popup = pop_up, 
-                      weight = 0, fillOpacity = .5,
-                      group="ENP") |>
+              fillColor = ~pal(categoria), 
+              popup = pop_up, 
+              weight = 0, fillOpacity = .5,
+              group="ENP") |>
   addPolygons(data = zec_map,  
-                       fillColor = "#4ce600",
-                      popup = pop_up_zec, 
-                      weight = 0, fillOpacity = .5,
-                      group = "ZEC") |>
+               fillColor = "#4ce600",
+              popup = pop_up_zec, 
+              weight = 0, fillOpacity = .5,
+              group = "ZEC") |>
   addPolygons(data = jardin_botanico, 
-                       fillColor = "yellow", fillOpacity = .5, weight = 1) |>
+              fillColor = "yellow", fillOpacity = .5, weight = 1) |>
   addCircleMarkers(data = sd, 
                    lat = ~latitude, lng = ~longitude,
                    popup = pop_up_species, 
                    fillOpacity = 1, 
-                   fillColor = ~pal_species(class), weight = .3,
+                   fillColor = "#3fff00", weight = .3, # fillColor = ~pal_species(class)  
                    radius = 8, group = "Especies") |>
-  addLegend(data = species, "bottomleft", pal = pal_species,
-                     values = ~class, title = "<strong>Leyenda: </strong>Clases", 
-                     opacity=1, group = "Leyenda") |>
+#  addLegend(data = species, "bottomleft", pal = pal_species,
+#            values = ~class, title = "<strong>Leyenda: </strong>Clases", 
+#            opacity=1, group = "Leyenda") |>
   addLayersControl(baseGroups = c("SIN CAPA", "ENP", "ZEC"), 
-                            overlayGroups = c("Leyenda", "Especies"),
-                            options = layersControlOptions(collapsed = T)) |>
-    htmlwidgets::onRender("
-    function(el, x) {
-      this.on('baselayerchange', function(e) {
-        e.layer.bringToBack();
-      })
-    }
+                   overlayGroups = c("Leyenda", "Especies"),
+                   options = layersControlOptions(collapsed = T)) |>
+  addResetMapButton() |>
+  htmlwidgets::onRender("
+  function(el, x) {
+    this.on('baselayerchange', function(e) {
+      e.layer.bringToBack();
+    })
+  }
   ")

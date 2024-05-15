@@ -21,9 +21,9 @@ enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") |>
                                        "Reserva Natural Integral", 
                                        "Sitio de Interés Científico")))
 
-zec_map <- sf::read_sf("data/gran_canaria_shp/gc_zec.shp") |> 
-  dplyr::rename_all(tolower) |>
-  sf::st_transform(map, crs = 4326) 
+zec_map <- read_sf("data/gran_canaria_shp/gc_zec.shp") |> 
+  rename_all(tolower) |>
+  st_transform(map, crs = 4326) 
 
 species <- read_tsv("data/coord_plantae.tsv") |>
   mutate(family = str_to_title(family),
@@ -74,8 +74,6 @@ pop_up_species <- paste0("=========================",
                          "<br>Categoría: ", species$category,
                          "<br>=========================",
                          "<br>Fecha y hora: ", species$gpsdatetime,
-                         "<br>Latitud (GD) = ", species$latitude, 
-                         "<br>Longitud (GD) = ", species$longitude,
                          "<br>=========================")
 
 sd <- SharedData$new(data = species)
@@ -88,27 +86,27 @@ map <- leaflet() |>
               popup = pop_up, 
               weight = 0, fillOpacity = .5,
               group = "ENP") |>
-  leaflet::addPolygons(data = zec_map,  
-                       fillColor = "#4ce600",
-                      popup = pop_up_zec, 
-                      weight = 0, fillOpacity = .5,
-                      group = "ZEC") |>
+  addPolygons(data = zec_map,  
+               fillColor = "#4ce600",
+              popup = pop_up_zec, 
+              weight = 0, fillOpacity = .5,
+              group = "ZEC") |>
   addPolygons(data = jardin_botanico, 
               fillColor = "yellow", fillOpacity = .5, weight = 1) |>
   addCircleMarkers(data = sd, 
                    lat = ~latitude, lng = ~longitude,
                    popup = pop_up_species, 
                    fillOpacity = 1, 
-                   fillColor = ~pal_species(class), weight = .3,
+                   fillColor = "green", weight = .3, # fillColor = ~pal_species(class)  
                    radius = 8,
                    group = "Especies") |>
-  leaflet::addLegend(data = species, "bottomleft", pal = pal_species,
-                     values = ~class, title = "<strong>Leyenda: </strong>Clases", 
-                     opacity=1, group = "Leyenda") |>
-  leaflet::addLayersControl(baseGroups = c("SIN CAPA", "ENP", "ZEC"), 
-                            overlayGroups = c("Leyenda", "Especies"),
-                            options = leaflet::layersControlOptions(collapsed = T, autoZIndex = TRUE))  |>
-  leaflet.extras::addResetMapButton() |>
+  addLegend(data = species, "bottomleft", pal = pal_species,
+            values = ~class, title = "<strong>Leyenda: </strong>Clases", 
+            opacity=1, group = "Leyenda") |>
+  addLayersControl(baseGroups = c("SIN CAPA", "ENP", "ZEC"), 
+                   overlayGroups = c("Leyenda", "Especies"),
+                   options = layersControlOptions(collapsed = T, autoZIndex = TRUE))  |>
+  addResetMapButton() |>
   htmlwidgets::onRender("
     function(el, x) {
       this.on('baselayerchange', function(e) {
