@@ -29,7 +29,8 @@ species <- read_tsv("data/coord_invertebrates.tsv",na ="") |>
     mutate(family = str_to_title(family),
            order = str_to_title(order),
            class = str_to_title(class), 
-           phylo = str_to_title(phylo))
+           phylo = str_to_title(phylo)) |>
+           filter(category != "Especie protegida")
 
 jardin_botanico <- read_sf("data/gran_canaria_shp/jardin_botanico.shp")
 
@@ -102,7 +103,7 @@ map <- leaflet() |>
 #            values = ~class, title = "<strong>Leyenda: </strong>Clases", 
 #            opacity=1, group = "Leyenda") |>
   addLayersControl(baseGroups = c("SIN CAPA", "ENP", "ZEC"), 
-                   overlayGroups = c("Leyenda", "Especies"),
+                   overlayGroups = c("Especies"),
                    options = layersControlOptions(collapsed = T)) |>
   addResetMapButton() |>
   htmlwidgets::onRender("

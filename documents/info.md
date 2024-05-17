@@ -3,7 +3,7 @@
 **Tabla de contenidos**
 
 - [Plataforma ideal](#plataforma-ideal)
-- [Uso básico de los mapas interactivos](#uso-básico-de-los-mapas-interactivos)
+- [Uso básico de los mapas interactivos -> ***desactualizado!!!***](#uso-básico-de-los-mapas-interactivos)
   - [Información sobre las especies en las etiquetas](#información-sobre-las-especies-en-las-etiquetas)
   - [Elementos del mapa](#elementos-del-mapa)
 - [Fotografías de las especies](#fotografías-de-las-especies)
@@ -56,22 +56,16 @@ La información de las especies se ha obtenido principalmente del buscador [***"
 
 Las fotografías en formato JPG están nombradas con la información de las especies, mediante el uso guiones altos ("```-```") para separar la información, que se procesarán en los programas. 
 
-* Las imágenes de invertebrados tienen la siguiente información: 
+* Las imágenes de invertebrados y plantas tienen la siguiente información: 
 
 ```
-ID-Especie-Autor-Nombre común-Familia-Orden-Clase-Filo-Reino Metazoa-Género Endémico (Canarias)-Especie Endémica (Canarias)-Subespecie Endémica (Canarias)-Origen-Categoría (especie protegida o invasora)
-``` 
-
-* La información de la flora y vegetación: 
-
-```
-ID-Especie-Autor-Nombre común-Familia-Orden-Clase-Subdivisión-División-Reino Plantae-Género Endémico (Canarias)-Especie Endémica (Canarias)-Subespecie Endémica (Canarias)-Origen-Categoría (especie protegida o invasora)
+ID-Especie-Autor-Género Endémico (Canarias)-Especie Endémica (Canarias)-Subespecie Endémica (Canarias)-Origen-Categoría (especie protegida o invasora)-ID Biota
 ``` 
 
 * Ejemplo de una de especie:
 
 ```
-FV0022-Pinus canariensis-C. Sm. ex DC.in Buch-Pino canario-pinaceae-pinales-pinopsida-coniferophytina-spermatophyta-plantae-eg_no-ee_si--ns-ep.jpg
+FV0022-Pinus canariensis-C. Sm. ex DC.in Buch-eg_no-ee_si--ns-ep.jpg
 ```
 
 ### **Aclaraciones:** 
