@@ -48,7 +48,7 @@ bscols(
   "",
   filter_select(
     id = "species",
-    label = "BUSCA LA/s ESPECIES/s!!!",
+    label = "BUSCA LAS ESPECIES!!!",
     sharedData = sd,
     group = ~specie,
     ""
