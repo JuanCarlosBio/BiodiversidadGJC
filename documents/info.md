@@ -3,9 +3,12 @@
 **Tabla de contenidos**
 
 - [Plataforma ideal](#plataforma-ideal)
-- [Uso básico de los mapas interactivos -> ***desactualizado!!!***](#uso-básico-de-los-mapas-interactivos)
-  - [Información sobre las especies en las etiquetas](#información-sobre-las-especies-en-las-etiquetas)
-  - [Elementos del mapa](#elementos-del-mapa)
+- [Uso básico de los mapas interactivos](#uso-básico-de-los-mapas-interactivos)
+  - [Moverse y *zoom in* y *zoom out*](#1-moverse-y-zoom-in-y-zoom-out)
+  - [Puntos del mapa](#2-puntos-del-mapa)
+  - [Filtrar especies](#3-filtrar-especies)
+  - [Cargar capas](#4-cargar-capas)
+  - [Volver al zoom original](#5-volver-al-zoom-original)
 - [Fotografías de las especies](#fotografías-de-las-especies)
   - [Información de las especies](#información-sobre-las-especies)
   - [Etiquetado de las imágenes JPG](#etiquetado-de-las-imágenes-jpg)
@@ -17,9 +20,72 @@ La página está pensada para usar en PC. En móvil se puede usar, pero hay que 
 
 ## **USO BÁSICO DE LOS MAPAS INTERACTIVOS**
 
+![](../figures/manual_mapas/01mapa_general.png)
 
+### 1. **Moverse y *zoom in* y *zoom out.***
+
+* Para moverse hay que presionar clic derecho en un sitio del mapa y arrastrar en la dirección que queramos.
+* Para hacer zoom podemos usar la rueda del ratón o los símbolos "+" o "-" en la parte izquierda superior del mapa.
+
+### 2. **Puntos del mapa**. 
+
+* Cada punto del mapa es un ejemplar de una especie identificada.
+* Al presionar sobre los puntos se nos presenta una etiqueta con su identificación.
+
+![](../figures/manual_mapas/02punto_seleccionado.png)
+
+### 3. **Filtrar especies**. 
+
+* Para ello solo hace falta filtrar la especie de interés en la barra arriba del mapa que dice ***"BUSCA LAS ESPECIES!!!"***:
+
+![](../figures/manual_mapas/03ejemplo_filtrado_1_individuo.png)
+
+* Se puede filtrar **más de una** especie a la vez:
+
+![](../figures/manual_mapas/04ejemplo_filtrado_varios_individuo.png)
+
+### 4. **Cargar capas**. 
+
+* Se pueden cargar capas del IDECanarias, por el momento se encuentran los ***Espacios Naturales Protegidos*** (**ENP**) de la isla de Gran Canaria, así como las ***Zonas de Especial Conservación*** (**ZEC**).
+* Para ello hay que poner el ratón el icono de arriba a la derecha que representa las capas:
+
+![](../figures/manual_mapas/05icono_capas.png)
+
+* Por defecto está la opción "***Sin capa***". Si seleccionamos "***ENP***" por ejemplo, cargamos los Especios Naturales Protegidos.
+
+![](../figures/manual_mapas/06capa_enp.png)
+
+* Del mismo modo que con los puntos de las especies, si hacemos clic con el ratón sobre un ENP, obtendremos información de el:
+
+![](../figures/manual_mapas/07clic_enp.png)
+
+### 5. **Volver al zoom original:**
+
+* En caso de hacer mucho *zoom in* o *zoom out* podemos presionar con clic derecho un botón de *"reset"* que se encuentra debajo de los botones del zoom.
+
+* En caso de hacer mucho *zoom in* o *zoom out*, podemos clicar en el botón
+
+![](../figures/manual_mapas/08boton_reset.png)
+
+### 5. **Uso combinado con la tabla de Especies** 
+
+* Es interesante combinar el uso del mapa con la tabla `HTML` debajo, sobre todo para comparar los resultados con bases de datos como biota (pretendo de que hayan más en el futuro como `GBIF`)
+
+* Ejemplo: Buscamos la especie invasora *Centranthus ruber* en el mapa:
+
+![](../figures/manual_mapas/09buscar_c.ruber_mapa.png)
+
+* Filtramos a su vez esta especie en el buscador de la tabla dinámica:
+
+![](../figures/manual_mapas/10buscar_c.ruber_tabla.png)
+
+* Una opción interesante es *abrir en otra ventana* la web de Biota para ver imágenes de las especies y comparar mis observaciones con esta WEB:
+
+![](../figures/manual_mapas/11web_vs_biota.png)
 
 ## **FOTOGRAFÍAS DE LAS ESPECIES**
+
+Puedes descargas las imágenes en el siguiente en este [LINK](https://juankkar.github.io/Especies_Encontradas_GC/data) 
 
 ### **Información sobre las especies**
 
@@ -32,13 +98,13 @@ Las fotografías en formato JPG están nombradas con la información de las espe
 * Las imágenes de invertebrados y plantas tienen la siguiente información: 
 
 ```
-ID-Especie-Autor-Género Endémico (Canarias)-Especie Endémica (Canarias)-Subespecie Endémica (Canarias)-Origen-Categoría (especie protegida o invasora)-ID Biota
+ID-Especie-Autor-Género Endémico (Canarias)-Especie Endémica (Canarias)-Subespecie Endémica (Canarias)-Origen-Categoría (especie protegida o invasora)-Hábitat-ID Biota
 ``` 
 
 * Ejemplo de una de especie:
 
 ```
-FV0022-Pinus canariensis-C. Sm. ex DC.in Buch-eg_no-ee_si--ns-ep.jpg
+ FV0022-Pinus canariensis-C. Sm. ex DC.in Buch-eg_no-ee_si--ns-ep-P_LHR-F00068.jpg
 ```
 
 ### **Aclaraciones:** 
@@ -80,6 +146,33 @@ FV0022-Pinus canariensis-C. Sm. ex DC.in Buch-eg_no-ee_si--ns-ep.jpg
   | ---------- | ------------------------------ |
   | ep         | **Especie protegida**          | 
   | ei         | **Especie invasora**           |
+
+</center>
+
+- La variable **Hábitat** tiene los sigientes valores:
+
+<center>
+
+
+  | **Valor**  |  **Significado**                         | 
+  | ---------- | -----------------------------------------|
+  | TC         | Tabaibal - Cardonal                      | 
+  | CC         | Cinturón Costero                         |
+  | HS         | Hábitat Sabuloso                         |
+  | HMNR       | Herbazales y matorral ruderal nitrófilo  |
+  | MA         | Monteverde arbóreo                       |
+  | BF         | Brezal - Fayal                           |
+  | PH         | Pinar húmedo                             |
+  | LHR        | Lavas históricas y recientes             |
+  | LT         | Laurisilva termófila                     |
+  | ER         | Escarpes rocosos                         |
+  | MC         | Matorral de cumbre                       |
+  | P          | Pinar                                    |
+  | BT         | Bosque termófilo                         |
+  | ZU         | Zonas urbanas                            |
+  | ZC         | Zonas de cultivo                         |
+
+
 
 </center>
 
