@@ -20,22 +20,20 @@ table_invertebrates <- invertebrates %>%
     drop_na(author) %>%
     mutate(name = ifelse(is.na(name), "-", as.character(name)),
            class = str_to_title(class)) %>%
-    group_by(specie, author, name, id_biota,
-             family, class, order, phylo, 
+    group_by(specie, author, name, id_biota, family,
              endemicity, origin, category) %>%
     count() %>%
-    arrange(family, , order, class, phylo, specie) %>%
+    arrange(specie, family) %>%
     select(-n)
 
 table_plantae <- plantae %>%
     drop_na(author) %>%
     mutate(name = ifelse(is.na(name), "-", as.character(name)),
            division = str_to_title(division)) %>%
-    group_by(specie, author, name, id_biota, 
-             family, order, class, division,
+    group_by(specie, author, name, id_biota, family,
              endemicity, origin, category) %>%
     count() %>%
-    arrange(class, specie) %>%
+    arrange(specie, family) %>%
     select(-n)
 
 #----------------------------------------------------------------------#
@@ -57,11 +55,8 @@ gt_invertebrates <- table_invertebrates %>%
         specie = md("**ESPECIE**"),
         author = md("**AUTOR**"),
         name = md("**NOMBRE COMÚN**"),
-        id_biota = md("**LINK BIOTA**"),
         family = md("**FAMILIA**"),
-        order = md("**ORDEN**"),
-        class = md("**CLASE**"),
-        phylo = md("**FILO**"),
+        id_biota = md("**LINK BIOTA**"),
         endemicity = md("**ENDEMICIDAD**"),
         origin = md("**ORIGEN**"),
         category = md("**CATEGORÍA**"),
@@ -93,11 +88,8 @@ gt_plantae <- table_plantae %>%
         specie = md("**ESPECIE**"),
         author = md("**AUTOR**"),
         name = md("**NOMBRE COMÚN**"),
-        id_biota = md("**LINK BIOTA**"),
         family = md("**FAMILIA**"),
-        order = md("**ORDEN**"),
-        class = md("**CLASE**"),
-        division = md("**DIVISIÓN**"),
+        id_biota = md("**LINK BIOTA**"),
         endemicity = md("**ENDEMICIDAD**"),
         origin = md("**ORIGEN**"),
         category = md("**CATEGORÍA**"),

@@ -17,34 +17,7 @@ La página está pensada para usar en PC. En móvil se puede usar, pero hay que 
 
 ## **USO BÁSICO DE LOS MAPAS INTERACTIVOS**
 
-### **Información sobre las especies en las etiquetas**
 
-* Para ver la información de las etiquetas de cada una de las especies basta con poner el ratón encima de los puntos coloreados. Nótese que los colores estarán basado en la ***Clase*** a la que pertenezca la especie.
-
-![](../figures/manual_mapas/cursor_en_el_mapa.png)
-
-* Al colocar el ratón en los bordes de los Espacios Naturales Protegidos se puede obtener información sobre estos. 
-
-![](../figures/manual_mapas/ENP_raton.png)
-
-### **Elementos del mapa**
-
-![Opciones del mapa](../figures/manual_mapas/opciones.png)
-
-No hay que tener en cuenta todos, solo algunos que son de gran utilidad:
-
-* La lupa (***zoom*** :mag_right:) está por defecto, sirve para zoom recortando un cuadrado-rectángulo, además se puede hacer ***zum in*** con :heavy_plus_sign: o ***zum out*** con :heavy_minus_sign:. 
-  * Para este cometido está muy bien también ***Autoscale*** o ***Reset axes*** para volver al estado original del mapa.
-
-![Resetear axes y autoescalar](../figures/manual_mapas/reset_axes.png)
-
-  * Tambíen se puede hacer zoom in y out con la rueda del ratón, pero es verdad que ocasiones se atasca y hay que jugar un poco con el, en ese momento es conveniente combinar la rueda del ratón con otras opciones como :mag_right:, :heavy_plus_sign:, :heavy_minus_sign:. 
-
-* Para moverse de un lado a otro es necesario cambiar a la opción analógica (***Pan***) que está al lado de lupa. 
-
-![panel](../figures/manual_mapas/panel.png)
-
-* El resto de opciones no son tan importantes.
 
 ## **FOTOGRAFÍAS DE LAS ESPECIES**
 
