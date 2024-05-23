@@ -10,6 +10,7 @@ output:
             collapsed: true
             smootg_scroll: true
 email_adress: jcge97@gmail.com
+github: https://github.com/Juankkar/ 
 github_repo: https://github.com/Juankkar/Especies_Encontradas_GC
 documentation: https://github.com/Juankkar/Especies_Encontradas_GC/blob/main/documents/info.md 
 ---
@@ -71,4 +72,5 @@ gt_invertebrates
 <a href="./">&#9664; Volver hacia atrás</a> | <a href="./data"> Descargar datos &#9654;</a> 
 
 Última actualización el `r format(today(), "%d/%m/%Y")`  
-Sitio [desarrollado](`r rmarkdown::metadata$github_repo`) por [Juan Carlos García Estupiñán](mailto:`r rmarkdown::metadata$email_adress`)
+Sitio [desarrollado](`r rmarkdown::metadata$github_repo`) por [<i class="fab fa-github"></i> Juan Carlos García Estupiñán](`r rmarkdown::metadata$github`)  
+Contacto vía [&#x2709; GMAIL](mailto:`r rmarkdown::metadata$email_adress`)

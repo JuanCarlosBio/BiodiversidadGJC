@@ -4,15 +4,15 @@ library(exifr)
 flora_vascular <- list.files("images/flora_vascular", full.names = TRUE)
 invertebrados <- list.files("images/invertebrados", full.names = TRUE)
 
-read_exif(flora_vascular) %>% 
-    select(FileName) %>%
-    print(n=Inf) %>%
-    as.vector()
-
-read_exif(invertebrados) %>%
-    select(FileName) %>%
-    print(n=Inf) %>%
-    as.vector()
+# read_exif(flora_vascular) %>% 
+#     select(FileName) %>%
+#     print(n=Inf) %>%
+#     as.vector()
+# 
+# read_exif(invertebrados) %>%
+#     select(FileName) %>%
+#     print(n=Inf) %>%
+#     as.vector()
 
 read_exif(flora_vascular) %>%
     rename_all(tolower) %>%

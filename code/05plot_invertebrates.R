@@ -29,8 +29,8 @@ species <- read_tsv("data/coord_invertebrates.tsv",na ="") |>
     mutate(family = str_to_title(family),
            order = str_to_title(order),
            class = str_to_title(class), 
-           phylo = str_to_title(phylo)) |>
-           filter(category != "Especie protegida")
+           phylo = str_to_title(phylo)) #|>
+           #filter(category != "Especie protegida")
 
 jardin_botanico <- read_sf("data/gran_canaria_shp/jardin_botanico.shp")
 
@@ -42,12 +42,12 @@ pal <- colorFactor(
   domain = enp_map$categoria
 )
 
-# number_class <- length(unique(species$class))
-# 
-# pal_species <- colorFactor(
-#   palette = sample(colors(), number_class),
-#   domain = species$class
-# )
+pal_species <- colorFactor(
+  palette = c("#0800ff", "#ff00a5", 
+              "#72ff00", "#ffff00", 
+              "#00ffed"),
+  domain = species$origin
+)
 
 pop_up <- paste0("ENP: ", enp_map$codigo, " ", enp_map$nombre, 
                 "<br>", 
@@ -97,13 +97,13 @@ map <- leaflet() |>
                    lat = ~latitude, lng = ~longitude,
                    popup = pop_up_species, 
                    fillOpacity = 1, 
-                   fillColor = "#3fff00", weight = .3, # fillColor = ~pal_species(class)  
+                   fillColor = ~pal_species(origin), weight = .3, # fillColor = ~pal_species(class)  
                    radius = 8, group = "Especies") |>
-#  addLegend(data = species, "bottomleft", pal = pal_species,
-#            values = ~class, title = "<strong>Leyenda: </strong>Clases", 
-#            opacity=1, group = "Leyenda") |>
+  addLegend(data = species, "bottomleft", pal = pal_species,
+            values = ~origin, title = "<strong>Leyenda: </strong>Origen", 
+            opacity=1, group = "Leyenda") |>
   addLayersControl(baseGroups = c("SIN CAPA", "ENP", "ZEC"), 
-                   overlayGroups = c("Especies"),
+                   overlayGroups = c("Especies", "Leyenda"),
                    options = layersControlOptions(collapsed = T)) |>
   addResetMapButton() |>
   htmlwidgets::onRender("
