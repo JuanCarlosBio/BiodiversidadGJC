@@ -115,15 +115,19 @@ rule process_exif_images:
         r_script = "code/04process_exif.R",
         fv_files = "images/flora_vascular.zip",
         ai_files = "images/flora_vascular.zip",
-        biota_file = "data/biota_data_processed.tsv"
+        biota_file = "data/biota_data_processed.tsv",
+        check_errors_labels = "code/check_errors_labels.R"
     output:
         "data/coord_invertebrates.tsv",
         "data/coord_plantae.tsv"
+    log:
+        "logs/week_names_label_errors.txt"
     conda:
         "code/enviroments/env.yml"
     shell:
         """
         Rscript {input.r_script}
+        Rscript {input.check_errors_labels} > {log}
         """  
 
 rule figures_and_stats:

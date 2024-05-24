@@ -19,7 +19,10 @@ exif_data_ai |>
     dplyr::rename_all(tolower) |>
     dplyr::select(filename, gpsdatetime, gpsposition,gpsaltitude) |>
     dplyr::mutate(filename = stringr::str_replace(filename, pattern = ".jpg", replacement = "")) |>
-    dplyr::filter(!(stringr::str_detect(filename,  "NO CLASIFICADO")) & stringr::str_detect(filename, "^AI")) |>
+    dplyr::filter(!(stringr::str_detect(filename,  "NO CLASIFICADO")) & 
+                    stringr::str_detect(filename, "^AI") & 
+                    stringr::str_count(filename, "-") == 8
+                    ) |> 
     tidyr::separate_wider_delim(gpsposition, delim = " ",
                                 names = c("latitude", "longitude")) |>
     dplyr::mutate(latitude = as.numeric(latitude),
@@ -53,7 +56,9 @@ exif_data_fv |>
     dplyr::rename_all(tolower) |>
     dplyr::select(filename, gpsdatetime, gpsposition, gpsaltitude) |>
     dplyr::mutate(filename = stringr::str_replace(filename, pattern = ".jpg", replacement = "")) |>
-    dplyr::filter(!(stringr::str_detect(filename,  "NO CLASIFICADO")) & stringr::str_detect(filename, "^FV")) |>
+    dplyr::filter(!(stringr::str_detect(filename,  "NO CLASIFICADO")) & 
+                    stringr::str_detect(filename, "^FV"),
+                    stringr::str_count(filename, "-") == 9) |>
     tidyr::separate_wider_delim(gpsposition, delim = " ",
                                 names = c("latitude", "longitude")) |>
     dplyr::mutate(latitude = as.numeric(latitude),
