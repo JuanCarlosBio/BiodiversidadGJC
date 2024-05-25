@@ -46,7 +46,9 @@ exif_data_ai |>
                   category = dplyr::case_when(category == "ep" ~ "Especie protegida",
                                               category == "ei" ~ "Especie introducida",
                                               !(category == "ep") | !(category == "ei") ~ "-"),
-                  author = stringr::str_replace_all(author, t_replacement)) |> 
+                  author = stringr::str_replace_all(author, t_replacement),
+                  gpsdatetime = lubridate::ymd_hms(gpsdatetime),
+                  gpsdatetime = format(gpsdatetime, "%d/%m/%Y")) |> 
     dplyr::inner_join(data_biota, ., by="id_biota") |> 
     dplyr::select(-subdivision, division) |> 
     readr::write_tsv("data/coord_invertebrates.tsv")
@@ -83,7 +85,9 @@ exif_data_fv |>
                                               category == "ei" ~ "Especie introducida",
                                               !(endemic_subspecie == "ep") | !(endemic_subspecie == "ei") ~ "-"),    
                   author = stringr::str_replace_all(author, t_replacement),
-                  specie = stringr::str_replace_all(specie, pattern = "_", replacement = "-")) |> 
+                  specie = stringr::str_replace_all(specie, pattern = "_", replacement = "-"),
+                  gpsdatetime = lubridate::ymd_hms(gpsdatetime),
+                  gpsdatetime = format(gpsdatetime, "%d/%m/%Y")) |> 
     dplyr::inner_join(data_biota, ., by="id_biota") |> 
     dplyr::select(-subdivision, division) |> 
     readr::write_tsv("data/coord_plantae.tsv")

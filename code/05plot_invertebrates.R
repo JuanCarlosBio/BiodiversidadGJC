@@ -73,7 +73,7 @@ pop_up_species <- paste0("=========================",
                          "<br>Origen: ", species$origin, 
                          "<br>Categoría: ", species$category,
                          "<br>=========================",
-                         "<br>Fecha y hora: ", species$gpsdatetime,
+                         "<br>Fecha: ", species$gpsdatetime,
                          "<br>=========================")
 
 sd <- SharedData$new(data = species)

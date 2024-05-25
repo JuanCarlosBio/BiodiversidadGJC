@@ -7,9 +7,9 @@ suppressMessages(suppressWarnings({
 flora_vascular <- list.files("images/flora_vascular", full.names = TRUE)
 invertebrados <- list.files("images/invertebrados", full.names = TRUE)
 
-print("==========================================================")
-print(">>> THIS ARE THE ERRORS THAT YOU HAVE IN PLANTAE THIS WEEK")
-print("==========================================================")
+print("==============================================================")
+print(">>> THIS ARE THE ERRORS THAT YOU HAVE HAD IN PLANTAE THIS WEEK")
+print("==============================================================")
 
 read_exif(flora_vascular) %>%
     rename_all(tolower) %>%
@@ -25,9 +25,9 @@ read_exif(flora_vascular) %>%
     filter(filename_ok == FALSE)%>%
     as.data.frame()
 
-print("==========================================================")
-print(">>> THIS ARE THE ERRORS THAT YOU HAVE IN METAZOA THIS WEEK")
-print("==========================================================")
+print("==============================================================")
+print(">>> THIS ARE THE ERRORS THAT YOU HAVE HAD IN METAZOA THIS WEEK")
+print("==============================================================")
 
 read_exif(invertebrados) %>%
     rename_all(tolower) %>%
