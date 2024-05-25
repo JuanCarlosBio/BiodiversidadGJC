@@ -1,14 +1,15 @@
 #!/usr/bin/env Rscript
 
-library(dplyr)
-library(stringr)
-library(readr)
-library(ggplot2)
-library(tidyr)
-library(ggtext)
-library(sf)
-library(gt)
-
+suppressMessages(suppressWarnings({
+  library(dplyr)
+  library(stringr)
+  library(readr)
+  library(ggplot2)
+  library(tidyr)
+  library(ggtext)
+  library(sf)
+  library(gt)
+}))
 ##----------------------------------------------------------------------------#
 ## Datos ##
 
@@ -126,7 +127,7 @@ ggsave(plot= species_plot,
        width = 1.5, height = 1.5)  
 
 ##----------------------------------------------------------------------------#
-## Primer gráfico nº 2 de metazoos y plantae
+## Númerod de especies encontradas según su Reino
 ##----------------------------------------------------------------------------#
 
 invertebrates_domain <- invertebrates |>
@@ -267,3 +268,131 @@ gt_endemism <- endemism_table |>
   tab_options(
     table.background.color = "#fff3d8"
   )
+
+##----------------------------------------------------------------------------#
+## Estadísticas de las Especies Nativas, Protegidas e Introducidas
+##----------------------------------------------------------------------------#
+
+# Procesado de datos
+
+category_invertebrates <- invertebrates |>
+  group_by(id_biota, category) |>
+  count() |>
+  ungroup() |>
+  group_by(category) |>
+  count() |>
+  mutate(category = factor(category,
+                           levels = c("Especie nativa", "Especie protegida", "Especie introducida"),
+                           labels = c("Nativas", "Protegidas", "Introducidas")))
+
+category_plantae <- plantae |>
+  group_by(id_biota, category) |>
+  count() |>
+  ungroup() |>
+  group_by(category) |>
+  count() |>
+  mutate(category = factor(category,
+                           levels = c("Especie nativa", "Especie protegida", "Especie introducida"),
+                           labels = c("Nativas", "Protegidas", "Introducidas")))
+
+# Gráfico de los invertebrados
+y_category_animal_axis <- max(category_invertebrates$n) + (max(category_invertebrates$n) * 0.2)
+n_nativa_animal <- as.integer(category_invertebrates[2,2])
+n_protegidas_animal <- as.integer(category_invertebrates[3,2])
+n_introducidas_animal <- as.integer(category_invertebrates[1,2])
+
+y_n_nativa_animal <- n_nativa_animal + (n_nativa_animal * .1) 
+y_n_protegidas_animal <- n_protegidas_animal + (n_protegidas_animal * .1) 
+y_n_introducidas_animal <- n_introducidas_animal + (n_introducidas_animal * .1) 
+y_n_category_animal <-c(y_n_nativa_animal, y_n_protegidas_animal, y_n_introducidas_animal) + max(y_n_nativa_animal, y_n_protegidas_animal, y_n_introducidas_animal) * 0.025
+
+category_invertebrate_plot <- category_invertebrates  |>
+  ggplot(aes(category, n, fill = category)) +
+  geom_col(color = "black", size = 2,width = .3, show.legend = FALSE) +
+  geom_text(aes(y = y_n_category_animal, 
+                x = c(1, 2, 3), 
+                label = c(as.character(n_nativa_animal),
+                          as.character(n_protegidas_animal),
+                          as.character(n_introducidas_animal))),
+             color = "black", fontface = "bold",
+             size=7, show.legend = FALSE) +
+  scale_fill_manual(values = c("#59ff00", "#2600ff", "#ff0000")) +
+  scale_y_continuous(expand = expansion(0),
+                     limits = c(0, y_category_animal_axis)) +
+   labs(
+     title = "Especies de <span style = 'color: #870909'>*ANIMALES*</span> categorizadas según sean:", 
+     subtitle = "<span style = 'color: #59ff00'>*Nativas* (no protegidas)</span>, <span style = 'color: #2600ff'>*Protegidas*</span> o <span style = 'color: #ff0000'>*Introducidas*</span>",
+     y = "Nº de especies",
+     x = "Especies"
+  ) + 
+  theme_classic() +
+  theme(
+    plot.background = element_rect(fill = "transparent", color = "transparent"),
+    panel.background = element_rect(fill = "transparent", color = "transparent"),
+    plot.title = element_markdown(face = "bold", size = 18, hjust = .5, 
+                                  margin = margin(b = .5, unit = "cm")),
+    plot.subtitle = element_markdown(face = "bold", size = 16, hjust = .5, 
+                                     margin = margin(b = .75, unit = "cm")),
+    axis.title = element_text(face = "bold", size = 18),
+    axis.title.x = element_text(margin = margin(t = .5, unit = "cm")), 
+    axis.title.y = element_text(margin = margin(r = .5, unit = "cm")),     
+    axis.text = element_text(face = "bold", size = 14),
+    axis.text.x = element_markdown(),
+    axis.line = element_line(linewidth = 1.5), 
+    axis.ticks = element_blank(),
+  );category_invertebrate_plot 
+
+ggsave(plot= category_invertebrate_plot, 
+       "figures/n_category_invertebrates.png",
+       width = 8, height = 5)  
+
+# Gráfico para plantas
+y_category_planta_axis <- max(category_plantae$n) + (max(category_plantae$n) * 0.2)
+n_nativa_planta <- as.integer(category_plantae[2,2])
+n_protegidas_planta <- as.integer(category_plantae[3,2])
+n_introducidas_planta <- as.integer(category_plantae[1,2])
+
+y_n_nativa_planta <- n_nativa_planta + (n_nativa_planta * .1) 
+y_n_protegidas_planta <- n_protegidas_planta + (n_protegidas_planta * .1) 
+y_n_introducidas_planta <- n_introducidas_planta + (n_introducidas_planta * .1) 
+y_n_category_planta <-c(y_n_nativa_planta, y_n_protegidas_planta, y_n_introducidas_planta) + max(y_n_nativa_planta, y_n_protegidas_planta, y_n_introducidas_planta) * 0.025
+
+category_plantae_plot <- category_plantae  |>
+  ggplot(aes(category, n, fill = category)) +
+  geom_col(color = "black", size = 2,width = .3, show.legend = FALSE) +
+  geom_text(aes(y = y_n_category_planta, 
+                x = c(1, 2, 3), 
+                label = c(as.character(n_nativa_planta),
+                          as.character(n_protegidas_planta),
+                          as.character(n_introducidas_planta))),
+             color = "black", fontface = "bold",
+             size=7, show.legend = FALSE) +
+  scale_fill_manual(values = c("#59ff00", "#2600ff", "#ff0000")) +
+  scale_y_continuous(expand = expansion(0),
+                     limits = c(0, y_category_planta_axis)) +
+   labs(
+     title = "Especies de <span style = 'color: forestgreen'>*PLANTAS*</span> categorizadas según sean:", 
+     subtitle = "<span style = 'color: #59ff00'>*Nativas* (no protegidas)</span>, <span style = 'color: #2600ff'>*Protegidas*</span> o <span style = 'color: #ff0000'>*Introducidas*</span>",
+     y = "Nº de especies",
+     x = "Especies"
+  ) + 
+  theme_classic() +
+  theme(
+    plot.background = element_rect(fill = "transparent", color = "transparent"),
+    panel.background = element_rect(fill = "transparent", color = "transparent"),
+    plot.title = element_markdown(face = "bold", size = 18, hjust = .5, 
+                                  margin = margin(b = .5, unit = "cm")),
+    plot.subtitle = element_markdown(face = "bold", size = 16, hjust = .5, 
+                                     margin = margin(b = .75, unit = "cm")),
+    axis.title = element_text(face = "bold", size = 18),
+    axis.title.x = element_text(margin = margin(t = .5, unit = "cm")), 
+    axis.title.y = element_text(margin = margin(r = .5, unit = "cm")),     
+    axis.text = element_text(face = "bold", size = 14),
+    axis.text.x = element_markdown(),
+    axis.line = element_line(linewidth = 1.5), 
+    axis.ticks = element_blank(),
+  );category_plantae_plot 
+
+ggsave(plot= category_plantae_plot, 
+       "figures/n_category_plantae.png",
+       width = 8, height = 5)  

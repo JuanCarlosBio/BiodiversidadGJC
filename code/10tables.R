@@ -1,8 +1,10 @@
 #!/usr/bin/env Rscript
 
-library(tidyverse)
-library(gt)
-library(glue)
+suppressMessages(suppressWarnings({
+    library(tidyverse)
+    library(gt)
+    library(glue)
+}))
 
 #----------------------------------------------------------------------#
 # Reading the data of the Speciecies of Invertebrates and Plantae

@@ -61,9 +61,7 @@ La página está pensada para usar en PC. En móvil se puede usar, pero hay que 
 
 ### 5. **Volver al zoom original:**
 
-* En caso de hacer mucho *zoom in* o *zoom out* podemos presionar con clic derecho un botón de *"reset"* que se encuentra debajo de los botones del zoom.
-
-* En caso de hacer mucho *zoom in* o *zoom out*, podemos clicar en el botón
+* En caso de hacer mucho *zoom in* o *zoom out* podemos presionar con clic derecho un botón de *"reset"* que se encuentra debajo de los botones del zoom. Este volverá a la vista original de Gran Canaria en el visor.
 
 ![](../figures/manual_mapas/08boton_reset.png)
 

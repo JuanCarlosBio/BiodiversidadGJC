@@ -8,8 +8,6 @@ library(leaflet.extras)
 library(glue)
 library(crosstalk)
 
-set.seed(1234)
-
 enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") |>
   st_transform(map, crs = 4326) |>
   mutate(categoria = factor(categoria,
@@ -42,13 +40,11 @@ pal <- colorFactor(
   domain = enp_map$categoria
 )
 
-number_class <- length(unique(species$class))
-
 pal_species <- colorFactor(
-  palette = sample(colors(), number_class),
-  domain = species$class
+  palette = c("#ff0000", "#59ff00", 
+              "#2600ff"),
+  domain = species$category
 )
-
 
 pop_up <- paste0("ENP: ", enp_map$codigo, " ", enp_map$nombre, 
                 "<br>", 
@@ -74,7 +70,7 @@ pop_up_species <- paste0("=========================",
                          "<br>Origen: ", species$origin,
                          "<br>Categoría: ", species$category,
                          "<br>=========================",
-                         "<br>Fecha y hora: ", species$gpsdatetime,
+                         "<br>Fecha: ", species$gpsdatetime,
                          "<br>=========================")
 
 sd <- SharedData$new(data = species)
@@ -98,21 +94,32 @@ map <- leaflet() |>
                    lat = ~latitude, lng = ~longitude,
                    popup = pop_up_species, 
                    fillOpacity = 1, 
-                   fillColor = "#3fff00", weight = .3, # fillColor = ~pal_species(class)  
+                   fillColor = ~pal_species(category), weight = .3, # fillColor = ~pal_species(class)  
                    radius = 8,
                    group = "Especies") |>
-#  addLegend(data = species, "bottomleft", pal = pal_species,
-#            values = ~class, title = "<strong>Leyenda: </strong>Clases", 
-#            opacity=1, group = "Leyenda") |>
+  addLegend(data = species, "bottomleft", pal = pal_species,
+            values = ~category, title = "<strong>Leyenda: </strong>Clases", 
+            opacity=1, group = "Leyenda") |>
   addLayersControl(baseGroups = c("SIN CAPA", "ENP", "ZEC"), 
-                   overlayGroups = c("Especies"),
+                   overlayGroups = c("Especies", "Leyenda"),
                    options = layersControlOptions(collapsed = T, autoZIndex = TRUE))  |>
   addResetMapButton() |>
   htmlwidgets::onRender("
     function(el, x) {
       this.on('baselayerchange', function(e) {
         e.layer.bringToBack();
-      })
+      });
+
+      var css = '.info.legend.leaflet-control { text-align: left; }';
+      var head = document.head || document.getElementsByTagName('head')[0];
+      var style = document.createElement('style');
+      style.type = 'text/css';
+      if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+      } else {
+        style.appendChild(document.createTextNode(css));
+      }
+      head.appendChild(style);
     }
   ") 
 

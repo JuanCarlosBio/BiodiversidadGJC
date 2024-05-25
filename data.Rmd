@@ -70,11 +70,29 @@ source("code/07statistics.R")
 gt_endemism
 ```
 
+## Especies categorizadas según su *origen* y *protección*:
+
+### Gráfico para las especies de invertebrados:
+
+<center>
+
+![](figures/n_category_invertebrates.png)
+
+</center>
+
+### Gráfico para las especies de plantas:
+
+<center>
+
+![](figures/n_category_plantae.png)
+
+</center>
+
 # **Volver a los mapas interactivos**
 
 <a href="./invertebrates">&#9664; Volver al mapa de invertebrados</a>  
 <a href="./flora">&#9664; Volver al mapa de flora</a>  
 
 Última actualización el `r format(lubridate::today(), "%d/%m/%Y")`  
-Sitio [desarrollado](`r rmarkdown::metadata$github_repo`) por [<i class="fab fa-github"></i> Juan Carlos García Estupiñán](`r rmarkdown::metadata$github`)  
-Contacto vía [&#x2709; GMAIL](mailto:`r rmarkdown::metadata$email_adress`)
+Sitio [**desarrollado**](`r rmarkdown::metadata$github_repo`) por [<i class="fab fa-github"></i> **Juan Carlos García Estupiñán**](`r rmarkdown::metadata$github`)  
+[**&#x2709; GMAIL**](mailto:`r rmarkdown::metadata$email_adress`)

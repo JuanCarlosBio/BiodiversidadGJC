@@ -8,8 +8,6 @@ library(leaflet.extras)
 library(glue)
 library(crosstalk)
 
-set.seed(1234)
-
 enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") |>
   st_transform(map, crs = 4326) |>
   mutate(categoria = factor(categoria,
@@ -43,10 +41,9 @@ pal <- colorFactor(
 )
 
 pal_species <- colorFactor(
-  palette = c("#0800ff", "#ff00a5", 
-              "#72ff00", "#ffff00", 
-              "#00ffed"),
-  domain = species$origin
+  palette = c("#ff0000", "#59ff00", 
+              "#2600ff"),
+  domain = species$category
 )
 
 pop_up <- paste0("ENP: ", enp_map$codigo, " ", enp_map$nombre, 
@@ -97,10 +94,10 @@ map <- leaflet() |>
                    lat = ~latitude, lng = ~longitude,
                    popup = pop_up_species, 
                    fillOpacity = 1, 
-                   fillColor = ~pal_species(origin), weight = .3, # fillColor = ~pal_species(class)  
+                   fillColor = ~pal_species(category), weight = .3, # fillColor = ~pal_species(class)  
                    radius = 8, group = "Especies") |>
   addLegend(data = species, "bottomleft", pal = pal_species,
-            values = ~origin, title = "<strong>Leyenda: </strong>Origen", 
+            values = ~category, title = "<strong>Leyenda: </strong>Origen", 
             opacity=1, group = "Leyenda") |>
   addLayersControl(baseGroups = c("SIN CAPA", "ENP", "ZEC"), 
                    overlayGroups = c("Especies", "Leyenda"),
@@ -110,6 +107,17 @@ map <- leaflet() |>
   function(el, x) {
     this.on('baselayerchange', function(e) {
       e.layer.bringToBack();
-    })
+    });
+
+      var css = '.info.legend.leaflet-control { text-align: left; }';
+      var head = document.head || document.getElementsByTagName('head')[0];
+      var style = document.createElement('style');
+      style.type = 'text/css';
+      if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+      } else {
+        style.appendChild(document.createTextNode(css));
+      }
+      head.appendChild(style);
   }
   ")

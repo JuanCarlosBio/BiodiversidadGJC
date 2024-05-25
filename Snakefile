@@ -18,6 +18,8 @@ rule targets:
         "data.html",
         "figures/GC_mapa.png",
         "figures/n_plantae_metazoa.png",
+        "figures/n_category_invertebrates.png",
+        "figures/n_category_plantae.png"
 
 rule download_images:
     input:
@@ -140,6 +142,8 @@ rule figures_and_stats:
     output:
         "figures/GC_mapa.png",
         "figures/n_plantae_metazoa.png",
+        "figures/n_category_invertebrates.png",
+        "figures/n_category_plantae.png"
     conda:
         "code/enviroments/env.yml"
     shell:
@@ -162,6 +166,8 @@ rule webpage_html:
         plantae = "data/coord_plantae.tsv", 
         gc_map_png = "figures/GC_mapa.png",
         n_plantae_metazoa_png = "figures/n_plantae_metazoa.png",
+        category_invertebrates_png = "figures/n_category_invertebrates.png",
+        category_plantae_png = "figures/n_category_plantae.png",
         tables = "code/10tables.R"
     output:
         "index.html",
