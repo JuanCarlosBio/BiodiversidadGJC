@@ -97,7 +97,7 @@ map <- leaflet() |>
                    fillColor = ~pal_species(category), weight = .3, # fillColor = ~pal_species(class)  
                    radius = 8, group = "Especies") |>
   addLegend(data = species, "bottomleft", pal = pal_species,
-            values = ~category, title = "<strong>Leyenda: </strong>Origen", 
+            values = ~category, title = "<strong>Leyenda:</strong>", 
             opacity=1, group = "Leyenda") |>
   addLayersControl(baseGroups = c("SIN CAPA", "ENP", "ZEC"), 
                    overlayGroups = c("Especies", "Leyenda"),

@@ -98,7 +98,7 @@ map <- leaflet() |>
                    radius = 8,
                    group = "Especies") |>
   addLegend(data = species, "bottomleft", pal = pal_species,
-            values = ~category, title = "<strong>Leyenda: </strong>Clases", 
+            values = ~category, title = "<strong>Leyenda:</strong>", 
             opacity=1, group = "Leyenda") |>
   addLayersControl(baseGroups = c("SIN CAPA", "ENP", "ZEC"), 
                    overlayGroups = c("Especies", "Leyenda"),
