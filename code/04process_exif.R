@@ -24,7 +24,7 @@ t_replacement <- c("_ta_" = "á","_te_" = "é","_ti_" = "í", "_to_" = "ó", "_t
 
 exif_data_ai |>
     rename_all(tolower) |>
-    select(filename, gpsdatetime, gpsposition,gpsaltitude) |>
+    select(sourcefile, filename, gpsdatetime, gpsposition,gpsaltitude) |>
     mutate(filename = str_replace(filename, pattern = ".jpg", replacement = "")) |>
     filter(!(str_detect(filename,  "NO CLASIFICADO")) & 
                     str_detect(filename, "^AI") & 
@@ -63,7 +63,7 @@ exif_data_ai |>
 
 exif_data_fv |>
     rename_all(tolower) |>
-    select(filename, gpsdatetime, gpsposition, gpsaltitude) |>
+    select(sourcefile, filename, gpsdatetime, gpsposition, gpsaltitude) |>
     mutate(filename = str_replace(filename, pattern = ".jpg", replacement = "")) |>
     filter(!(str_detect(filename,  "NO CLASIFICADO")) & 
                     str_detect(filename, "^FV"),

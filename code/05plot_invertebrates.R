@@ -54,7 +54,8 @@ pop_up_zec <- paste0("Código: ", zec_map$cod_zec,
                      "<br>", 
                      "Nombre de la ZEC: ", zec_map$nom_zec) 
 
-pop_up_species <- paste0("=========================", 
+pop_up_species <- paste0(#glue("<img src='{species$sourcefile}'/>")
+                         "=========================", 
                          "<br>Identificador (ID): ", species$id,
                          "<br>=========================",
                          "<br>Filo: ", species$phylo,

@@ -41,8 +41,7 @@ pal <- colorFactor(
 )
 
 pal_species <- colorFactor(
-  palette = c("#ff0000", "#59ff00", 
-              "#2600ff"),
+  palette = c("#ff0000", "#59ff00"),
   domain = species$category
 )
 
@@ -54,12 +53,11 @@ pop_up_zec <- paste0("Código: ", zec_map$cod_zec,
                      "<br>", 
                      "Nombre de la ZEC: ", zec_map$nom_zec) 
 
-pop_up_species <- paste0("=========================",  
+pop_up_species <- paste0(#glue("<img src='{species$sourcefile}'/>"),
+                         "=========================",  
                          "<br>Identificador (ID): ", species$id,
                          "<br>=========================",  
                          "<br>División: ", species$division,
-                         "<br>Clase: ", species$class,
-                         "<br>Orden: ", species$order,
                          "<br>Familia: ", species$family,
                          "<br>Especie: ", glue("{species$specie}"), " ", species$author,
                          "<br>Nomb. común: ", species$name,
@@ -68,7 +66,6 @@ pop_up_species <- paste0("=========================",
                          "<br>Especie Endémica: ", species$endemic_specie,
                          "<br>Subespecie Endémica: ", species$endemic_subspecie,
                          "<br>Origen: ", species$origin,
-                         "<br>Categoría: ", species$category,
                          "<br>=========================",
                          "<br>Fecha: ", species$gpsdatetime,
                          "<br>=========================")
