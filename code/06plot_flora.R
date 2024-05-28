@@ -1,5 +1,6 @@
 #!/usr/bin/env Rscript
 
+## Load the libraries
 library(leaflet)
 library(sf)
 library(tidyverse)
@@ -8,6 +9,7 @@ library(leaflet.extras)
 library(glue)
 library(crosstalk)
 
+## Load the data
 enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") |>
   st_transform(map, crs = 4326) |>
   mutate(categoria = factor(categoria,
@@ -18,6 +20,15 @@ enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") |>
                                        "Reserva Natural Especial",
                                        "Reserva Natural Integral", 
                                        "Sitio de Interés Científico")))
+
+protected_species <- read_sf("data/gran_canaria_shp/protected_species_layer.shp") |>
+  mutate(specie = paste0(specie, " ", "(", str_to_lower(name), ")")) |>
+  group_by(specie, geometry) |>
+  summarise(n = n()) |>
+  ungroup() |>
+  group_by(geometry) |>
+  summarise(species = paste(specie, collapse = "<br>> "),
+            n = n())
 
 zec_map <- read_sf("data/gran_canaria_shp/gc_zec.shp") |> 
   rename_all(tolower) |>
@@ -32,7 +43,8 @@ species <- read_tsv("data/coord_plantae.tsv") |>
 
 jardin_botanico <- read_sf("data/gran_canaria_shp/jardin_botanico.shp")
 
-pal <- colorFactor(
+## Create the color palettes for the layers
+pal_pne <- colorFactor(
   palette = c("#004078", "#80a0bd", 
               "#f78000", "#e60000", 
               "#00913f", "#034a31", 
@@ -41,34 +53,12 @@ pal <- colorFactor(
 )
 
 pal_species <- colorFactor(
-  palette = c("#ff0000", "#59ff00"),
+  palette = c("#ff0000", "#59ff00", "#ffae00"),
   domain = species$category
 )
 
-pop_up <- paste0("ENP: ", enp_map$codigo, " ", enp_map$nombre, 
-                "<br>", 
-                "Categoría: ", enp_map$categoria)
-
-pop_up_zec <- paste0("Código: ", zec_map$cod_zec, 
-                     "<br>", 
-                     "Nombre de la ZEC: ", zec_map$nom_zec) 
-
-pop_up_species <- paste0(#glue("<img src='{species$sourcefile}'/>"),
-                         "=========================",  
-                         "<br>Identificador (ID): ", species$id,
-                         "<br>=========================",  
-                         "<br>División: ", species$division,
-                         "<br>Familia: ", species$family,
-                         "<br>Especie: ", glue("{species$specie}"), " ", species$author,
-                         "<br>Nomb. común: ", species$name,
-                         "<br>=========================",
-                         "<br>Género Endémico: ", species$endemic_genus, 
-                         "<br>Especie Endémica: ", species$endemic_specie,
-                         "<br>Subespecie Endémica: ", species$endemic_subspecie,
-                         "<br>Origen: ", species$origin,
-                         "<br>=========================",
-                         "<br>Fecha: ", species$gpsdatetime,
-                         "<br>=========================")
+bins <- c(1, 2, 4, Inf)
+pal_protected_especies <- colorBin("YlOrRd", domain = protected_species$n, bins = bins)
 
 sd <- SharedData$new(data = species)
 
@@ -76,29 +66,113 @@ map <- leaflet() |>
   setView(-15.6, 27.95, zoom = 10) |>
   addTiles() |>
   addPolygons(data = enp_map, 
-              fillColor = ~pal(categoria), 
-              popup = pop_up, 
+              fillColor = ~pal_pne(categoria), 
+              color = "transparent",
               weight = 0, fillOpacity = .5,
-              group = "ENP") |>
+              dashArray = "3",
+              highlightOptions = highlightOptions(weight = 5,
+                                                  color = "#666",
+                                                  fillOpacity = .7,
+                                                  dashArray = "",
+                                                  bringToFront = FALSE),
+              label =  paste0("<strong>ENP</strong>: ", 
+                              enp_map$codigo, " ", 
+                              glue("<u>{enp_map$nombre}</u>"), 
+                              "<br>", 
+                              "<strong>Categoría</strong>: ", 
+                              enp_map$categoria) |> 
+                lapply(htmltools::HTML),
+              labelOptions = labelOptions(
+                style = list("font-weight" = "normal",
+                             padding = "3px 8px"),
+                textsize = "15px",
+                direction = "auto"
+              ),
+              group = "Espacios Naturales<br>Protegidos") |>
   addPolygons(data = zec_map,  
-               fillColor = "#4ce600",
-              popup = pop_up_zec, 
+              fillColor = "#4ce600",
+              color = "transparent",
+              dashArray = "3",
+              highlightOptions = highlightOptions(weight = 5,
+                                                  color = "#666",
+                                                  fillOpacity = .7,
+                                                  dashArray = "",
+                                                  bringToFront = FALSE),              
+              label = paste0("<strong>Código:</strong> ", zec_map$cod_zec, 
+                             "<br>", 
+                             "<strong>Nombre de la ZEC:</strong> ", 
+                             glue("<u>{zec_map$nom_zec}</u>")) |> 
+                lapply(htmltools::HTML),
+              labelOptions = labelOptions(
+                style = list("font-weight" = "normal",
+                             padding = "3px 8px"),
+                textsize = "15px",
+                direction = "auto"
+              ),              
               weight = 0, fillOpacity = .5,
-              group = "ZEC") |>
+              group = "Red Natura 2000") |>
+  addPolygons(data = protected_species,
+              fillColor = ~pal_protected_especies(n),
+              color = "transparent",
+              dashArray = "3",
+              label = paste0("<p style='text-align:left;'>",
+                             "###=================================###",
+                             "<br>### <strong>ESPECIES PROTEGIUDAS DEL LUGAR</strong> ###", 
+                             "<br>###=================================###", 
+                             glue("<br>==> <strong>Número de especies protegidas en total: <u>{protected_species$n}</u></strong>"),
+                             glue("<br>> <i>{protected_species$species}</i>"),
+                             "</p>") |> 
+                lapply(htmltools::HTML),
+              labelOptions = labelOptions(
+                style = list("font-weight" = "normal",
+                             padding = "3px 8px"),
+                textsize = "10px",
+                direction = "auto"
+              ),              
+              weight = 0, fillOpacity = .9,
+              group = "Especies Protegidas") |>
   addPolygons(data = jardin_botanico, 
               fillColor = "yellow", fillOpacity = .5, weight = 1) |>
   addCircleMarkers(data = sd, 
                    lat = ~latitude, lng = ~longitude,
-                   popup = pop_up_species, 
+                   popup = paste0(#glue("<img src='{species$sourcefile}'/>"),
+                                  "<p style='text-align:left;'", 
+                                  "=========================",  
+                                  "<br><strong>Identificador (ID</strong>): ", species$id,
+                                  "<br>=========================",  
+                                  "<br><strong>División:</strong> ", species$division,
+                                  "<br><strong>Clase:</strong> ", species$class,
+                                  "<br><strong>Orden:</strong> ", species$order,
+                                  "<br><strong>Familia:</strong> ", species$family,
+                                  "<br><strong>Especie:</strong> ", glue("<i>{species$specie}</i>"), " ", species$author,
+                                  "<br><strong>Nomb. común:</strong> ", species$name,
+                                  "<br>=========================",
+                                  "<br><strong>Género Endémico</strong>: ", species$endemic_genus, 
+                                  "<br><strong>Especie Endémica:</strong> ", species$endemic_specie,
+                                  "<br><strong>Subespecie Endémica:</strong> ", species$endemic_subspecie,
+                                  "<br><strong>Origen:</strong> ", species$origin,
+                                  "<br>=========================",
+                                  "<br><strong>Fecha:</strong> ", species$gpsdatetime,
+                                  "<br>=========================",
+                                  "</p>") |> lapply(htmltools::HTML), 
                    fillOpacity = 1, 
                    fillColor = ~pal_species(category), weight = .3, # fillColor = ~pal_species(class)  
                    radius = 8,
                    group = "Especies") |>
+  addLegend(data = protected_species, 
+            "bottomleft", 
+            pal = pal_protected_especies,
+            values = ~n, 
+            title = "<strong>Especies protegidas</strong>", 
+            opacity=1, 
+            group = "Leyenda especies<br>protegidas") |>
   addLegend(data = species, "bottomleft", pal = pal_species,
-            values = ~category, title = "<strong>Leyenda:</strong>", 
-            opacity=1, group = "Leyenda") |>
-  addLayersControl(baseGroups = c("SIN CAPA", "ENP", "ZEC"), 
-                   overlayGroups = c("Especies", "Leyenda"),
+            values = ~category, title = "<strong>Especies NO protegidas</strong>", 
+            opacity=1, group = "Leyenda Especies") |> 
+  addLayersControl(baseGroups = c("SIN CAPA", "Espacios Naturales<br>Protegidos", 
+                                  "Red Natura 2000", "Especies Protegidas"), 
+                   overlayGroups = c("Especies", "Leyenda Especies", 
+                                     "Leyenda especies<br>protegidas"),
                    options = layersControlOptions(collapsed = T, autoZIndex = TRUE))  |>
   addResetMapButton() |>
   htmlwidgets::onRender("

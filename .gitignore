@@ -1,6 +1,7 @@
 # Code files
 code/filtrar*
 code/*.jl
+code/*ipynb
 # Data files
 data/*
 !data/README.txt

@@ -8,9 +8,11 @@ rule targets:
         "data/biota_species.csv",
         "data/gran_canaria_shp/gc_muni.shp",
         "data/gran_canaria_shp/gc_pne.shp",
+        "data/gran_canaria_shp/gc_grid_empty.shp",
         "data/gran_canaria_shp/jardin_botanico.shp",
         "data/coord_invertebrates.tsv",
         "data/coord_plantae.tsv",
+        "data/gran_canaria_shp/protected_species_layer.shp",
         "data/biota_data_processed.tsv", 
         "index.html",
         "invertebrates.html",
@@ -78,7 +80,8 @@ rule process_canary_islands_shp:
         shp_pne = "data/islands_shp/eennpp.shp",
     output:
         "data/gran_canaria_shp/gc_muni.shp",
-        "data/gran_canaria_shp/gc_pne.shp"
+        "data/gran_canaria_shp/gc_pne.shp",
+        "data/gran_canaria_shp/gc_grid_empty.shp"
     conda:
         "code/enviroments/env.yml"
     shell:
@@ -115,13 +118,15 @@ rule process_biota_data:
 rule process_exif_images:
     input:
         r_script = "code/04process_exif.R",
+        py_script = "code/13protected_species_layer.py",
         fv_files = "images/flora_vascular.zip",
         ai_files = "images/flora_vascular.zip",
         biota_file = "data/biota_data_processed.tsv",
         check_errors_labels = "code/check_errors_labels.R"
     output:
         "data/coord_invertebrates.tsv",
-        "data/coord_plantae.tsv"
+        "data/coord_plantae.tsv",
+        "data/gran_canaria_shp/protected_species_layer.shp"
     log:
         "logs/week_names_label_errors.txt"
     conda:
@@ -130,6 +135,7 @@ rule process_exif_images:
         """
         Rscript {input.r_script}
         Rscript {input.check_errors_labels} > {log}
+        python {input.py_script}
         """  
 
 rule figures_and_stats:

@@ -1,5 +1,6 @@
 #!/usr/bin/env Rscript
 
+## Load the libraries
 library(leaflet)
 library(sf)
 library(tidyverse)
@@ -8,6 +9,7 @@ library(leaflet.extras)
 library(glue)
 library(crosstalk)
 
+## Load the data
 enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") |>
   st_transform(map, crs = 4326) |>
   mutate(categoria = factor(categoria,
@@ -27,12 +29,12 @@ species <- read_tsv("data/coord_invertebrates.tsv",na ="") |>
     mutate(family = str_to_title(family),
            order = str_to_title(order),
            class = str_to_title(class), 
-           phylo = str_to_title(phylo)) #|>
-           #filter(category != "Especie protegida")
+           phylo = str_to_title(phylo)) 
 
 jardin_botanico <- read_sf("data/gran_canaria_shp/jardin_botanico.shp")
 
-pal <- colorFactor(
+## Create the color palettes for the layers
+pal_pne <- colorFactor(
   palette = c("#004078", "#80a0bd", 
               "#f78000", "#e60000", 
               "#00913f", "#034a31", 
@@ -41,38 +43,9 @@ pal <- colorFactor(
 )
 
 pal_species <- colorFactor(
-  palette = c("#ff0000", "#59ff00", 
-              "#2600ff"),
+  palette = c("#ff0000", "#59ff00", "#2600ff"),
   domain = species$category
 )
-
-pop_up <- paste0("ENP: ", enp_map$codigo, " ", enp_map$nombre, 
-                "<br>", 
-                "Categoría: ", enp_map$categoria)
-
-pop_up_zec <- paste0("Código: ", zec_map$cod_zec, 
-                     "<br>", 
-                     "Nombre de la ZEC: ", zec_map$nom_zec) 
-
-pop_up_species <- paste0(#glue("<img src='{species$sourcefile}'/>")
-                         "=========================", 
-                         "<br>Identificador (ID): ", species$id,
-                         "<br>=========================",
-                         "<br>Filo: ", species$phylo,
-                         "<br>Clase: ", species$class,
-                         "<br>Orden: ", species$order,
-                         "<br>Familia: ", species$family,
-                         "<br>Especie: ", species$specie, " ", species$author, # No funciona unfortunately
-                         "<br>Nomb. Común: ", species$name, 
-                         "<br>=========================",
-                         "<br>Género Endémico: ", species$endemic_genus, 
-                         "<br>Especie Endémica: ", species$endemic_specie,
-                         "<br>Subespecie Endémica: ", species$endemic_subspecie,
-                         "<br>Origen: ", species$origin, 
-                         "<br>Categoría: ", species$category,
-                         "<br>=========================",
-                         "<br>Fecha: ", species$gpsdatetime,
-                         "<br>=========================")
 
 sd <- SharedData$new(data = species)
 
@@ -80,27 +53,49 @@ map <- leaflet() |>
   setView(-15.6, 27.95, zoom = 10) |>
   addTiles() |>
   addPolygons(data = enp_map, 
-              fillColor = ~pal(categoria), 
-              popup = pop_up, 
+              fillColor = ~pal_pne(categoria), 
+              popup = paste0("Espacios Naturales<br>Protegidos: ", enp_map$codigo, " ", enp_map$nombre, 
+                             "<br>", 
+                             "Categoría: ", enp_map$categoria), 
               weight = 0, fillOpacity = .5,
-              group="ENP") |>
+              group="Espacios Naturales<br>Protegidos") |>
   addPolygons(data = zec_map,  
                fillColor = "#4ce600",
-              popup = pop_up_zec, 
+              popup = paste0("Código: ", zec_map$cod_zec, 
+                             "<br>", 
+                             "Nombre de la Zonas de Especial<br>conservación: ", zec_map$nom_zec), 
               weight = 0, fillOpacity = .5,
-              group = "ZEC") |>
+              group = "Red Natura 2000") |>
   addPolygons(data = jardin_botanico, 
               fillColor = "yellow", fillOpacity = .5, weight = 1) |>
   addCircleMarkers(data = sd, 
                    lat = ~latitude, lng = ~longitude,
-                   popup = pop_up_species, 
+                   popup = paste0(#glue("<img src='{species$sourcefile}'/>")
+                                  "=========================", 
+                                  "<br>Identificador (ID): ", species$id,
+                                  "<br>=========================",
+                                  "<br>Filo: ", species$phylo,
+                                  "<br>Clase: ", species$class,
+                                  "<br>Orden: ", species$order,
+                                  "<br>Familia: ", species$family,
+                                  "<br>Especie: ", species$specie, " ", species$author, # No funciona unfortunately
+                                  "<br>Nomb. Común: ", species$name, 
+                                  "<br>=========================",
+                                  "<br>Género Endémico: ", species$endemic_genus, 
+                                  "<br>Especie Endémica: ", species$endemic_specie,
+                                  "<br>Subespecie Endémica: ", species$endemic_subspecie,
+                                  "<br>Origen: ", species$origin, 
+                                  "<br>Categoría: ", species$category,
+                                  "<br>=========================",
+                                  "<br>Fecha: ", species$gpsdatetime,
+                                  "<br>========================="), 
                    fillOpacity = 1, 
                    fillColor = ~pal_species(category), weight = .3, # fillColor = ~pal_species(class)  
                    radius = 8, group = "Especies") |>
   addLegend(data = species, "bottomleft", pal = pal_species,
             values = ~category, title = "<strong>Leyenda:</strong>", 
             opacity=1, group = "Leyenda") |>
-  addLayersControl(baseGroups = c("SIN CAPA", "ENP", "ZEC"), 
+  addLayersControl(baseGroups = c("SIN CAPA", "Espacios Naturales<br>Protegidos", "Red Natura 2000"), 
                    overlayGroups = c("Especies", "Leyenda"),
                    options = layersControlOptions(collapsed = T)) |>
   addResetMapButton() |>
