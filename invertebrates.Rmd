@@ -37,16 +37,20 @@ body{
 
 Mapa interactivo formado por varias capas:
 
-- Especies observadas.
-- Espacios Naturales Protegidos (ENP) y las Zonas de Especial Conservación (ZEC).
-- Leyenda con el origen de las especies.
+- Capas básicas:
+  - Por defectos sin capa
+  - Espacies Naturales Protegidos (ENP)
+  - Zonas de Especial Conservación (ZEC)
+- Capas en primer plano:
+  - Especies nativas (no protegidas), protegidas y introducidas 
+  - Leyenda 
 
 Ayuda para el manejo del mapa &#10132; [documentación](`r rmarkdown::metadata$documentation`).
 
 <center>
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
-source("code/05plot_invertebrates.R")
+source("code/R/03plot_invertebrates.R")
 
 bscols(
   widths = c(6, 3, 3),
@@ -69,7 +73,7 @@ map
 * ### **Busca la especie que estés interesado!!!**
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
-source("code/10tables.R")
+source("code/R/07tables.R")
 gt_invertebrates
 ```
 

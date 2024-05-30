@@ -36,7 +36,7 @@ body{
 # <strong>Descarga las fotografías de las especies en los mapas interativos</strong> 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
-source("code/07statistics.R")
+source("code/R/05statistics.R")
 ```
 
 [link ai]: https://www.dropbox.com/scl/fo/j8wy15nzlrpn98dkpsu6e/h?rlkey=27la6qjalew06kc9wy3cgundv&dl=1

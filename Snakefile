@@ -4,6 +4,7 @@ rule targets:
         "images/invertebrados.zip",
         "data/islands_shp/municipios.shp",
         "data/islands_shp/eennpp.shp",
+        "data/islands_shp/20160609 habitatsUE(vegyZEC).shp",
         "data/jardin_botanico.kml",
         "data/biota_species.csv",
         "data/gran_canaria_shp/gc_muni.shp",
@@ -25,7 +26,7 @@ rule targets:
 
 rule download_images:
     input:
-        bash_script = "code/01download_images.bash"
+        bash_script = "code/bash/01download_images.bash"
     output:
         "images/flora_vascular.zip",
         "images/invertebrados.zip"
@@ -38,10 +39,11 @@ rule download_images:
 
 rule download_canary_islands_shp:
     input:
-        bash_script = "code/02canary_islands_idecanarias.bash"
+        bash_script = "code/bash/02canary_islands_idecanarias.bash"
     output:
         "data/islands_shp/municipios.shp",
-        "data/islands_shp/eennpp.shp"
+        "data/islands_shp/eennpp.shp",
+        "data/islands_shp/20160609 habitatsUE(vegyZEC).shp",
     conda:
         "code/enviroments/env.yml"
     shell:
@@ -51,7 +53,7 @@ rule download_canary_islands_shp:
 
 rule download_jardin_botanico:
     input:
-        bash_script = "code/08download_jarbot.bash"
+        bash_script = "code/bash/03download_jarbot.bash"
     output:
         "data/jardin_botanico.kml"
     conda:
@@ -63,7 +65,7 @@ rule download_jardin_botanico:
 
 rule download_biota_data:
     input:
-        bash_script = "code/11download_biota_data.sh"
+        bash_script = "code/bash/04download_biota_data.sh"
     output:
         "data/biota_species.csv"
     conda:
@@ -75,7 +77,7 @@ rule download_biota_data:
 
 rule process_canary_islands_shp:
     input:
-        python_script = "code/03process_canary_island.py",
+        python_script = "code/python/01process_canary_island.py",
         shp_muni = "data/islands_shp/municipios.shp",
         shp_pne = "data/islands_shp/eennpp.shp",
     output:
@@ -92,7 +94,7 @@ rule process_canary_islands_shp:
 
 rule process_jardin_botanico_kml:
     input:
-        r_script = "code/09process_jardin_botanico.R",
+        r_script = "code/R/06process_jardin_botanico.R",
         kml_jarbot = "data/jardin_botanico.kml"
     output:
         "data/gran_canaria_shp/jardin_botanico.shp"
@@ -104,7 +106,7 @@ rule process_jardin_botanico_kml:
         """
 rule process_biota_data:
     input:
-        r_script = "code/12process_biota_data.R",
+        r_script = "code/R/08process_biota_data.R",
         biota_file = "data/biota_species.csv"
     output:
         "data/biota_data_processed.tsv" 
@@ -117,12 +119,12 @@ rule process_biota_data:
 
 rule process_exif_images:
     input:
-        r_script = "code/04process_exif.R",
-        py_script = "code/13protected_species_layer.py",
+        r_script = "code/R/01process_exif.R",
+        py_script = "code/python/02protected_species_layer.py",
         fv_files = "images/flora_vascular.zip",
         ai_files = "images/flora_vascular.zip",
         biota_file = "data/biota_data_processed.tsv",
-        check_errors_labels = "code/check_errors_labels.R"
+        check_errors_labels = "code/R/02check_errors_labels.R"
     output:
         "data/coord_invertebrates.tsv",
         "data/coord_plantae.tsv",
@@ -140,7 +142,7 @@ rule process_exif_images:
 
 rule figures_and_stats:
     input:
-        script_r = "code/07statistics.R",
+        script_r = "code/R/05statistics.R",
         gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
         gc_pne_shp = "data/gran_canaria_shp/gc_pne.shp",
         invertebrates = "data/coord_invertebrates.tsv",
@@ -163,8 +165,8 @@ rule webpage_html:
         rmd_invertebrates = "invertebrates.Rmd",
         rmd_flora = "flora.Rmd",
         rmd_data = "data.Rmd",
-        r_script_invertebrates = "code/05plot_invertebrates.R",
-        r_script_flora = "code/06plot_flora.R",
+        r_script_invertebrates = "code/R/03plot_invertebrates.R",
+        r_script_flora = "code/R/04plot_flora.R",
         gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
         gc_pne_shp = "data/gran_canaria_shp/gc_pne.shp", 
         jarbot = "data/gran_canaria_shp/jardin_botanico.shp",
@@ -174,7 +176,7 @@ rule webpage_html:
         n_plantae_metazoa_png = "figures/n_plantae_metazoa.png",
         category_invertebrates_png = "figures/n_category_invertebrates.png",
         category_plantae_png = "figures/n_category_plantae.png",
-        tables = "code/10tables.R"
+        tables = "code/R/07tables.R"
     output:
         "index.html",
         "invertebrates.html",

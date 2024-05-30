@@ -38,16 +38,22 @@ body{
 
 Mapa interactivo formado por varias capas:
 
-- Especies observadas.
-- Espacios Naturales Protegidos (ENP) y las Zonas de Especial Conservación (ZEC).
-- Leyenda con el origen de las especies.
+- Capas básicas:
+  - Por defectos sin capa
+  - Espacies Naturales Protegidos (ENP)
+  - Zonas de Especial Conservación (ZEC)
+  - Hábitats de Interés Comunitario (HIC)
+  - Especies Protegidas
+- Capas en primer plano:
+  - Especies nativas (no protegidas, introducidas y traslocadas)
+  - Leyendas 
 
 Ayuda para el manejo del mapa &#10132; [documentación](`r rmarkdown::metadata$documentation`).
 
 <center>
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
-source("code/06plot_flora.R")
+source("code/R/04plot_flora.R")
 
 bscols(
   widths = c(6, 3, 3),
@@ -71,7 +77,7 @@ map
 * ### **Busca la especie en la que estés interesado!!!**
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
-source("code/10tables.R")
+source("code/R/07tables.R")
 gt_plantae
 ```
 
