@@ -90,7 +90,7 @@ map <- leaflet() |>
                              "<br>### <strong>ESPECIES PROTEGIUDAS DEL LUGAR</strong> ###", 
                              "<br>###=================================###", 
                              glue("<br>==> <strong>Número de especies protegidas en total: <u>{protected_species$n}</u></strong>"),
-                             glue("<br>> <i>{protected_species$species}</i>"),
+                             glue("<br>> {protected_species$species}"),
                              "</p>") |> 
                 lapply(htmltools::HTML),
               popupOptions = labelOptions(
