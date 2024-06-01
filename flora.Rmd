@@ -74,13 +74,12 @@ body {
 
 Mapa interactivo formado por varias capas:
 
-- Capas básicas:
+- **Capas de base**:
   - Por defectos sin capa
   - Espacies Naturales Protegidos (ENP)
   - Zonas de Especial Conservación (ZEC)
-  - Hábitats de Interés Comunitario (HIC)
   - Especies Protegidas
-- Capas en primer plano:
+- **Capas en primer plano**:
   - Especies (nativas no protegidas, introducidas y traslocadas)
   - Leyendas 
 

@@ -2,6 +2,7 @@
 code/filtrar*
 code/*.jl
 code/*ipynb
+code/nombrar/
 # Data files
 data/*
 !data/README.txt

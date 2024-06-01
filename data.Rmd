@@ -128,7 +128,7 @@ gt_endemism
 </center>
 
 <div style="text-align: center;">
-<button class="button" onclick="window.location.href='./data'">INICIO</button>
+<button class="button" onclick="window.location.href='./'">INICIO</button>
 <button class="button" onclick="window.location.href='./invertebrates'">MAPA INVERTEBRADOS</button>
 <button class="button" onclick="window.location.href='./flora'">MAPA FLORA Y VEGETACIÓN</button>
 </div>
