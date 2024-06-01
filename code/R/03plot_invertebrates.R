@@ -1,49 +1,8 @@
 #!/usr/bin/env Rscript
 
-## Load the libraries
-library(leaflet)
-library(sf)
-library(tidyverse)
-library(geojsonio)
-library(leaflet.extras)
-library(glue)
-library(crosstalk)
+source("code/R/process_map_layers.R")
 
-# Url for finding the species in biota https://www.biodiversidadcanarias.es/biota/
-url_biota <- "https://www.biodiversidadcanarias.es/biota/especie/"
-
-## Load the data
-enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") |>
-  st_transform(map, crs = 4326) |>
-  mutate(categoria = factor(categoria,
-                            levels = c("Monumento Natural", 
-                                       "Paisaje Protegido",
-                                       "Parque Natural", 
-                                       "Parque Rural", 
-                                       "Reserva Natural Especial",
-                                       "Reserva Natural Integral", 
-                                       "Sitio de Interés Científico")))
-
-zec_map <- read_sf("data/gran_canaria_shp/gc_zec.shp") |> 
-  rename_all(tolower) |>
-  st_transform(map, crs = 4326) 
-
-species <- read_tsv("data/coord_invertebrates.tsv",na ="") |>
-    mutate(family = str_to_title(family),
-           order = str_to_title(order),
-           class = str_to_title(class), 
-           phylo = str_to_title(phylo)) 
-
-jardin_botanico <- read_sf("data/gran_canaria_shp/jardin_botanico.shp")
-
-## Create the color palettes for the layers
-pal_pne <- colorFactor(
-  palette = c("#004078", "#80a0bd", 
-              "#f78000", "#e60000", 
-              "#00913f", "#034a31", 
-              "#BADBCA"),
-  domain = enp_map$categoria
-)
+species <- f_species("coord_invertebrates.tsv") 
 
 pal_species <- colorFactor(
   palette = c("#ff0000", "#59ff00", "#2600ff"),
@@ -65,14 +24,14 @@ map <- leaflet() |>
                                                   fillOpacity = .7,
                                                   dashArray = "",
                                                   bringToFront = FALSE),
-              label =  paste0("<strong>ENP</strong>: ", 
+              popup =  paste0("<strong>ENP</strong>: ", 
                               enp_map$codigo, " ", 
                               glue("<u>{enp_map$nombre}</u>"), 
                               "<br>", 
                               "<strong>Categoría</strong>: ", 
                               enp_map$categoria) |> 
                 lapply(htmltools::HTML),
-              labelOptions = labelOptions(
+              popupOptions = labelOptions(
                 style = list("font-weight" = "normal",
                              padding = "3px 8px"),
                 textsize = "15px",
@@ -101,6 +60,21 @@ map <- leaflet() |>
               ),              
               weight = 0, fillOpacity = .5,
               group = "Red Natura 2000") |>
+  addPolygons(data = hic_map, 
+              fillColor = ~pal_hic(habue4dva1), 
+              color = "transparent",
+              weight = 0, fillOpacity = .5,
+              dashArray = "3",
+              popup = paste0(
+                "<strong>Código HIC:</strong>): ", glue("<u>{hic_map$habue4dva1}</u>"),
+                "<br><strong>Nombre:</strong> ", hic_map$name
+                ) |> lapply(htmltools::HTML),  
+              highlightOptions = highlightOptions(weight = 5,
+                                                  color = "#666",
+                                                  fillOpacity = .7,
+                                                  dashArray = "",
+                                                  bringToFront = FALSE),
+              group = "Hábitats de Interés<br>Comunitarios") |>
   addPolygons(data = jardin_botanico, 
               fillColor = "yellow", fillOpacity = .5, weight = 1) |>
   addCircleMarkers(data = sd, 
@@ -131,7 +105,7 @@ map <- leaflet() |>
   addLegend(data = species, "bottomleft", pal = pal_species,
             values = ~category, title = "<strong>Leyenda:</strong>", 
             opacity=1, group = "Leyenda") |>
-  addLayersControl(baseGroups = c("SIN CAPA", "Espacios Naturales<br>Protegidos", "Red Natura 2000"), 
+  addLayersControl(baseGroups = c("SIN CAPA", "Espacios Naturales<br>Protegidos", "Red Natura 2000", "Hábitats de Interés<br>Comunitarios"), 
                    overlayGroups = c("Especies", "Leyenda"),
                    options = layersControlOptions(collapsed = T)) |>
   addResetMapButton() |>

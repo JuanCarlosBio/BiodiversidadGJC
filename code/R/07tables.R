@@ -72,7 +72,7 @@ gt_invertebrates <- table_invertebrates %>%
         use_search = TRUE,
         use_resizers = TRUE,
         use_compact_mode = TRUE
-    )
+    ) 
 
 gt_plantae <- table_plantae %>% 
     as_tibble() %>% 

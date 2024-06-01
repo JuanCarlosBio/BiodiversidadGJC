@@ -1,77 +1,10 @@
 [1] "=============================================================="
 [1] ">>> THIS ARE THE ERRORS THAT YOU HAVE HAD IN PLANTAE THIS WEEK"
 [1] "=============================================================="
-                        id filename_ok filename_pieces
-1  IMG_20240529_171506.jpg       FALSE               1
-2  IMG_20240529_171546.jpg       FALSE               1
-3  IMG_20240529_171631.jpg       FALSE               1
-4  IMG_20240529_171635.jpg       FALSE               1
-5  IMG_20240529_171659.jpg       FALSE               1
-6  IMG_20240529_171742.jpg       FALSE               1
-7  IMG_20240529_171747.jpg       FALSE               1
-8  IMG_20240529_171853.jpg       FALSE               1
-9  IMG_20240529_172130.jpg       FALSE               1
-10 IMG_20240529_172245.jpg       FALSE               1
-11 IMG_20240529_172410.jpg       FALSE               1
-12 IMG_20240529_172439.jpg       FALSE               1
-13 IMG_20240529_172558.jpg       FALSE               1
-14 IMG_20240529_172632.jpg       FALSE               1
-15 IMG_20240529_172922.jpg       FALSE               1
-16 IMG_20240529_173147.jpg       FALSE               1
-17 IMG_20240529_174431.jpg       FALSE               1
-18 IMG_20240529_174940.jpg       FALSE               1
-19 IMG_20240529_175132.jpg       FALSE               1
-20 IMG_20240529_175234.jpg       FALSE               1
-21 IMG_20240529_175313.jpg       FALSE               1
-22 IMG_20240529_175700.jpg       FALSE               1
-23 IMG_20240529_175715.jpg       FALSE               1
-24 IMG_20240529_175722.jpg       FALSE               1
-25 IMG_20240529_175735.jpg       FALSE               1
-26 IMG_20240529_175749.jpg       FALSE               1
-27 IMG_20240529_175813.jpg       FALSE               1
-28 IMG_20240529_175824.jpg       FALSE               1
-29 IMG_20240529_175835.jpg       FALSE               1
-30 IMG_20240529_175921.jpg       FALSE               1
-31 IMG_20240529_180047.jpg       FALSE               1
-32 IMG_20240529_180201.jpg       FALSE               1
-33 IMG_20240529_180224.jpg       FALSE               1
-34 IMG_20240529_180312.jpg       FALSE               1
-35 IMG_20240529_180354.jpg       FALSE               1
-36 IMG_20240529_180528.jpg       FALSE               1
-37 IMG_20240529_180547.jpg       FALSE               1
-38 IMG_20240529_180611.jpg       FALSE               1
-39 IMG_20240529_180644.jpg       FALSE               1
-40 IMG_20240529_180719.jpg       FALSE               1
-41 IMG_20240529_180815.jpg       FALSE               1
-42 IMG_20240529_180911.jpg       FALSE               1
-43 IMG_20240529_181048.jpg       FALSE               1
-44 IMG_20240529_181126.jpg       FALSE               1
-45 IMG_20240529_181209.jpg       FALSE               1
-46 IMG_20240529_181316.jpg       FALSE               1
-47 IMG_20240529_181404.jpg       FALSE               1
-48 IMG_20240529_181430.jpg       FALSE               1
-49 IMG_20240529_182045.jpg       FALSE               1
-50 IMG_20240529_182210.jpg       FALSE               1
-51 IMG_20240529_182259.jpg       FALSE               1
-52 IMG_20240529_182334.jpg       FALSE               1
-53 IMG_20240529_182431.jpg       FALSE               1
-54 IMG_20240529_182437.jpg       FALSE               1
-55 IMG_20240529_182529.jpg       FALSE               1
-56 IMG_20240529_182555.jpg       FALSE               1
-57 IMG_20240529_182633.jpg       FALSE               1
-58 IMG_20240529_182647.jpg       FALSE               1
-59 IMG_20240529_182834.jpg       FALSE               1
-60 IMG_20240529_183009.jpg       FALSE               1
+[1] id              filename_ok     filename_pieces
+<0 rows> (or 0-length row.names)
 [1] "=============================================================="
 [1] ">>> THIS ARE THE ERRORS THAT YOU HAVE HAD IN METAZOA THIS WEEK"
 [1] "=============================================================="
-                       id filename_ok filename_pieces
-1 IMG_20240529_171257.jpg       FALSE               1
-2 IMG_20240529_171944.jpg       FALSE               1
-3 IMG_20240529_171958.jpg       FALSE               1
-4 IMG_20240529_172130.jpg       FALSE               1
-5 IMG_20240529_172838.jpg       FALSE               1
-6 IMG_20240529_175446.jpg       FALSE               1
-7 IMG_20240529_181710.jpg       FALSE               1
-8 IMG_20240529_184025.jpg       FALSE               1
-9 IMG_20240529_185032.jpg       FALSE               1
+[1] id              filename_ok     filename_pieces
+<0 rows> (or 0-length row.names)

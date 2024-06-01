@@ -10,10 +10,13 @@ suppressMessages(suppressWarnings({
   library(sf)
   library(gt)
 }))
+
 ##----------------------------------------------------------------------------#
-## Datos ##
+
+## Loding scripts and fonts 
 source("code/R/01process_exif.R")
 
+## Loading the data ##
 invertebrates <- read_tsv("data/coord_invertebrates.tsv")
 plantae <- read_tsv("data/coord_plantae.tsv") 
 enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp")
@@ -176,7 +179,7 @@ metazoa_plantae_plot <- plad_invdp |>
   theme(
     plot.background = element_rect(fill = "transparent", color = "transparent"),
     panel.background = element_rect(fill = "transparent", color = "transparent"),
-    plot.title = element_markdown(face = "bold", size = 18, hjust = .5, 
+    plot.title = element_markdown(face = "bold", size = 18, hjust = .5,
                                   margin = margin(b = .75, unit = "cm")),
     axis.title = element_text(face = "bold", size = 18),
     axis.title.x = element_text(margin = margin(t = .5, unit = "cm")), 
@@ -234,7 +237,7 @@ endemism_table <- endemic_organisms_count |>
                              organism == "invertebrates" ~ "Metazoa"), 
         name_value = paste0(name, "_", value)) |>
         select(-name, -value) |>
-  pivot_wider(organism, names_from=name_value, values_from=n)
+  pivot_wider(id_cols = organism, names_from=name_value, values_from=n)
 
 gt_endemism <- endemism_table |>
   gt(rowname_col = "organism") |>
@@ -266,14 +269,13 @@ gt_endemism <- endemism_table |>
   ) |>
   tab_options(
     table.background.color = "#fff3d8"
-  )
+  ) 
 
 ##----------------------------------------------------------------------------#
 ## Estadísticas de las Especies Nativas, Protegidas e Introducidas/traslocadas
 ##----------------------------------------------------------------------------#
 
 # Procesado de datos
-
 category_invertebrates <- invertebrates |>
   group_by(id_biota, category) |>
   count() |>
@@ -331,7 +333,7 @@ category_invertebrate_plot <- category_invertebrates  |>
     plot.title = element_markdown(face = "bold", size = 18, hjust = .5, 
                                   margin = margin(b = .5, unit = "cm")),
     plot.subtitle = element_markdown(face = "bold", size = 16, hjust = .5, 
-                                     margin = margin(b = .75, unit = "cm")),
+                                     margin = margin(b = .75, unit = "cm")), 
     axis.title = element_text(face = "bold", size = 18),
     axis.title.x = element_text(margin = margin(t = .5, unit = "cm")), 
     axis.title.y = element_text(margin = margin(r = .5, unit = "cm")),     
@@ -390,7 +392,7 @@ category_plantae_plot <- category_plantae  |>
     panel.background = element_rect(fill = "transparent", color = "transparent"),
     plot.title = element_markdown(face = "bold", size = 18, hjust = .5, 
                                   margin = margin(b = .5, unit = "cm")),
-    plot.subtitle = element_markdown(face = "bold", size = 16, hjust = .5, 
+    plot.subtitle = element_markdown(face = "bold", size = 14, hjust = .5, 
                                      margin = margin(b = .75, unit = "cm")),
     axis.title = element_text(face = "bold", size = 18),
     axis.title.x = element_text(margin = margin(t = .5, unit = "cm")), 
