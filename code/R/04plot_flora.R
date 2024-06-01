@@ -66,21 +66,21 @@ map <- leaflet() |>
               ),              
               weight = 0, fillOpacity = .5,
               group = "Red Natura 2000") |>
-  addPolygons(data = hic_map, 
-              fillColor = ~pal_hic(habue4dva1), 
-              color = "transparent",
-              weight = 0, fillOpacity = .5,
-              dashArray = "3",
-              popup = paste0(
-                "<strong>Código HIC:</strong>): ", glue("<u>{hic_map$habue4dva1}</u>"),
-                "<br><strong>Nombre:</strong> ", hic_map$name
-                ) |> lapply(htmltools::HTML),  
-              highlightOptions = highlightOptions(weight = 5,
-                                                  color = "#666",
-                                                  fillOpacity = .7,
-                                                  dashArray = "",
-                                                  bringToFront = FALSE),
-              group = "Hábitats de Interés<br>Comunitarios") |>
+#  addPolygons(data = hic_map, 
+#              fillColor = ~pal_hic(habue4dva1), 
+#              color = "transparent",
+#              weight = 0, fillOpacity = .5,
+#              dashArray = "3",
+#              popup = paste0(
+#                "<strong>Código HIC:</strong>): ", glue("<u>{hic_map$habue4dva1}</u>"),
+#                "<br><strong>Nombre:</strong> ", hic_map$name
+#                ) |> lapply(htmltools::HTML),  
+#              highlightOptions = highlightOptions(weight = 5,
+#                                                  color = "#666",
+#                                                  fillOpacity = .7,
+#                                                  dashArray = "",
+#                                                  bringToFront = FALSE),
+#              group = "Hábitats de Interés<br>Comunitarios") |>
   addPolygons(data = protected_species,
               fillColor = ~pal_protected_especies(n),
               color = "transparent",
@@ -144,8 +144,10 @@ map <- leaflet() |>
   addLegend(data = species, "bottomleft", pal = pal_species,
             values = ~category, title = "<strong>Especies NO protegidas</strong>", 
             opacity=1, group = "Leyenda Especies") |> 
-  addLayersControl(baseGroups = c("SIN CAPA", "Espacios Naturales<br>Protegidos", 
-                                  "Red Natura 2000", "Hábitats de Interés<br>Comunitarios", 
+  addLayersControl(baseGroups = c("SIN CAPA", 
+                                  "Espacios Naturales<br>Protegidos", 
+                                  "Red Natura 2000", 
+                                  # "Hábitats de Interés<br>Comunitarios", 
                                   "Especies Protegidas"), 
                    overlayGroups = c("Especies", "Leyenda Especies", 
                                      "Leyenda especies<br>protegidas"),
