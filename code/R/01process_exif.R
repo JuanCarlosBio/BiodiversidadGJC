@@ -12,6 +12,7 @@ data_biota <- readr::read_tsv("data/biota_data_processed.tsv")
 
 for (imgs in c("images/flora_vascular", "images/invertebrados")){
     system(glue("unzip -n {imgs}.zip -d {imgs}/"))
+    system(glue("zip -d {imgs}.zip '*'"))
 }
 
 

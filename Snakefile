@@ -4,7 +4,6 @@ rule targets:
         "images/invertebrados.zip",
         "data/islands_shp/municipios.shp",
         "data/islands_shp/eennpp.shp",
-        "data/islands_shp/20160609 habitatsUE(vegyZEC).shp",
         "data/jardin_botanico.kml",
         "data/biota_species.csv",
         "data/gran_canaria_shp/gc_muni.shp",
@@ -43,7 +42,6 @@ rule download_canary_islands_shp:
     output:
         "data/islands_shp/municipios.shp",
         "data/islands_shp/eennpp.shp",
-        "data/islands_shp/20160609 habitatsUE(vegyZEC).shp",
     conda:
         "code/enviroments/env.yml"
     shell:

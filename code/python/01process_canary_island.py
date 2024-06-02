@@ -9,7 +9,6 @@ from shapely.geometry import box
 canary_islands = gpd.read_file("data/islands_shp/municipios.shp")
 pne = gpd.read_file("data/islands_shp/eennpp.shp")
 zec = gpd.read_file("data/islands_shp/IC_n2000_ZECZonificacion.shp")
-hic = gpd.read_file("data/islands_shp/20160609 habitatsUE(vegyZEC).shp") 
 ##-----------------------------------------------------------------##
 
 ##-----------------------------------------------------------------##
@@ -17,7 +16,6 @@ hic = gpd.read_file("data/islands_shp/20160609 habitatsUE(vegyZEC).shp")
 gc_muni = canary_islands[canary_islands["isla"] == "GRAN CANARIA"]
 gc_pne = pne[pne["codigo"].str.startswith("C")]
 gc_zec = zec[zec["ISLA"] == "GRAN CANARIA"]
-gc_hic = hic[hic["Cod_ISLA"] == "C"]
 
 # Fix Gran Canaria Protected Natural Spaces
 gc_filter1 = gc_pne[gc_pne["codigo"].isin(["C-01", "C-21", "C-20", "C-14",
@@ -55,6 +53,5 @@ grid = gpd.GeoDataFrame({'geometry': boxes}, crs=gc_muni.crs)
 gc_muni.to_file("data/gran_canaria_shp/gc_muni.shp")
 gc_pne_processed.to_file("data/gran_canaria_shp/gc_pne.shp")
 gc_zec.to_file("data/gran_canaria_shp/gc_zec.shp")
-gc_hic.to_file("data/gran_canaria_shp/gc_hic.shp")
 grid.to_file("data/gran_canaria_shp/gc_grid_empty.shp")
 ##-----------------------------------------------------------------##

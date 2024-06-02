@@ -82,7 +82,7 @@ Mapa interactivo formado por varias capas:
   - Espacies Naturales Protegidos (ENP)
   - Zonas de Especial Conservación (ZEC)
 - **Capas en primer plano**:
-  - Especies nativas (no protegidas), protegidas y introducidas 
+  - Especies nativas (no protegidas), protegidas e introducidas 
   - Leyenda 
 
 Ayuda para el manejo del mapa &#10132; [documentación](`r rmarkdown::metadata$documentation`).
