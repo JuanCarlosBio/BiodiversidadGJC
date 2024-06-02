@@ -193,4 +193,3 @@ rule webpage_html:
         R -e "rmarkdown::render('{input.rmd_flora}')"
         R -e "rmarkdown::render('{input.rmd_data}')"
         """  
-

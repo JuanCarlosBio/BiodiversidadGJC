@@ -5,10 +5,10 @@ url_pne=https://opendata.sitcan.es/upload/medio-ambiente/eennpp.zip
 url_zec=https://opendata.sitcan.es/upload/medio-ambiente/gobcan_medio-ambiente_zec-zonificacion.zip 
 url_hic=https://www.gobiernodecanarias.org/medioambiente/descargas/Biodiversidad/Habitats%20de%20interes%20comunitario.zip
 
-wget -P data/ $url_muni -N  
-wget -P data/ $url_pne -N 
-wget -P data/ $url_zec -N 
-wget -P data/ $url_hic -N 
+wget -P data/ $url_muni -N -q 
+wget -P data/ $url_pne -N -q
+wget -P data/ $url_zec -N -q
+wget -P data/ $url_hic -N -q
 
 mkdir -p data/islands_shp
 
