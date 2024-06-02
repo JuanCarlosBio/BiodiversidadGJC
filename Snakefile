@@ -136,7 +136,7 @@ rule process_exif_images:
         "code/enviroments/env.yml"
     shell:
         """
-        echo ">>>IMÁgenes<<<" ; ls images/
+        echo ">>>IMÁGENES<<<" ; ls images/ ; du -h images/*zip
         Rscript {input.r_script}
         Rscript {input.check_errors_labels} > {log}
         python {input.py_script}

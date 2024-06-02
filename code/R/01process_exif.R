@@ -1,17 +1,19 @@
 #!/usr/bin/env Rscript
 
-
 suppressMessages(suppressWarnings({
     library(dplyr)
     library(tidyr)
     library(stringr)
     library(lubridate)
+    library(glue)
 }))
 
 data_biota <- readr::read_tsv("data/biota_data_processed.tsv")
 
-unzip("images/flora_vascular.zip", exdir = "images/flora_vascular")
-unzip("images/invertebrados.zip", exdir = "images/invertebrados")
+for (imgs in c("images/flora_vascular", "images/invertebrados")){
+    system(glue("unzip -n {imgs}.zip -d {imgs}/"))
+}
+
 
 ai_files <- list.files("images/invertebrados/", 
                     full.names = TRUE)
