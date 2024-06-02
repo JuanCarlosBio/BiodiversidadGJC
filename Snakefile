@@ -123,6 +123,7 @@ rule process_exif_images:
         py_script = "code/python/02protected_species_layer.py",
         fv_files = "images/flora_vascular.zip",
         ai_files = "images/flora_vascular.zip",
+        empty_grid = "data/gran_canaria_shp/gc_grid_empty.shp",
         biota_file = "data/biota_data_processed.tsv",
         check_errors_labels = "code/R/02check_errors_labels.R"
     output:
