@@ -1,8 +1,8 @@
 [1] "=============================================================="
 [1] ">>> THIS ARE THE ERRORS THAT YOU HAVE HAD IN PLANTAE THIS WEEK"
 [1] "=============================================================="
-[1] id              filename_ok     filename_pieces
-<0 rows> (or 0-length row.names)
+      id filename_ok filename_pieces
+1 FV0975       FALSE               9
 [1] "=============================================================="
 [1] ">>> THIS ARE THE ERRORS THAT YOU HAVE HAD IN METAZOA THIS WEEK"
 [1] "=============================================================="

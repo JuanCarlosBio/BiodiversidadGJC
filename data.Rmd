@@ -78,16 +78,12 @@ body {
 source("code/R/05statistics.R")
 ```
 
-[link ai]: https://www.dropbox.com/scl/fo/j8wy15nzlrpn98dkpsu6e/h?rlkey=27la6qjalew06kc9wy3cgundv&dl=1
-
-[link fv]: https://www.dropbox.com/scl/fo/z9ad8tcbh02d2zy7g7xf0/h?rlkey=yvu3gii63sfvpicsgplvbty88&dl=1
-
 <center>
 
   |         **MAPA**             | **Nº CLASIFICADAS** | **Nº NO CLASIFICADAS** | **DESCARGA**      | 
   | :--------------------------: | :-----------------: | :--------------------: | :---------------: |
-  | *Mapa de invertebrados*      | `r tabla_n_ai$n[1]`  | `r tabla_n_ai$n[2]`   |   [imágenes de invertebrados (`r glue::glue("{round((file.info('images/invertebrados.zip')$size / 1073741824), 2)} GB")`)](https://www.dropbox.com/scl/fo/z9ad8tcbh02d2zy7g7xf0/h?rlkey=yvu3gii63sfvpicsgplvbty88&dl=1) | 
-  | *Mapa de flora y vegetación* | `r tabla_n_fv$n[1]`  | `r tabla_n_fv$n[2]`   |   [imágenes de flora y vegetación (`r glue::glue("{round((file.info('images/flora_vascular.zip')$size / 1073741824), 2)} GB")`)](https://www.dropbox.com/scl/fo/z9ad8tcbh02d2zy7g7xf0/h?rlkey=yvu3gii63sfvpicsgplvbty88&dl=1) |
+  | *Mapa de invertebrados*      | `r tabla_n_ai$n[1]`  | `r tabla_n_ai$n[2]`   |   [imágenes de invertebrados](https://www.dropbox.com/scl/fo/l468a8h01ig4ls8468pmu/AHEIUVWfH_E8WMbAF4mLHmI?rlkey=ggn9xajw53jji5tl63acppd8u&st=16usfqrf&dl=1) | 
+  | *Mapa de flora y vegetación* | `r tabla_n_fv$n[1]`  | `r tabla_n_fv$n[2]`   |   [imágenes de flora y vegetación](https://www.dropbox.com/scl/fo/rxpvaa2g0rmy4qgb8ws86/ANZK8JFmhui6oZSm9QtqcVw?rlkey=4stj5ob4e3j7sxomvumq0903l&st=f3nucvc4&dl=1) |
 
 </center>
 

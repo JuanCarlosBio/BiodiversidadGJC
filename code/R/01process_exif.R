@@ -2,33 +2,31 @@
 
 suppressMessages(suppressWarnings({
     library(dplyr)
+    library(readr)
     library(tidyr)
     library(stringr)
     library(lubridate)
-    library(glue)
 }))
 
 data_biota <- readr::read_tsv("data/biota_data_processed.tsv")
 
-for (imgs in c("images/flora_vascular", "images/invertebrados")){
-    system(glue("unzip -n {imgs}.zip -d {imgs}/"))
-    system(glue("zip -d {imgs}.zip '*'"))
-}
-
-
-ai_files <- list.files("images/invertebrados/", 
-                    full.names = TRUE)
-fv_files <- list.files("images/flora_vascular/", 
-                    full.names = TRUE)
-
-exif_data_ai <- exifr::read_exif(ai_files)
-exif_data_fv <- exifr::read_exif(fv_files)
+# unzip("images/flora_vascular.zip", exdir = "images/flora_vascular")
+# unzip("images/invertebrados.zip", exdir = "images/invertebrados")
+# 
+# ai_files <- list.files("images/invertebrados/", 
+#                     full.names = TRUE)
+# fv_files <- list.files("images/flora_vascular/", 
+#                     full.names = TRUE)
+# 
+# exif_data_ai <- exifr::read_exif(ai_files)
+# exif_data_fv <- exifr::read_exif(fv_files)
 
 t_replacement <- c("_ta_" = "á","_te_" = "é","_ti_" = "í", "_to_" = "ó", "_tu_" = "ú", "_enie_" = "ñ")
 
-exif_data_ai |>
-    rename_all(tolower) |>
-    select(sourcefile, filename, gpsdatetime, gpsposition,gpsaltitude) |>
+# exif_data_ai |>
+#     rename_all(tolower) |>
+#     select(sourcefile, filename, gpsdatetime, gpsposition,gpsaltitude) |>
+read_tsv("data/raw_dropbox_links_metazoa_content.tsv") |>
     mutate(filename = str_replace(filename, pattern = ".jpg", replacement = "")) |>
     filter(!(str_detect(filename,  "NO CLASIFICADO")) & 
                     str_detect(filename, "^AI") & 
@@ -65,9 +63,10 @@ exif_data_ai |>
     readr::write_tsv("data/coord_invertebrates.tsv")
 
 
-exif_data_fv |>
-    rename_all(tolower) |>
-    select(sourcefile, filename, gpsdatetime, gpsposition, gpsaltitude) |>
+# exif_data_fv |>
+#     rename_all(tolower) |>
+#     select(sourcefile, filename, gpsdatetime, gpsposition, gpsaltitude) |>
+read_tsv("data/raw_dropbox_links_plantae_content.tsv") |>
     mutate(filename = str_replace(filename, pattern = ".jpg", replacement = "")) |>
     filter(!(str_detect(filename,  "NO CLASIFICADO")) & 
                     str_detect(filename, "^FV"),

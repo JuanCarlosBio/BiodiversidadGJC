@@ -5,15 +5,11 @@ suppressMessages(suppressWarnings({
     library(exifr)
 }))
 
-flora_vascular <- list.files("images/flora_vascular", full.names = TRUE)
-invertebrados <- list.files("images/invertebrados", full.names = TRUE)
-
 print("==============================================================")
 print(">>> THIS ARE THE ERRORS THAT YOU HAVE HAD IN PLANTAE THIS WEEK")
 print("==============================================================")
 
-read_exif(flora_vascular) %>%
-    rename_all(tolower) %>%
+read_tsv("data/raw_dropbox_links_plantae_content.tsv") %>%
     filter(!(str_detect(filename,  "NO CLASIFICADO"))) %>% 
     select(filename) %>%
     separate_wider_delim(filename, delim = "-",
@@ -30,8 +26,7 @@ print("==============================================================")
 print(">>> THIS ARE THE ERRORS THAT YOU HAVE HAD IN METAZOA THIS WEEK")
 print("==============================================================")
 
-read_exif(invertebrados) %>%
-    rename_all(tolower) %>%
+read_tsv("data/raw_dropbox_links_metazoa_content.tsv") %>%
     filter(!(str_detect(filename,  "NO CLASIFICADO"))) %>% 
     select(filename) %>%
     separate_wider_delim(filename, delim = "-",

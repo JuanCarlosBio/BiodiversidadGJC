@@ -14,9 +14,10 @@ suppressMessages(suppressWarnings({
 ##----------------------------------------------------------------------------#
 
 ## Loding scripts and fonts 
-source("code/R/01process_exif.R")
 
 ## Loading the data ##
+exif_data_ai <- read_tsv("data/raw_dropbox_links_metazoa_content.tsv")
+exif_data_fv <- read_tsv("data/raw_dropbox_links_plantae_content.tsv")
 invertebrates <- read_tsv("data/coord_invertebrates.tsv")
 plantae <- read_tsv("data/coord_plantae.tsv") 
 enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp")
@@ -56,7 +57,6 @@ plantae_processed <- plantae |>
 ##----------------------------------------------------------------------------#
 
 exif_data_ai |>
-  rename_all(tolower) |>
   select(filename) |>
   mutate(clasificados = case_when(str_detect(filename, pattern = "NO CLASIFICADO") ~ "no clasificada",
                                   !(str_detect(filename, pattern = "NO CLASIFICADO")) ~ "clasificada")) |>

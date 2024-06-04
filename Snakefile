@@ -1,7 +1,9 @@
 rule targets:
     input:
-        "images/flora_vascular.zip",
-        "images/invertebrados.zip",
+#        "images/flora_vascular.zip",
+#        "images/invertebrados.zip",
+        "data/raw_dropbox_links_metazoa_content.tsv",
+        "data/raw_dropbox_links_plantae_content.tsv",
         "data/islands_shp/municipios.shp",
         "data/islands_shp/eennpp.shp",
         "data/jardin_botanico.kml",
@@ -23,17 +25,32 @@ rule targets:
         "figures/n_category_invertebrates.png",
         "figures/n_category_plantae.png"
 
+#rule download_images:
+#    input:
+#        bash_script = "code/bash/01download_images.bash"
+#    output:
+#        "images/flora_vascular.zip",
+#        "images/invertebrados.zip"
+#    conda:
+#        "code/enviroments/env.yml"
+#    shell:
+#        """
+#        bash {input.bash_script}
+#        """
+
 rule download_images:
     input:
-        bash_script = "code/bash/01download_images.bash"
+        r_script = "code/R/01download_images.R",
+        metadata_metazoa = "metadata/dropbox_links_metazoa.csv",
+        metadata_plantae = "metadata/dropbox_links_plantae.csv"
     output:
-        "images/flora_vascular.zip",
-        "images/invertebrados.zip"
+        "data/raw_dropbox_links_metazoa_content.tsv",
+        "data/raw_dropbox_links_plantae_content.tsv"
     conda:
         "code/enviroments/env.yml"
     shell:
         """
-        bash {input.bash_script}
+        Rscript {input.r_script}
         """
 
 rule download_canary_islands_shp:
@@ -119,8 +136,10 @@ rule process_exif_images:
     input:
         r_script = "code/R/01process_exif.R",
         py_script = "code/python/02protected_species_layer.py",
-        fv_files = "images/flora_vascular.zip",
-        ai_files = "images/flora_vascular.zip",
+#        fv_files = "images/flora_vascular.zip",
+#        ai_files = "images/flora_vascular.zip",
+        fv_files ="data/raw_dropbox_links_metazoa_content.tsv",
+        ai_files ="data/raw_dropbox_links_plantae_content.tsv",
         empty_grid = "data/gran_canaria_shp/gc_grid_empty.shp",
         biota_file = "data/biota_data_processed.tsv",
         check_errors_labels = "code/R/02check_errors_labels.R"
@@ -134,7 +153,6 @@ rule process_exif_images:
         "code/enviroments/env.yml"
     shell:
         """
-        echo ">>>IMÁGENES<<<" ; ls images/ ; du -h images/*zip
         Rscript {input.r_script}
         Rscript {input.check_errors_labels} > {log}
         python {input.py_script}
