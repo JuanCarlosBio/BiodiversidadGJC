@@ -186,6 +186,7 @@ rule webpage_html:
         r_script_invertebrates = "code/R/03plot_invertebrates.R",
         r_script_flora = "code/R/04plot_flora.R",
         r_script_process_layers = "code/R/process_map_layers.R",
+        py_script = "code/python/03protected_natural_spaces_info.py",
         gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
         gc_pne_shp = "data/gran_canaria_shp/gc_pne.shp", 
         jarbot = "data/gran_canaria_shp/jardin_botanico.shp",

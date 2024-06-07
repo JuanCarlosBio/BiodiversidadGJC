@@ -35,7 +35,9 @@ map <- leaflet() |>
       glue("<u>{enp_map$nombre}</u>"), 
       "<br>", 
       "<strong>Categoría</strong>: ", 
-      enp_map$categoria) |> 
+      enp_map$categoria,
+      glue("<br><a href={url_pne_info}{species$info}>Información del espacio</a>")
+      ) |> 
         lapply(htmltools::HTML),
     popupOptions = labelOptions(
       style = list("font-weight" = "normal",

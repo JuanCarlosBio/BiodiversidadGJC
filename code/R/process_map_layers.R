@@ -12,6 +12,7 @@ suppressMessages(suppressWarnings({
 }))
 
 url_biota <- "https://www.biodiversidadcanarias.es/biota/especie/"
+url_pne_info <- "https://descargas.grancanaria.com/jardincanario/ESPACIOS%20NATURALES%20PROTEGIDOS%20DE%20GRAN%20CANARIA/" 
 
 ## Load the data
 # Url for finding the species in biota https://www.biodiversidadcanarias.es/biota/
@@ -26,8 +27,15 @@ f_species <- function(data){
     return(df_speices)
 }
 
-enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") |>
-  st_transform(map, crs = 4326) |>
+## Information of the protected natural spaces
+pne_info <- system("python code/python/03protected_natural_spaces_info.py | grep ^C-", intern = T)
+df_pne_info <- data.frame(info = pne_info)
+df_pne_processed <- df_pne_info |> 
+  mutate(codigo = str_remove(info, "%.*"),
+         codigo = str_replace(codigo, "^C-(\\d)$", "C-0\\1"))
+
+enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") %>%
+  st_transform(map, crs = 4326) %>%
   mutate(categoria = factor(categoria,
                             levels = c("Monumento Natural", 
                                        "Paisaje Protegido",
@@ -35,7 +43,8 @@ enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") |>
                                        "Parque Rural", 
                                        "Reserva Natural Especial",
                                        "Reserva Natural Integral", 
-                                       "Sitio de Interés Científico")))
+                                       "Sitio de Interés Científico"))) %>%
+  inner_join(., df_pne_processed, by="codigo") 
 
 protected_species <- read_sf("data/gran_canaria_shp/protected_species_layer.shp") |>
   group_by(specie, name, id_biota, geometry) |> 
