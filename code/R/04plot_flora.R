@@ -10,7 +10,7 @@ pal_species <- colorFactor(
   domain = species$category
 )
 
-bins <- c(2, 5, 8, Inf)
+bins <- c(1, 2, 4, 6, Inf)
 pal_protected_especies <- colorBin("YlOrRd", domain = protected_species$n, bins = bins)
 
 sd <- SharedData$new(data = species)
@@ -36,7 +36,7 @@ map <- leaflet() |>
       "<br>", 
       "<strong>Categoría</strong>: ", 
       enp_map$categoria,
-      glue("<br><a href={url_pne_info}{species$info}>Información del espacio</a>")
+      glue("<br><a href={url_pne_info}{enp_map$info}>Información del espacio</a>")
       ) |> 
         lapply(htmltools::HTML),
     popupOptions = labelOptions(
@@ -68,21 +68,6 @@ map <- leaflet() |>
               ),              
               weight = 0, fillOpacity = .5,
               group = "Red Natura 2000") |>
-#  addPolygons(data = hic_map, 
-#              fillColor = ~pal_hic(habue4dva1), 
-#              color = "transparent",
-#              weight = 0, fillOpacity = .5,
-#              dashArray = "3",
-#              popup = paste0(
-#                "<strong>Código HIC:</strong>): ", glue("<u>{hic_map$habue4dva1}</u>"),
-#                "<br><strong>Nombre:</strong> ", hic_map$name
-#                ) |> lapply(htmltools::HTML),  
-#              highlightOptions = highlightOptions(weight = 5,
-#                                                  color = "#666",
-#                                                  fillOpacity = .7,
-#                                                  dashArray = "",
-#                                                  bringToFront = FALSE),
-#              group = "Hábitats de Interés<br>Comunitarios") |>
   addPolygons(data = protected_species,
               fillColor = ~pal_protected_especies(n),
               color = "transparent",
