@@ -10,7 +10,7 @@ pal_species <- colorFactor(
   domain = species$category
 )
 
-bins <- c(1, 2, 4, Inf)
+bins <- c(2, 5, 8, Inf)
 pal_protected_especies <- colorBin("YlOrRd", domain = protected_species$n, bins = bins)
 
 sd <- SharedData$new(data = species)
