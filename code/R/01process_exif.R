@@ -9,23 +9,10 @@ suppressMessages(suppressWarnings({
 }))
 
 data_biota <- readr::read_tsv("data/biota_data_processed.tsv")
-
-# unzip("images/flora_vascular.zip", exdir = "images/flora_vascular")
-# unzip("images/invertebrados.zip", exdir = "images/invertebrados")
-# 
-# ai_files <- list.files("images/invertebrados/", 
-#                     full.names = TRUE)
-# fv_files <- list.files("images/flora_vascular/", 
-#                     full.names = TRUE)
-# 
-# exif_data_ai <- exifr::read_exif(ai_files)
-# exif_data_fv <- exifr::read_exif(fv_files)
+protected_species_layer <- readr::read_tsv("data/protected_species/coord_plantae_pe.tsv")
 
 t_replacement <- c("_ta_" = "á","_te_" = "é","_ti_" = "í", "_to_" = "ó", "_tu_" = "ú", "_enie_" = "ñ")
 
-# exif_data_ai |>
-#     rename_all(tolower) |>
-#     select(sourcefile, filename, gpsdatetime, gpsposition,gpsaltitude) |>
 read_tsv("data/raw_dropbox_links_metazoa_content.tsv") |>
     mutate(filename = str_replace(filename, pattern = ".jpg", replacement = "")) |>
     filter(!(str_detect(filename,  "NO CLASIFICADO")) & 
@@ -59,13 +46,10 @@ read_tsv("data/raw_dropbox_links_metazoa_content.tsv") |>
                   gpsdatetime = ymd_hms(gpsdatetime),
                   gpsdatetime = format(gpsdatetime, "%d/%m/%Y")) |> 
     inner_join(data_biota, ., by="id_biota") |> 
-    select(-subdivision, division) |> 
+    select(-subdivision, division) |>
     readr::write_tsv("data/coord_invertebrates.tsv")
 
 
-# exif_data_fv |>
-#     rename_all(tolower) |>
-#     select(sourcefile, filename, gpsdatetime, gpsposition, gpsaltitude) |>
 read_tsv("data/raw_dropbox_links_plantae_content.tsv") |>
     mutate(filename = str_replace(filename, pattern = ".jpg", replacement = "")) |>
     filter(!(str_detect(filename,  "NO CLASIFICADO")) & 
@@ -101,4 +85,5 @@ read_tsv("data/raw_dropbox_links_plantae_content.tsv") |>
                   gpsdatetime = format(gpsdatetime, "%d/%m/%Y")) |> 
     inner_join(data_biota, ., by="id_biota") |> 
     select(-subdivision, division) |> 
+    bind_rows(protected_species_layer) |> 
     readr::write_tsv("data/coord_plantae.tsv")

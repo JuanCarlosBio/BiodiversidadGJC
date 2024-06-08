@@ -63,13 +63,9 @@ exif_data_ai |>
   group_by(clasificados) |>
   count() -> tabla_n_ai
 
-exif_data_fv |>
+plantae |>
   rename_all(tolower) |>
-  select(filename) |>
-  mutate(clasificados = case_when(str_detect(filename, pattern = "NO CLASIFICADO") ~ "no clasificada",
-                                  !(str_detect(filename, pattern = "NO CLASIFICADO")) ~ "clasificada")) |>
-  group_by(clasificados) |>
-  count() -> tabla_n_fv
+  nrow() -> tabla_n_fv
 
 ##----------------------------------------------------------------------------#
 ## Primer gráfico nº 1 mapa de portada
