@@ -104,7 +104,7 @@ map <- leaflet() |>
                    fillOpacity = 1, 
                    fillColor = ~pal_species(category), weight = .3, # fillColor = ~pal_species(class)  
                    radius = 8, group = "Especies") |>
-  addLegend(data = species, "bottomleft", pal = pal_species,
+  addLegend(data = species, "bottomright", pal = pal_species,
             values = ~category, title = "<strong>Leyenda:</strong>", 
             opacity=1, group = "Leyenda") |>
   addLayersControl(baseGroups = c("SIN CAPA", 
@@ -115,6 +115,7 @@ map <- leaflet() |>
                    overlayGroups = c("Especies", "Leyenda"),
                    options = layersControlOptions(collapsed = T)) |>
   addResetMapButton() |>
+  addScaleBar("bottomleft", scaleBarOptions(metric = TRUE, imperial = FALSE)) |>
   htmlwidgets::onRender("
   function(el, x) {
     this.on('baselayerchange', function(e) {

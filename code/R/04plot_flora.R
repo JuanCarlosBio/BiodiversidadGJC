@@ -128,7 +128,7 @@ map <- leaflet() |>
             title = "<strong>Especies protegidas</strong>", 
             opacity=1, 
             group = "Leyenda especies<br>protegidas") |>
-  addLegend(data = species, "bottomleft", pal = pal_species,
+  addLegend(data = species, "bottomright", pal = pal_species,
             values = ~category, title = "<strong>Especies NO protegidas</strong>", 
             opacity=1, group = "Leyenda Especies") |> 
   addLayersControl(baseGroups = c("SIN CAPA", 
@@ -140,6 +140,7 @@ map <- leaflet() |>
                                      "Leyenda especies<br>protegidas"),
                    options = layersControlOptions(collapsed = T, autoZIndex = TRUE))  |>
   addResetMapButton() |>
+  addScaleBar("bottomleft", scaleBarOptions(metric = TRUE, imperial = FALSE)) |>
   htmlwidgets::onRender("
     function(el, x) {
       this.on('baselayerchange', function(e) {
