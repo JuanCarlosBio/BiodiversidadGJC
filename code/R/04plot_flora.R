@@ -122,7 +122,7 @@ map <- leaflet() |>
                    radius = 8,
                    group = "Especies") |>
   addLegend(data = protected_species, 
-            "bottomleft", 
+            "bottomright", 
             pal = pal_protected_especies,
             values = ~n, 
             title = "<strong>Especies protegidas</strong>", 
