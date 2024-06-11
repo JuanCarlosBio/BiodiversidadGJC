@@ -66,8 +66,9 @@ body {
 }
 ```
 
+# ***BiodiversidadGJC***
 
-# **Bienvenid@ a mi página web!!!** 👨‍💻
+## **Bienvenid@ a mi página web!!!** 👨‍💻
 
 Mi idea es subir por el momento mapas interactivos de especies de ***flora*** y ***fauna*** que me voy encontrando por la isla de **Gran Canaria** 🏝️ 
 
