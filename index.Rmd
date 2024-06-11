@@ -6,8 +6,8 @@ output:
         theme: cerulean
         
 email_adress: jcge97@gmail.com
-github: https://github.com/Juankkar/ 
-github_repo: https://github.com/Juankkar/Especies_Encontradas_GC
+github: https://github.com/JuanCarlosBio/ 
+github_repo: https://github.com/JuanCarlosBio/BiodiversidadGJC
 ---
 
 ```{r setup, include=FALSE, echo = FALSE}

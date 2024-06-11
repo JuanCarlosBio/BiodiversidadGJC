@@ -10,9 +10,9 @@ output:
             collapsed: true
             smootg_scroll: true
 email_adress: jcge97@gmail.com
-github: https://github.com/Juankkar/ 
-github_repo: https://github.com/Juankkar/Especies_Encontradas_GC
-documentation: https://github.com/Juankkar/Especies_Encontradas_GC/blob/main/documents/info.md 
+github: https://github.com/JuanCarlosBio/ 
+github_repo: https://github.com/JuanCarlosBio/BiodiversidadGJC
+documentation: https://github.com/JuanCarlosBio/BiodiversidadGJC/blob/main/documents/info.md 
 ---
 
 ```{r setup, include=FALSE}
@@ -39,7 +39,7 @@ body {
   font-family: "Roboto"; sans-serif;
   font-weight: 400;
   font-style: normal;
-//    background-image: url('https://github.com/Juankkar/cosas_mias/blob/main/IMG_20240428_173528.jpg?raw=true');
+//    background-image: url('https://github.com/JuanCarlosBio/cosas_mias/blob/main/IMG_20240428_173528.jpg?raw=true');
   background-size: 100%;
 }
 
