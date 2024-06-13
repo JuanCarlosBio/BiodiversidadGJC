@@ -1,5 +1,5 @@
 ---
-title: Especies de animales invertebrados
+title: BiodiversidadGJC
 author: Juan Carlos García Estupiñán
 output: 
     html_document:
@@ -101,7 +101,8 @@ bscols(
     sharedData = sd,
     group = ~specie,
     ""
-  ))
+  )
+)
 
 map
 ```

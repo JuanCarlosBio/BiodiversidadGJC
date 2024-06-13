@@ -10,7 +10,6 @@ rule targets:
         "data/protected_species/protected_species_layer.shp",
         "data/gran_canaria_shp/gc_muni.shp",
         "data/gran_canaria_shp/gc_pne.shp",
-        "data/gran_canaria_shp/gc_grid_empty.shp",
         "data/gran_canaria_shp/jardin_botanico.shp",
         "data/coord_invertebrates.tsv",
         "data/coord_plantae.tsv",
@@ -96,8 +95,7 @@ rule process_canary_islands_shp:
         shp_pne = "data/islands_shp/eennpp.shp",
     output:
         "data/gran_canaria_shp/gc_muni.shp",
-        "data/gran_canaria_shp/gc_pne.shp",
-        "data/gran_canaria_shp/gc_grid_empty.shp"
+        "data/gran_canaria_shp/gc_pne.shp"
     conda:
         "code/enviroments/env.yml"
     shell:

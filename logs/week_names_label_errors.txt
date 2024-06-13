@@ -4,6 +4,7 @@
       id filename_ok filename_pieces
 1 FV0221       FALSE               9
 2 FV0252       FALSE               9
+3 FV0324       FALSE               9
 [1] "=============================================================="
 [1] ">>> THIS ARE THE ERRORS THAT YOU HAVE HAD IN METAZOA THIS WEEK"
 [1] "=============================================================="

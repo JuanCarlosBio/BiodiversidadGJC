@@ -22,7 +22,8 @@ f_species <- function(data){
         mutate(family = str_to_title(family),
             order = str_to_title(order),
             class = str_to_title(class), 
-            division = str_to_title(division)) 
+            division = str_to_title(division),
+            date = lubridate::dmy(gpsdatetime)) 
 
     return(df_speices)
 }
