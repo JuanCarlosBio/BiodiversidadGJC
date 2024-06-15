@@ -90,7 +90,7 @@ Mi idea es subir por el momento mapas interactivos de especies de ***flora*** y 
 
 ## <strong>MAPAS INTERACTIVOS CON LOS ORGANISMOS</strong> 🗺️️
 
-### Mapa de especies de <span style='color: red'><u>INVERTEBRADOS</u></span> 🐌 🐜
+### Mapa de especies de <span style='color: #870909'><u>INVERTEBRADOS</u></span> 🐌 🐜
 
 * Aquí documento las especies de invertebrados que he observado en Gran Canaria.
 

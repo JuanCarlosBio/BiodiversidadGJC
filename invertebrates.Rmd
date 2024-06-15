@@ -73,7 +73,7 @@ body {
 
 <center>
 <div style="background-color: #F4F4F4; text-align: center;">
-## **Mapa de especies de <span style='color: red'><u>INVERTEBRADOS</u></span>**
+## **Mapa de especies de <span style='color: #870909'><u>INVERTEBRADOS</u></span>**
 </div>
 </center>
 
@@ -111,7 +111,7 @@ map
 
 </center>
 
-## **Tabla de las especies de metazoos (invertebrados):**
+## **Tabla de las especies de <span style='color: #870909'><u>metazoos (invertebrados)</u></span>:**
 
 * ### **Busca la especie que estés interesado!!!**
 

@@ -104,7 +104,7 @@ species_plot <- coord_invert_plantae |>
                "#00913f", "#034a31", 
                "#BADBCA")) +
   labs(
-    title = "<span style = 'color: red'>ANIMALES</span> Y <span style = 'color: forestgreen'>PLANTAS</span> IDENTIFICADOS!!!"
+    title = "<span style = 'color: #870909'>ANIMALES</span> Y <span style = 'color: forestgreen'>PLANTAS</span> IDENTIFICADOS!!!"
   ) +
   theme_test() +
   theme(
