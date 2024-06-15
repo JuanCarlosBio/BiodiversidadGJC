@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-source("code/R/process_map_layers.R")
+source("code/R/07process_map_layers.R")
 
 species <- f_species("coord_plantae.tsv") |>
   filter(category != "Especie protegida")

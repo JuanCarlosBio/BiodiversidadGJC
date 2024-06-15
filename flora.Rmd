@@ -70,7 +70,11 @@ body {
 }
 ```
 
-# **Mapa de especies de FLORA Y VEGETACIÓN**
+<center>
+<div style="background-color: #F4F4F4; text-align: center;">
+# **Mapa de especies de <span style='color: green'><u>FLORA Y VEGETACIÓN</u></span>**
+</div>
+</center>
 
 Mapa interactivo formado por varias capas:
 
@@ -88,7 +92,7 @@ Ayuda para el manejo del mapa &#10132; [documentación](`r rmarkdown::metadata$d
 <center>
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE, out.width = '90%'}
-source("code/R/04plot_flora.R")
+source("code/R/05plot_flora.R")
 
 bscols(
   widths = c(6, 3, 3),
@@ -107,12 +111,12 @@ map
 
 </center>
 
-# **Tabla de las especies de plantas:**
+# **Tabla de las especies de <span style='color: green'><u>plantas</u></span>:**
 
 * ### **Busca la especie en la que estés interesado!!!**
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
-source("code/R/07tables.R")
+source("code/R/10tables.R")
 gt_plantae
 ```
 

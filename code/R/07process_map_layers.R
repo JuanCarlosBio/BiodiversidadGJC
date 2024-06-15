@@ -29,7 +29,7 @@ f_species <- function(data){
 }
 
 ## Information of the protected natural spaces
-pne_info <- system("python code/python/03protected_natural_spaces_info.py | grep ^C-", intern = T)
+pne_info <- system("python code/python/02protected_natural_spaces_info.py | grep ^C-", intern = T)
 df_pne_info <- data.frame(info = pne_info)
 df_pne_processed <- df_pne_info |> 
   mutate(codigo = str_remove(info, "%.*"),

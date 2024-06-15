@@ -68,7 +68,7 @@ body {
 
 <center>
 
-<div style="background-color: #CFE8FC; text-align: center;">
+<div style="background-color: #F4F4F4; text-align: center;">
 # ***<span style='color: green'>Biodiversidad</span><span style='color: #fcc938'>G</span><span style='color: #e8002d'>J</span><span style='color: #1e68a4'>C</span>***
 </div>
 
@@ -90,11 +90,11 @@ Mi idea es subir por el momento mapas interactivos de especies de ***flora*** y 
 
 ## <strong>MAPAS INTERACTIVOS CON LOS ORGANISMOS</strong> 🗺️️
 
-### Mapa de especies de INVERTEBRADOS 🐌 🐜
+### Mapa de especies de <span style='color: red'><u>INVERTEBRADOS</u></span> 🐌 🐜
 
 * Aquí documento las especies de invertebrados que he observado en Gran Canaria.
 
-### Mapa de especies de FLORA y VEGETACIÓN 🌺 🌱
+### Mapa de especies de <span style='color: green'><u>FLORA y VEGETACIÓN</u></span> 🌺 🌱
 
 * Aquí documento las especies de flora y vegetación que he Observado en Gran Canaria.
 

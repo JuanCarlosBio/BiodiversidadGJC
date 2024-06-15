@@ -75,7 +75,7 @@ body {
 # <strong>Descarga las fotografías de las especies en los mapas interativos</strong> 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
-source("code/R/05statistics.R")
+source("code/R/09statistics.R")
 ```
 
 <center>

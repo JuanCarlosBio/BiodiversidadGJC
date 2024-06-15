@@ -71,9 +71,11 @@ body {
 }
 ```
 
-
-
-## **Mapa de especies de INVERTEBRADOS**
+<center>
+<div style="background-color: #F4F4F4; text-align: center;">
+## **Mapa de especies de <span style='color: red'><u>INVERTEBRADOS</u></span>**
+</div>
+</center>
 
 Mapa interactivo formado por varias capas:
 
@@ -90,7 +92,7 @@ Ayuda para el manejo del mapa &#10132; [documentación](`r rmarkdown::metadata$d
 <center>
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE, out.width = '90%'}
-source("code/R/03plot_invertebrates.R")
+source("code/R/04plot_invertebrates.R")
 
 bscols(
   widths = c(6, 3, 3),
@@ -114,7 +116,7 @@ map
 * ### **Busca la especie que estés interesado!!!**
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
-source("code/R/07tables.R")
+source("code/R/10tables.R")
 gt_invertebrates
 ```
 
