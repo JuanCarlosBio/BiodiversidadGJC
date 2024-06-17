@@ -79,8 +79,8 @@ body {
 Mapa interactivo formado por varias capas:
 
 - **Capas de base**:
-  - Por defectos sin capa
-  - Espacies Naturales Protegidos (ENP)
+  - Por defecto sin capa
+  - Espacios Naturales Protegidos (ENP)
   - Zonas de Especial Conservación (ZEC)
   - Especies Protegidas
 - **Capas en primer plano**:

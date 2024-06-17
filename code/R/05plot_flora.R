@@ -5,6 +5,20 @@ source("code/R/07process_map_layers.R")
 species <- f_species("coord_plantae.tsv") |>
   filter(category != "Especie protegida")
 
+system("python code/python/03_count_pne_species.py")
+species_pne <- read_csv("data/temp_species.csv")
+protected_species_pne <- read_csv("data/protected_species/temp_protected_species.csv")
+all_species_pne <- rbind(species_pne, protected_species_pne)
+
+enp_map <- enp_map |> 
+  left_join(all_species_pne, by = "codigo") |>
+  mutate(category = str_replace_all(tolower(category), pattern = " ", replacement = "_")) |>
+  pivot_wider(names_from = "category", values_from = n) |> 
+  select(-"NA") |>  
+  mutate(across(everything(), ~replace_na(., 0)),
+         total_species = especie_nativa + especie_protegida + especie_introducida + especie_traslocada) 
+
+
 pal_species <- colorFactor(
   palette = c("#ff0000", "#59ff00", "#ffae00"),
   domain = species$category
@@ -36,7 +50,11 @@ map <- leaflet() |>
       "<br>", 
       "<strong>Categoría</strong>: ", 
       enp_map$categoria,
-      glue("<br><a href={url_pne_info}{enp_map$info}>Información del espacio</a>")
+      glue("<br><a href={url_pne_info}{enp_map$info}>Información del espacio</a>"),
+      "<br>---<br><strong><u>Nº de especies observadas en el ENP:</u></strong>",
+      glue("<br><strong><span style='color: #15d600'>Nativas</span></strong> = {enp_map$especie_nativa}, <strong><span style='color: blue'>Protegidas</span></strong> = {enp_map$especie_protegida}"), 
+      glue("<br><strong><span style='color: #ff0000'>Introducidas</span></strong> = {enp_map$especie_introducida}, <strong><span style='color: #ffae00'>Traslocadas<span></strong> = {enp_map$especie_traslocada}"),
+      glue("<br><strong>Total de especies observadas</strong> = <u>{enp_map$total_species}</u>")
       ) |> 
         lapply(htmltools::HTML),
     popupOptions = labelOptions(
