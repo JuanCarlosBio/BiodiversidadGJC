@@ -135,6 +135,8 @@ map <- leaflet() |>
                                   "<br><strong>Fecha:</strong> ", species$gpsdatetime,
                                   "<br>=========================",
                                   "</p>") |> lapply(htmltools::HTML), 
+                   label = glue("<i>{species$specie}</i><br>({species$name})") |> lapply(htmltools::HTML), 
+                   labelOptions = labelOptions(textsize = 11),
                    fillOpacity = 1, 
                    fillColor = ~pal_species(category), weight = .3, # fillColor = ~pal_species(class)  
                    radius = 8,
@@ -152,7 +154,6 @@ map <- leaflet() |>
   addLayersControl(baseGroups = c("SIN CAPA", 
                                   "Espacios Naturales<br>Protegidos", 
                                   "Red Natura 2000", 
-                                  # "Hábitats de Interés<br>Comunitarios", 
                                   "Especies Protegidas"), 
                    overlayGroups = c("Especies", "Leyenda Especies", 
                                      "Leyenda especies<br>protegidas"),

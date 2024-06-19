@@ -62,27 +62,11 @@ map <- leaflet() |>
               ),              
               weight = 0, fillOpacity = .5,
               group = "Red Natura 2000") |>
-#  addPolygons(data = hic_map, 
-#              fillColor = ~pal_hic(habue4dva1), 
-#              color = "transparent",
-#              weight = 0, fillOpacity = .5,
-#              dashArray = "3",
-#              popup = paste0(
-#                "<strong>Código HIC:</strong>): ", glue("<u>{hic_map$habue4dva1}</u>"),
-#                "<br><strong>Nombre:</strong> ", hic_map$name
-#                ) |> lapply(htmltools::HTML),  
-#              highlightOptions = highlightOptions(weight = 5,
-#                                                  color = "#666",
-#                                                  fillOpacity = .7,
-#                                                  dashArray = "",
-#                                                  bringToFront = FALSE),
-#              group = "Hábitats de Interés<br>Comunitarios") |>
   addPolygons(data = jardin_botanico, 
               fillColor = "yellow", fillOpacity = .5, weight = 1) |>
   addCircleMarkers(data = sd, 
                    lat = ~latitude, lng = ~longitude,
-                   popup = paste0(#glue("<img src='{species$sourcefile}'/>")
-                                  "<p style='text-align:left;'>", 
+                   popup = paste0("<p style='text-align:left;'>", 
                                   "<strong>Identificador (ID</strong>): ", species$id,
                                   glue("<br><a href={url_biota}{species$id_biota}><strong>Biota:</strong> {species$id_biota}</a>"),
                                   "<br>=========================",
@@ -110,7 +94,6 @@ map <- leaflet() |>
   addLayersControl(baseGroups = c("SIN CAPA", 
                                   "Espacios Naturales<br>Protegidos", 
                                   "Red Natura 2000" 
-                                  #,"Hábitats de Interés<br>Comunitarios"
                                   ), 
                    overlayGroups = c("Especies", "Leyenda"),
                    options = layersControlOptions(collapsed = T)) |>
