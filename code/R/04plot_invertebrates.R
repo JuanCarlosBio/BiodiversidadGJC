@@ -1,16 +1,25 @@
 #!/usr/bin/env Rscript
 
+## Se usarán los datos del procesados en 07process_map_layers.R 
 source("code/R/07process_map_layers.R")
 
+## Cargamos las especies, en este caso de metazoos (organismos invertebrados)
 species <- f_species("coord_invertebrates.tsv") 
 
+## Establecemos colores del mapa para las especies:
+## * Especie Introducida = rojo
+## * Especie Nativa = verde
+## * Especie protegida = azul
 pal_species <- colorFactor(
   palette = c("#ff0000", "#59ff00", "#2600ff"),
   domain = species$category
 )
 
+## Para poder filtrar las especies, tenemos que crear un objeto SharedData,
+## Al que llamaremos "sd"
 sd <- SharedData$new(data = species)
 
+## Mapa del Leaflet para las especies de invertebrados
 map <- leaflet() |>
   setView(-15.6, 27.95, zoom = 10) |>
   addTiles() |>
@@ -99,6 +108,9 @@ map <- leaflet() |>
                    options = layersControlOptions(collapsed = T)) |>
   addResetMapButton() |>
   addScaleBar("bottomleft", scaleBarOptions(metric = TRUE, imperial = FALSE)) |>
+  ## La primera función de JS lo que hace es asegurar que los puntos de las especies se encuentren siempre al frente,
+  ## mientras que el resto de capas se encuentren en segundo plano. La segunda parte de css, lo que hace es que el texto
+  ## de la leyenda se encuentre justificado hacia la derecha
   htmlwidgets::onRender("
   function(el, x) {
     this.on('baselayerchange', function(e) {

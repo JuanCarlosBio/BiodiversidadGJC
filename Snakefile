@@ -51,17 +51,22 @@ rule download_canary_islands_shp:
         bash {input.bash_script}
         """
 
-rule download_jardin_botanico:
-    input:
-        bash_script = "code/bash/02download_jarbot.bash"
-    output:
-        "data/jardin_botanico.kml"
-    conda:
-        "code/enviroments/env.yml"
-    shell:
-        """
-        bash {input.bash_script}
-        """
+rule download_extra_layers:
+	input:
+		jarbot_script = "code/bash/02download_jarbot.bash",
+		protected_species_script = "code/bash/04download_protected_species_layer.bash"
+	output:
+		"data/jardin_botanico.kml",
+		"data/protected_species/coord_plantae_pe.tsv",
+		"data/protected_species/protected_species_layer.shp"
+	conda:
+		"code/enviroments/env.yml"
+	shell:
+		"""
+		bash {input.jarbot_script}
+		bash {input.protected_species_script}
+		""" 
+		
 
 rule download_biota_data:
     input:
@@ -74,19 +79,6 @@ rule download_biota_data:
         """
         bash {input.bash_script}
         """
-
-rule download_protected_species_layer:
-    input:
-        bash_script = "code/bash/04download_protected_species_layer.bash"
-    output:
-        "data/protected_species/coord_plantae_pe.tsv",
-        "data/protected_species/protected_species_layer.shp"
-    conda:
-        "code/enviroments/env.yml"
-    shell:
-        """
-        bash {input.bash_script}
-        """    
 
 rule process_canary_islands_shp:
     input:
