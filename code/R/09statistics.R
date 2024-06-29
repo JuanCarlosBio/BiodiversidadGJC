@@ -145,22 +145,17 @@ plad_invdp <- plantaed_invertebratesd |>
   mutate(domain = factor(domain, levels = c("Metazoa", "Plantae"))) 
 
 y_domain_axis <- max(plad_invdp$n) + (max(plad_invdp$n) * 0.2)
-n_metazoa <- as.integer(plad_invdp[1,2])
-n_plantae <- as.integer(plad_invdp[2,2])
-
-y_n_metazoa <- n_metazoa + (n_metazoa * .1) 
-y_n_plantae <- n_plantae + (n_plantae * .1) 
-y_n_metazoa_plantae <-c(y_n_metazoa, y_n_plantae) + max(n_metazoa, n_plantae) * 0.025
 
 metazoa_plantae_plot <- plad_invdp |>
   ggplot(aes(domain, n, fill = domain)) +
   geom_col(color = "black", size = 2,width = .3, show.legend = FALSE) +
-  geom_text(aes(y = y_n_metazoa_plantae, 
-                 x = c(1, 2), 
-                 label = c(as.character(n_metazoa),
-                           as.character(n_plantae))),
-             color = "black", fontface = "bold",
-             size=7, show.legend = FALSE) +
+  geom_text(aes(domain, n, label = n),
+            position = "identity",
+            color = "black", 
+            fontface = "bold",
+            size=7, 
+            show.legend = FALSE,
+            vjust = -.5) +
   scale_fill_manual(values = c("#870909", "forestgreen")) +
   scale_y_continuous(expand = expansion(0),
                      limits = c(0, y_domain_axis)) +
@@ -294,25 +289,16 @@ category_plantae <- plantae |>
 
 # Gráfico de los invertebrados
 y_category_animal_axis <- max(category_invertebrates$n) + (max(category_invertebrates$n) * 0.2)
-n_nativa_animal <- as.integer(category_invertebrates[2,2])
-n_protegidas_animal <- as.integer(category_invertebrates[3,2])
-n_introducidas_animal <- as.integer(category_invertebrates[1,2])
-
-y_n_nativa_animal <- n_nativa_animal + (n_nativa_animal * .1) 
-y_n_protegidas_animal <- n_protegidas_animal + (n_protegidas_animal * .1) 
-y_n_introducidas_animal <- n_introducidas_animal + (n_introducidas_animal * .1) 
-y_n_category_animal <-c(y_n_nativa_animal, y_n_protegidas_animal, y_n_introducidas_animal) + max(y_n_nativa_animal, y_n_protegidas_animal, y_n_introducidas_animal) * 0.025
 
 category_invertebrate_plot <- category_invertebrates  |>
   ggplot(aes(category, n, fill = category)) +
   geom_col(color = "black", size = 2,width = .3, show.legend = FALSE) +
-  geom_text(aes(y = y_n_category_animal, 
-                x = c(1, 2, 3), 
-                label = c(as.character(n_nativa_animal),
-                          as.character(n_protegidas_animal),
-                          as.character(n_introducidas_animal))),
-             color = "black", fontface = "bold",
-             size=7, show.legend = FALSE) +
+  geom_text(aes(category, n, label = n),
+             color = "black", 
+             fontface = "bold",
+             size=7, 
+             show.legend = FALSE,
+             vjust = -.5) +
   scale_fill_manual(values = c("#59ff00", "#2600ff", "#ff0000")) +
   scale_y_continuous(expand = expansion(0),
                      limits = c(0, y_category_animal_axis)) +
@@ -345,34 +331,16 @@ ggsave(plot= category_invertebrate_plot,
 
 # Gráfico para plantas
 y_category_planta_axis <- max(category_plantae$n) + (max(category_plantae$n) * 0.2)
-n_nativa_planta <- as.integer(category_plantae[2,2])
-n_protegidas_planta <- as.integer(category_plantae[3,2])
-n_introducidas_planta <- as.integer(category_plantae[1,2])
-n_traslocadas_planta <- as.integer(category_plantae[4,2])
-
-y_n_nativa_planta <- n_nativa_planta + (n_nativa_planta * .1) 
-y_n_protegidas_planta <- n_protegidas_planta + (n_protegidas_planta * .1) 
-y_n_introducidas_planta <- n_introducidas_planta + (n_introducidas_planta * .1) 
-y_n_traslocadas_planta <- n_traslocadas_planta + (n_traslocadas_planta * .1) 
-y_n_category_planta <-c(y_n_nativa_planta, 
-                        y_n_protegidas_planta, 
-                        y_n_introducidas_planta,
-                        y_n_traslocadas_planta) + max(y_n_nativa_planta, 
-                                                      y_n_protegidas_planta, 
-                                                      y_n_introducidas_planta,
-                                                      y_n_traslocadas_planta) * 0.025
 
 category_plantae_plot <- category_plantae  |>
   ggplot(aes(category, n, fill = category)) +
   geom_col(color = "black", size = 2,width = .3, show.legend = FALSE) +
-  geom_text(aes(y = y_n_category_planta, 
-                x = c(1, 2, 3, 4), 
-                label = c(as.character(n_nativa_planta),
-                          as.character(n_protegidas_planta),
-                          as.character(n_introducidas_planta),
-                          as.character(n_traslocadas_planta))),
-             color = "black", fontface = "bold",
-             size=7, show.legend = FALSE) +
+  geom_text(aes(category, n, label = n),
+            color = "black", 
+            fontface = "bold",
+            size=7, 
+            show.legend = FALSE,
+            vjust = -.5) +
   scale_fill_manual(values = c("#59ff00", "#2600ff", "#ff0000", "#ffae00")) +
   scale_y_continuous(expand = expansion(0),
                      limits = c(0, y_category_planta_axis)) +
