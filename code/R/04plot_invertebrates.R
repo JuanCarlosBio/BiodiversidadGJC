@@ -94,6 +94,8 @@ map <- leaflet() |>
                                   "<br><strong>Fecha:</strong> ", species$gpsdatetime,
                                   "<br>=========================",
                                   "</p>") |> lapply(htmltools::HTML), 
+                   label = glue("<i>{species$specie}</i><br>({species$name})") |> lapply(htmltools::HTML), 
+                   labelOptions = labelOptions(textsize = 11),
                    fillOpacity = 1, 
                    fillColor = ~pal_species(category), weight = .3, # fillColor = ~pal_species(class)  
                    radius = 8, group = "Especies") |>
