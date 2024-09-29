@@ -5,7 +5,7 @@ source("code/R/07process_map_layers.R")
 species <- f_species("coord_plantae.tsv") |>
   filter(category != "Especie protegida")
 
-system("python code/python/03_count_pne_species.py")
+system("python3 code/python/03_count_pne_species.py")
 species_pne <- read_csv("data/temp_species.csv")
 protected_species_pne <- read_csv("data/protected_species/temp_protected_species.csv")
 all_species_pne <- rbind(species_pne, protected_species_pne)
@@ -13,10 +13,14 @@ all_species_pne <- rbind(species_pne, protected_species_pne)
 enp_map <- enp_map |> 
   left_join(all_species_pne, by = "codigo") |>
   mutate(category = str_replace_all(tolower(category), pattern = " ", replacement = "_")) |>
-  pivot_wider(names_from = "category", values_from = n) |> 
-  select(-"NA") |>  
-  mutate(across(everything(), ~replace_na(., 0)),
-         total_species = especie_nativa + especie_protegida + especie_introducida + especie_traslocada) 
+  pivot_wider(
+    names_from = "category", 
+    values_from = n,
+    values_fn = sum
+  ) |> 
+  select(-"NA") |>   
+  mutate(across(where(is.numeric), ~replace_na(., 0)),
+         total_species = especie_nativa + especie_protegida + especie_introducida + especie_traslocada)
 
 
 pal_species <- colorFactor(
