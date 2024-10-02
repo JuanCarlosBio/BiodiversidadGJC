@@ -20,18 +20,13 @@ plantae_points.set_crs(epsg=4326, inplace=True)
 
 plantae_plus_pne = gpd.overlay(plantae_points, gc_pne, how="intersection")
 
-plantae_data = pd.DataFrame(
-    plantae_plus_pne[["codigo", "category", "id_biota"]]
-    ).groupby(
-        ["codigo", "category", "id_biota"]
-        ).size(
-            ).reset_index(
-                name = "n"
-                ).groupby(
-                    ["codigo", "category"]
-                    ).size(
-                        ).reset_index(
-                            name = "n"
-                            ) 
+plantae_data = (
+    pd.DataFrame(plantae_plus_pne[["codigo", "category", "id_biota"]])
+        .groupby(["codigo", "category", "id_biota"])
+        .size().reset_index(name = "n")
+        .groupby(["codigo", "category"])
+        .size()
+        .reset_index(name = "n")
+    )
 
 plantae_data.to_csv("data/temp_species.csv", index=False)
