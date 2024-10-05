@@ -22,7 +22,10 @@ sd <- SharedData$new(data = species)
 ## Mapa del Leaflet para las especies de invertebrados
 map <- leaflet() |>
   setView(-15.6, 27.95, zoom = 10) |>
-  addTiles() |>
+  #addTiles() |>
+  addProviderTiles(
+    providers$Esri.WorldImagery
+  ) |>
   addPolygons(data = enp_map, 
               fillColor = ~pal_pne(categoria), 
               color = "transparent",
