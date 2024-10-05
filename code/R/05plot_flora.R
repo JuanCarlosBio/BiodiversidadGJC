@@ -40,6 +40,10 @@ map <- leaflet() |>
     providers$Esri.WorldImagery,
     options = providerTileOptions(minZoom = 10) 
   ) |>
+  addProviderTiles(
+    providers$CartoDB.VoyagerOnlyLabels,
+    options = providerTileOptions(minZoom = 10)   
+  ) |>
   addPolygons(
     data = enp_map, 
     fillColor = ~pal_pne(categoria), 
