@@ -24,7 +24,8 @@ map <- leaflet() |>
   setView(-15.6, 27.95, zoom = 10) |>
   #addTiles() |>
   addProviderTiles(
-    providers$Esri.WorldImagery
+    providers$Esri.WorldImagery,
+    options = providerTileOptions(minZoom = 10)
   ) |>
   addPolygons(data = enp_map, 
               fillColor = ~pal_pne(categoria), 
