@@ -43,6 +43,7 @@ body {
   font-family: "Roboto"; sans-serif;
   font-weight: 400;
   font-style: normal;
+  font-size: 15px;
   background-size: 100%;
 }
 
@@ -86,7 +87,7 @@ Mapa interactivo formado por varias capas:
   - Espacios Naturales Protegidos (ENP)
   - Zonas de Especial Conservación (ZEC)
 - **Capas en primer plano**:
-  - Especies nativas (no protegidas), protegidas e introducidas 
+  - Especies <span style="color: green"><u>nativas (no protegidas)</u></span>, <span style="color: blue"><u>protegidas</u></span>, e <span style="color: red"><u>introducidas</u></span> 
   - Leyenda 
 
 Ayuda para el manejo del mapa &#10132; [documentación](`r rmarkdown::metadata$documentation`).

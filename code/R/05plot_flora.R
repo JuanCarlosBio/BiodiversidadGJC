@@ -2,8 +2,11 @@
 
 source("code/R/07process_map_layers.R")
 
+url_photos_species <- "https://raw.githubusercontent.com/biologyphotos/flora_gc/refs/heads/main/"
+
 species <- f_species("coord_plantae.tsv") |>
-  filter(category != "Especie protegida")
+  filter(category != "Especie protegida") |>
+  mutate(species_photos = glue("{url_photos_species}{id_biota}.jpg"))
 
 system("python3 code/python/03_count_pne_species.py")
 species_pne <- read_csv("data/temp_species.csv")
@@ -63,7 +66,8 @@ map <- leaflet() |>
       "<strong>Categoría</strong>: ", 
       enp_map$categoria,
       glue("<br><a href={url_pne_info}{enp_map$info}>Información del espacio</a>"),
-      "<br>---<br><strong><u>Nº de especies observadas en el ENP:</u></strong>",
+      "<hr style=border: 1px solid black; width: 100%>",
+      "<strong><u>Nº de especies observadas en el ENP:</u></strong>",
       glue("<br><strong><span style='color: #15d600'>Nativas</span></strong> = {enp_map$especie_nativa}, <strong><span style='color: blue'>Protegidas</span></strong> = {enp_map$especie_protegida}"), 
       glue("<br><strong><span style='color: #ff0000'>Introducidas</span></strong> = {enp_map$especie_introducida}, <strong><span style='color: #ffae00'>Traslocadas<span></strong> = {enp_map$especie_traslocada}"),
       glue("<br><strong>Total de especies observadas</strong> = <u>{enp_map$total_species}</u>")
@@ -103,10 +107,9 @@ map <- leaflet() |>
               color = "transparent",
               dashArray = "3",
               popup = paste0("<p style='text-align:left;'>",
-                             "###=================================###",
-                             "<br>### <strong>ESPECIES PROTEGIUDAS DEL LUGAR</strong> ###", 
-                             "<br>###=================================###", 
-                             glue("<br>==> <strong>Número de especies protegidas en total: <u>{protected_species$n}</u></strong>"),
+                             "<strong>ESPECIES PROTEGIUDAS DEL LUGAR</strong>", 
+                             "<hr style=border: 1px solid black; width: 100%>", 
+                             glue("🌱️ <strong>Número de especies protegidas en total: <u>{protected_species$n}</u></strong>"),
                              glue("<br>> {protected_species$species}"),
                              "</p>") |> 
                 lapply(htmltools::HTML),
@@ -131,23 +134,24 @@ map <- leaflet() |>
                                   "<p style='text-align:left;'>", 
                                   "<strong>Identificador (ID):</strong> ", species$id,
                                   glue("<br><a href={url_biota}{species$id_biota}><strong>Biota:</strong> {species$id_biota}</a>"), 
-                                  "<br>=========================",  
-                                  "<br><strong>División:</strong> ", species$division,
+                                  "<br>-----<br>",  
+                                  "<strong>División:</strong> ", species$division,
                                   "<br><strong>Clase:</strong> ", species$class,
                                   "<br><strong>Orden:</strong> ", species$order,
                                   "<br><strong>Familia:</strong> ", species$family,
                                   "<br><strong>Especie:</strong> ", glue("<i>{species$specie}</i>"), " ", species$author,
                                   "<br><strong>Nomb. común:</strong> ", species$name,
-                                  "<br>=========================",
-                                  "<br><strong>Género Endémico</strong>: ", species$endemic_genus, 
+                                  "<br>-----<br>",
+                                  "<strong>Género Endémico</strong>: ", species$endemic_genus, 
                                   "<br><strong>Especie Endémica:</strong> ", species$endemic_specie,
                                   "<br><strong>Subespecie Endémica:</strong> ", species$endemic_subspecie,
                                   "<br><strong>Origen:</strong> ", species$origin,
-                                  "<br>=========================",
-                                  "<br><strong>Fecha:</strong> ", species$gpsdatetime,
-                                  "<br>=========================",
+                                  "<br>-----<br>",
+                                  "<strong>Fecha:</strong> ", species$gpsdatetime,
                                   "</p>") |> lapply(htmltools::HTML), 
-                   label = glue("<i>{species$specie}</i><br>({species$name})") |> lapply(htmltools::HTML), 
+                   label = paste0(glue("<i>{species$specie}</i>"),
+                                  glue("<br>---------------------------------------------------------------------"),
+                                  glue("<br><img class='center' src='{species$species_photos}' style='width: 270px; height: 200px;'>")) |> lapply(htmltools::HTML), 
                    labelOptions = labelOptions(textsize = 11),
                    fillOpacity = 1, 
                    fillColor = ~pal_species(category), weight = .3, # fillColor = ~pal_species(class)  
