@@ -3,8 +3,13 @@
 ## Se usarán los datos del procesados en 07process_map_layers.R 
 source("code/R/07process_map_layers.R")
 
+## URL donde pongo fotos para las etiquetas de las especies
+url_photos_species <- "https://raw.githubusercontent.com/biologyphotos/volume1/refs/heads/main/"
+
 ## Cargamos las especies, en este caso de metazoos (organismos invertebrados)
-species <- f_species("coord_invertebrates.tsv") 
+species <- f_species("coord_invertebrates.tsv") |>
+  ## Creamos un campo con las direcciones de las imágenes propias para las etiquetas
+  mutate(species_photos = glue("{url_photos_species}{id_biota}.jpg"))
 
 ## Establecemos colores del mapa para las especies:
 ## * Especie Introducida = rojo
@@ -102,7 +107,9 @@ map <- leaflet() |>
                                   "<br><strong>Fecha:</strong> ", species$gpsdatetime,
                                   "<br>=========================",
                                   "</p>") |> lapply(htmltools::HTML), 
-                   label = glue("<i>{species$specie}</i><br>({species$name})") |> lapply(htmltools::HTML), 
+                   label = paste0(glue("<i>{species$specie}</i>"),
+                                 glue("<br>---------------------------------------------------------------------"),
+                                 glue("<br><img class='center' src='{species$species_photos}' style='width: 270px; height: 200px;'>")) |> lapply(htmltools::HTML), 
                    labelOptions = labelOptions(textsize = 11),
                    fillOpacity = 1, 
                    fillColor = ~pal_species(category), weight = .3, # fillColor = ~pal_species(class)  
