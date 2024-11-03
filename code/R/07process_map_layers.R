@@ -1,6 +1,9 @@
 #!/usr/bin/env Rscript
 
-## Load the libraries
+## CARGAR LAS LIBRERÍAS
+##==============================================
+
+## Librerías necesarias para el procesado de datos y mapas
 suppressMessages(suppressWarnings({
     library(leaflet)
     library(sf)
@@ -11,12 +14,14 @@ suppressMessages(suppressWarnings({
     library(crosstalk)
 }))
 
+## PRE-PROCESADO DE DATOS PARA LOS MAPAS
+##==============================================
+
+## Urls que se necesitan para los links
 url_biota <- "https://www.biodiversidadcanarias.es/biota/especie/"
 url_pne_info <- "https://descargas.grancanaria.com/jardincanario/ESPACIOS%20NATURALES%20PROTEGIDOS%20DE%20GRAN%20CANARIA/" 
 
-## Load the data
-# Url for finding the species in biota https://www.biodiversidadcanarias.es/biota/
-
+## Función para crear un TSV con los datos de mis imágenes + los datos de BIOTA
 f_species <- function(data){
     df_speices <- read_tsv(glue("data/{data}")) |>
         mutate(family = str_to_title(family),
@@ -28,9 +33,10 @@ f_species <- function(data){
     return(df_speices)
 }
 
-## Information of the protected natural spaces
+## Trípticos informativos de Los ENPs que se implementarán en la capa de los ENPs
 pne_info <- system("python code/python/02protected_natural_spaces_info.py | grep ^C-", intern = T)
 df_pne_info <- data.frame(info = pne_info)
+## Capa de los ENPs de la Isla de Gran Canaria a partir de los datos de IDECanarias
 df_pne_processed <- df_pne_info |> 
   mutate(codigo = str_remove(info, "%.*"),
          codigo = str_replace(codigo, "^C-(\\d)$", "C-0\\1"))
@@ -47,6 +53,7 @@ enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") %>%
                                        "Sitio de Interés Científico"))) %>%
   inner_join(., df_pne_processed, by="codigo")  
 
+## Crear una capa de especies Protegidas (flora)
 protected_species <- read_sf("data/protected_species/protected_species_layer.shp") |>
   group_by(specie, name, id_biota, geometry) |> 
   summarise(n = n()) |>  
@@ -55,14 +62,28 @@ protected_species <- read_sf("data/protected_species/protected_species_layer.shp
   summarise(species = paste0(glue("<i><a href='https://www.biodiversidadcanarias.es/biota/especie/{id_biota}'>{specie}</i></a> ({name})"), collapse = "<br>> "),
             n = n())
 
+## Crear una capa las zonas ZEC de Gran Canaria (IDECanarias)
 zec_map <- read_sf("data/gran_canaria_shp/gc_zec.shp") |> 
   rename_all(tolower) |>
-  st_transform(map, crs = 4326) 
+  st_transform(map, crs = 4326) |>
+  mutate(Des_ZON = factor(des_zon,
+                          levels = c("Zona de conservación prioritaria",
+                                     "Zona de conservación",
+                                     "Zona de restauración prioritaria",
+                                     "Zona de restauración",
+                                     "Zona de transición")))
 
+## Delimitar el jardín botánico
 jardin_botanico <- read_sf("data/gran_canaria_shp/jardin_botanico.shp")
 
-## Create the color palettes for the layers
+## Definir los colores para los ENPs
 pal_pne <- colorFactor(
   palette = c("#004078", "#80a0bd", "#f78000", "#e60000", "#00913f", "#034a31", "#BADBCA"),
   domain = enp_map$categoria
+)
+
+## Definir los colores para las ZEC
+pal_zec <- colorFactor(
+  palette = c("#88c185", "#b4fcae", "#fedd86", "#feebb8", "#eaeaea"),
+  domain = zec_map$des_zon
 )

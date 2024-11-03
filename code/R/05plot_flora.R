@@ -1,18 +1,26 @@
 #!/usr/bin/env Rscript
 
+## CARGAR Y PROCESAR DATOS
+##==============================================
+
+## Se usarán los datos del procesados en 07process_map_layers.R 
 source("code/R/07process_map_layers.R")
 
+## URL donde pongo fotos para las etiquetas de las especies
 url_photos_species <- "https://raw.githubusercontent.com/biologyphotos/flora_gc/refs/heads/main/"
 
+## Cargamos las especies, en este caso de metazoos (organismos invertebrados)
 species <- f_species("coord_plantae.tsv") |>
   filter(category != "Especie protegida") |>
   mutate(species_photos = glue("{url_photos_species}{id_biota}.jpg"))
 
+## Creamos un recuento de especies en los ENP y lo añadiremos a la etiqueta
 system("python3 code/python/03_count_pne_species.py")
 species_pne <- read_csv("data/temp_species.csv")
 protected_species_pne <- read_csv("data/protected_species/temp_protected_species.csv")
 all_species_pne <- rbind(species_pne, protected_species_pne)
 
+## Capa de las especies protegidas de flora, formada por las especies y número de estas
 enp_map <- enp_map |> 
   left_join(all_species_pne, by = "codigo") |>
   mutate(category = str_replace_all(tolower(category), pattern = " ", replacement = "_")) |>
@@ -26,16 +34,28 @@ enp_map <- enp_map |>
          total_species = especie_nativa + especie_protegida + especie_introducida + especie_traslocada)
 
 
+## Establecemos colores para las especies:
+## * Especie Introducida = rojo
+## * Especie Nativa = verde
+## * Especie traslocada = naranja
 pal_species <- colorFactor(
   palette = c("#ff0000", "#59ff00", "#ffae00"),
   domain = species$category
 )
 
+## La capa de especies protegidas se colorearás según el siguente intervalo:
 bins <- c(1, 2, 4, 6, Inf)
 pal_protected_especies <- colorBin("YlOrRd", domain = protected_species$n, bins = bins)
 
+## Para poder filtrar las especies, tenemos que crear un objeto SharedData,
+## Al que llamaremos "sd"
 sd <- SharedData$new(data = species)
 
+## FIN DE CARGAR Y PROCESAR DATOS
+##==============================================
+
+## MAPA INTERACTIVO DE LEAFLET
+##==============================================
 map <- leaflet() |>
   setView(-15.6, 27.95, zoom = 10) |>
 #  addTiles() |>
@@ -81,7 +101,7 @@ map <- leaflet() |>
     ),
     group = "Espacios Naturales<br>Protegidos") |>
   addPolygons(data = zec_map,  
-              fillColor = "#4ce600",
+              fillColor = ~pal_zec(des_zon),
               color = "transparent",
               dashArray = "3",
               highlightOptions = highlightOptions(weight = 5,
@@ -89,10 +109,11 @@ map <- leaflet() |>
                                                   fillOpacity = .7,
                                                   dashArray = "",
                                                   bringToFront = FALSE),              
-              label = paste0("<strong>Código:</strong> ", zec_map$cod_zec, 
-                             "<br>", 
-                             "<strong>Nombre de la ZEC:</strong> ", 
-                             glue("<u>{zec_map$nom_zec}</u>")) |> 
+              label = paste0("<p align='left'>",
+                             "<strong>Código:</strong> ", zec_map$cod_zec, 
+                             glue("<br><strong>Nombre de la ZEC:</strong> <u>{zec_map$nom_zec}</u>"),
+                             glue("<br><strong>Zonificación:</strong> <u>{zec_map$des_zon}</u> ({zec_map$tip_zon})"),
+                             "</p>") |> 
                 lapply(htmltools::HTML),
               labelOptions = labelOptions(
                 style = list("font-weight" = "normal",
