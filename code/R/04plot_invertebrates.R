@@ -12,14 +12,19 @@ url_photos_species <- "https://raw.githubusercontent.com/biologyphotos/volume1/r
 ## Cargamos las especies, en este caso de metazoos (organismos invertebrados)
 species <- f_species("coord_invertebrates.tsv") |>
   ## Creamos un campo con las direcciones de las imágenes propias para las etiquetas
-  mutate(species_photos = glue("{url_photos_species}{id_biota}.jpg"))
+  mutate(species_photos = glue("{url_photos_species}{id_biota}.jpg")) |>
+  filter(category != "Especie protegida")
 
 ## Establecemos colores del mapa para las especies:
 ## * Especie Introducida = rojo
 ## * Especie Nativa = verde
 ## * Especie protegida = azul
 pal_species <- colorFactor(
-  palette = c("#ff0000", "#59ff00", "#2600ff"),
+  palette = c(
+	      "#ff0000", 
+	      "#59ff00"#, 
+	      #"#2600ff"
+	      ),
   domain = species$category
 )
 
