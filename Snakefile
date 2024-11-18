@@ -134,7 +134,7 @@ rule process_exif_images:
         "data/coord_invertebrates.tsv",
         "data/coord_plantae.tsv"
     log:
-        "logs/week_names_label_errors.txt"
+        "tests/week_names_label_errors.txt"
     conda:
         "code/enviroments/env.yml"
     shell:

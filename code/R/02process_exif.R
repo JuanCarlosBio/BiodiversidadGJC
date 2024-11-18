@@ -8,10 +8,14 @@ suppressMessages(suppressWarnings({
     library(lubridate)
 }))
 
+## -> Ahora que lo vuelvo a visitar a día de 18/11/2024 digo que este código funciona 
+## de maravilla a pesar de ser BASURA xd, tengo pensado como solucionar esta locura 
+## pero necesito tiempo para mentalizarme en cambiar este desastre
+
 data_biota <- readr::read_tsv("data/biota_data_processed.tsv")
 protected_species_layer <- readr::read_tsv("data/protected_species/coord_plantae_pe.tsv")
 
-t_replacement <- c("_ta_" = "á","_te_" = "é","_ti_" = "í", "_to_" = "ó", "_tu_" = "ú", "_enie_" = "ñ")
+t_replacement <- c("_ta_" = "á","_te_" = "é","_ti_" = "í", "_to_" = "ó", "_tu_" = "ú", "_enie_" = "ñ") ## -> pero esto que es! en que estaba pensando, bueno estas cosas pasan
 
 read_tsv("data/raw_dropbox_links_metazoa_content.tsv") |>
     mutate(filename = str_replace(filename, pattern = ".jpg", replacement = "")) |>

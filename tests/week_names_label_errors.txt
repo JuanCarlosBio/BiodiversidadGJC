@@ -1,9 +1,8 @@
 [1] "=============================================================="
 [1] ">>> THIS ARE THE ERRORS THAT YOU HAVE HAD IN PLANTAE THIS WEEK"
 [1] "=============================================================="
-                            id filename_ok filename_pieces
-1                      FV01317       FALSE              11
-2 FV01893Lavandula canariensis       FALSE               9
+[1] id              filename_ok     filename_pieces
+<0 rows> (or 0-length row.names)
 [1] "=============================================================="
 [1] ">>> THIS ARE THE ERRORS THAT YOU HAVE HAD IN METAZOA THIS WEEK"
 [1] "=============================================================="

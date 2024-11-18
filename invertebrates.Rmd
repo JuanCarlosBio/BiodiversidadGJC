@@ -43,7 +43,7 @@ body {
   font-family: "Roboto"; sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 15px;
+  font-size: 16px;
   background-size: 100%;
 }
 
@@ -102,7 +102,7 @@ bscols(
   "",
   filter_select(
     id = "species",
-    label = "BUSCA LAS ESPECIES!!!",
+    label = "BUSCA LA/s ESPECIES QUE TE INTERESEN",
     sharedData = sd,
     group = ~specie,
     ""
@@ -114,9 +114,11 @@ map
 
 </center>
 
-## **Tabla de las especies de <span style='color: #870909'><u>metazoos (invertebrados)</u></span>:**
+## **TABLA DE LAS ESPECIES DE <span style='color: #870909'><u>METAZOOS (INVERTEBRADOS)</u></span>:**
 
-* ### **Busca la especie que estés interesado!!!**
+### **Busca en la tabla la/s especie/s que estés interesado (*"<u>search</u>"*):**
+
+* **<u>Truco</u>**: Por otro lado puedes buscar por palabras clave, como *"especies nativa"*, *"especie traslocada"*
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 source("code/R/10tables.R")

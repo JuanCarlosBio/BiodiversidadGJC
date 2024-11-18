@@ -41,7 +41,7 @@ body {
   font-family: "Roboto"; sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 15px;
+  font-size: 16px;
 //    background-image: url('https://github.com/JuanCarlosBio/cosas_mias/blob/main/IMG_20240428_173528.jpg?raw=true');
   background-size: 100%;
 }
@@ -102,7 +102,7 @@ bscols(
   "",
   filter_select(
     id = "species",
-    label = "BUSCA LAS ESPECIES!!!",
+    label = "BUSCA LA/s ESPECIE/s QUE TE INTERESEN",
     sharedData = sd,
     group = ~specie,
     ""
@@ -114,9 +114,9 @@ map
 
 </center>
 
-# **Tabla de las especies de <span style='color: green'><u>plantas</u></span>:**
+### **Busca en la tabla la/s especie/s que estés interesado (*"<u>search</u>"*):**
 
-* ### **Busca la especie en la que estés interesado!!!**
+* **<u>Truco</u>**: puedes buscar por palabras clave, como *"especies nativa"*, *"especie traslocada"*
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 source("code/R/10tables.R")
