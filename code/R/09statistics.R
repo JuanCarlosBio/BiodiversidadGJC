@@ -16,10 +16,10 @@ suppressMessages(suppressWarnings({
 ## Loding scripts and fonts 
 
 ## Loading the data ##
-exif_data_ai <- read_tsv("data/raw_dropbox_links_metazoa_content.tsv")
-exif_data_fv <- read_tsv("data/raw_dropbox_links_plantae_content.tsv")
-invertebrates <- read_tsv("data/coord_invertebrates.tsv")
-plantae <- read_tsv("data/coord_plantae.tsv") 
+exif_data_ai <- read_tsv("data/species/raw/raw_dropbox_links_metazoa_content.tsv")
+exif_data_fv <- read_tsv("data/species/raw/raw_dropbox_links_plantae_content.tsv")
+invertebrates <- read_tsv("data/species/processed/coord_invertebrates.tsv")
+plantae <- read_tsv("data/species/processed/coord_plantae.tsv") 
 enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp")
 map <- read_sf("data/gran_canaria_shp/gc_muni.shp") |>
   st_transform(map, crs = 4326) 

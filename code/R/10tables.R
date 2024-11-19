@@ -9,8 +9,8 @@ suppressMessages(suppressWarnings({
 #----------------------------------------------------------------------#
 # Reading the data of the Speciecies of Invertebrates and Plantae
 #----------------------------------------------------------------------#
-invertebrates <- read_tsv("data/coord_invertebrates.tsv")
-plantae <- read_tsv("data/coord_plantae.tsv") 
+invertebrates <- read_tsv("data/species/processed/coord_invertebrates.tsv")
+plantae <- read_tsv("data/species/processed/coord_plantae.tsv") 
 
 # Url for finding the species in biota https://www.biodiversidadcanarias.es/biota/
 url_biota <- "https://www.biodiversidadcanarias.es/biota/especie/"

@@ -12,12 +12,12 @@ suppressMessages(suppressWarnings({
 ## de maravilla a pesar de ser BASURA xd, tengo pensado como solucionar esta locura 
 ## pero necesito tiempo para mentalizarme en cambiar este desastre
 
-data_biota <- readr::read_tsv("data/biota_data_processed.tsv")
+data_biota <- readr::read_tsv("data/biota/processed/biota_data_processed.tsv")
 protected_species_layer <- readr::read_tsv("data/protected_species/coord_plantae_pe.tsv")
 
 t_replacement <- c("_ta_" = "á","_te_" = "é","_ti_" = "í", "_to_" = "ó", "_tu_" = "ú", "_enie_" = "ñ") ## -> pero esto que es! en que estaba pensando, bueno estas cosas pasan
 
-read_tsv("data/raw_dropbox_links_metazoa_content.tsv") |>
+read_tsv("data/species/raw/raw_dropbox_links_metazoa_content.tsv") |>
     mutate(filename = str_replace(filename, pattern = ".jpg", replacement = "")) |>
     filter(!(str_detect(filename,  "NO CLASIFICADO")) & 
            str_detect(filename, "^AI") & 
@@ -60,10 +60,10 @@ read_tsv("data/raw_dropbox_links_metazoa_content.tsv") |>
         gpsdatetime = format(gpsdatetime, "%d/%m/%Y")) |> 
     inner_join(data_biota, ., by="id_biota") |> 
     select(-subdivision, division) |>
-    readr::write_tsv("data/coord_invertebrates.tsv")
+    readr::write_tsv("data/species/processed/coord_invertebrates.tsv")
 
 
-read_tsv("data/raw_dropbox_links_plantae_content.tsv") |>
+read_tsv("data/species/raw/raw_dropbox_links_plantae_content.tsv") |>
     mutate(filename = str_replace(filename, pattern = ".jpg", replacement = "")) |>
     filter(!(str_detect(filename,  "NO CLASIFICADO")) & 
            str_detect(filename, "^FV"),
@@ -108,4 +108,4 @@ read_tsv("data/raw_dropbox_links_plantae_content.tsv") |>
     inner_join(data_biota, ., by="id_biota") |> 
     select(-subdivision, division) |> 
     bind_rows(protected_species_layer) |> 
-    readr::write_tsv("data/coord_plantae.tsv")
+    readr::write_tsv("data/species/processed/coord_plantae.tsv")

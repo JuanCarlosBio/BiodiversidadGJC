@@ -23,7 +23,7 @@ url_pne_info <- "https://descargas.grancanaria.com/jardincanario/ESPACIOS%20NATU
 
 ## Función para crear un TSV con los datos de mis imágenes + los datos de BIOTA
 f_species <- function(data){
-    df_speices <- read_tsv(glue("data/{data}")) |>
+    df_speices <- read_tsv(glue("data/species/processed/{data}")) |>
         mutate(family = str_to_title(family),
             order = str_to_title(order),
             class = str_to_title(class), 

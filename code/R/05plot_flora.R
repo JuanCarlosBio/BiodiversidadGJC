@@ -16,7 +16,7 @@ species <- f_species("coord_plantae.tsv") |>
 
 ## Creamos un recuento de especies en los ENP y lo añadiremos a la etiqueta
 system("python3 code/python/03_count_pne_species.py")
-species_pne <- read_csv("data/temp_species.csv")
+species_pne <- read_csv("data/species/pne_species_count.csv")
 protected_species_pne <- read_csv("data/protected_species/temp_protected_species.csv")
 all_species_pne <- rbind(species_pne, protected_species_pne)
 

@@ -16,16 +16,16 @@ for (org in c("dropbox_links_plantae", "dropbox_links_metazoa")){
 	                       col_names = FALSE)
 	})) 
 		
-          ## Como el csv de los metadatos está compuesto de una sola columna, podemos
-          ## seleccionar los links como un vector con X1
+    ## Como el csv de los metadatos está compuesto de una sola columna, podemos
+    ## seleccionar los links como un vector con X1
 	  links <- metadata$X1
 
-          ## Creamos listas vacías con la información de las imágenes (metadados) de interés:
-          ## * Sourcefile: Ruta y nombre del archivo JPG con la especie
-          ## * Filename: Nombre del archivo JPG
-          ## * GPSDatatime: Fecha y Hora donde se tomó la foto
-          ## * GPSPosition: Longitud y Latitud de la foto	
-          ## * GPSAltitude: Altitud donde se tomó la foto
+    ## Creamos listas vacías con la información de las imágenes (metadados) de interés:
+    ## * Sourcefile: Ruta y nombre del archivo JPG con la especie
+    ## * Filename: Nombre del archivo JPG
+    ## * GPSDatatime: Fecha y Hora donde se tomó la foto
+    ## * GPSPosition: Longitud y Latitud de la foto	
+    ## * GPSAltitude: Altitud donde se tomó la foto
 	  list_sourcefile <- c()
 	  list_filename <- c()
 	  list_gpsdatetime <- c()
@@ -40,10 +40,10 @@ for (org in c("dropbox_links_plantae", "dropbox_links_metazoa")){
 				## Para ello además hay que descomprimir el archivo zip de la carpetac on las imágenes	
 	      unzip(glue("images/{org}.zip"), exdir = glue("images/{org}"))
 	
-              ## Este condicional es para prevenir errores, como lo que se descargan son varias carpetas
-              ## si he añadido alguna nueva pero no hay fotos en ella, dirá que no se encuentran fotos, 
-              ## por el contrario si hay fotos, se continúa con la creación de los vectores con los me_
-              ## tadados de las imágenes para cada parámetro especificado anteriormente.
+        ## Este condicional es para prevenir errores, como lo que se descargan son varias carpetas
+        ## si he añadido alguna nueva pero no hay fotos en ella, dirá que no se encuentran fotos, 
+        ## por el contrario si hay fotos, se continúa con la creación de los vectores con los me_
+        ## tadados de las imágenes para cada parámetro especificado anteriormente.
 	      archivos <- list.files(glue("images/{org}"), full.names = TRUE)
 
 	      if (length(archivos) > 0) {
@@ -62,10 +62,10 @@ for (org in c("dropbox_links_plantae", "dropbox_links_metazoa")){
 	      } else {
 	        print("No hay archivos en el directorio especificado.")
 	      }
-              ## Cuando se guarden en la memoria la información de los metadatos en los vectores
-              ## de R, se eliminan las fotos dentro del la carpeta images/. La razónde hacerlo de
-              ## esta manera, es que al haber gran cantidad de imágenes, no hay memoria que pueda
-              ## guardarla en la máquina virtual de GitHub Actions
+        ## Cuando se guarden en la memoria la información de los metadatos en los vectores
+        ## de R, se eliminan las fotos dentro del la carpeta images/. La razónde hacerlo de
+        ## esta manera, es que al haber gran cantidad de imágenes, no hay memoria que pueda
+        ## guardarla en la máquina virtual de GitHub Actions
 	      system("rm -rf images/*;touch images/README.txt")
 	  }
 	
@@ -77,7 +77,7 @@ for (org in c("dropbox_links_plantae", "dropbox_links_metazoa")){
 	                            gpsaltitude = list_gpsaltitude) 
 	
 	  ## Guardar el data frame combinado si es necesario. De esta manera tenemos un 
-          ## Archivo TSV para cada organismo, sin imágenes de por medio, es mucho más
-          ## pequeño un archivo de este tipo que un JPG.
-	  write_tsv(combined_df, glue("data/raw_{org}_content.tsv")) 
+    ## Archivo TSV para cada organismo, sin imágenes de por medio, es mucho más
+    ## pequeño un archivo de este tipo que un JPG.
+	  write_tsv(combined_df, glue("data/species/raw/raw_{org}_content.tsv")) 
 }

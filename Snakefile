@@ -1,19 +1,19 @@
 rule targets:
     input:
-        "data/raw_dropbox_links_metazoa_content.tsv",
-        "data/raw_dropbox_links_plantae_content.tsv",
+        "data/species/raw/raw_dropbox_links_metazoa_content.tsv",
+        "data/species/raw/raw_dropbox_links_plantae_content.tsv",
         "data/islands_shp/municipios.shp",
         "data/islands_shp/eennpp.shp",
         "data/jardin_botanico.kml",
-        "data/biota_species.csv",
+        "data/biota/raw/biota_species.csv",
         "data/protected_species/coord_plantae_pe.tsv",
         "data/protected_species/protected_species_layer.shp",
         "data/gran_canaria_shp/gc_muni.shp",
         "data/gran_canaria_shp/gc_pne.shp",
         "data/gran_canaria_shp/jardin_botanico.shp",
-        "data/coord_invertebrates.tsv",
-        "data/coord_plantae.tsv",
-        "data/biota_data_processed.tsv", 
+        "data/species/processed/coord_invertebrates.tsv",
+        "data/species/processed/coord_plantae.tsv",
+        "data/biota/processed/biota_data_processed.tsv", 
         "index.html",
         "invertebrates.html",
         "flora.html",
@@ -29,12 +29,13 @@ rule download_images:
         metadata_metazoa = "metadata/dropbox_links_metazoa.csv",
         metadata_plantae = "metadata/dropbox_links_plantae.csv"
     output:
-        "data/raw_dropbox_links_metazoa_content.tsv",
-        "data/raw_dropbox_links_plantae_content.tsv"
+        "data/species/raw/raw_dropbox_links_metazoa_content.tsv",
+        "data/species/raw/raw_dropbox_links_plantae_content.tsv"
     conda:
         "code/enviroments/env.yml"
     shell:
         """
+        mkdir -p data/species data/species/raw/ data/species/processed/  
         Rscript {input.r_script}
         """
 
@@ -72,7 +73,7 @@ rule download_biota_data:
     input:
         bash_script = "code/bash/03download_biota_data.sh"
     output:
-        "data/biota_species.csv"
+        "data/biota/raw/biota_species.csv"
     conda:
         "code/enviroments/env.yml"
     shell:
@@ -112,9 +113,9 @@ rule process_jardin_botanico_kml:
 rule process_biota_data:
     input:
         r_script = "code/R/08process_biota_data.R",
-        biota_file = "data/biota_species.csv"
+        biota_file = "data/biota/raw/biota_species.csv"
     output:
-        "data/biota_data_processed.tsv" 
+        "data/biota/processed/biota_data_processed.tsv" 
     conda:
         "code/enviroments/env.yml"
     shell:
@@ -125,14 +126,14 @@ rule process_biota_data:
 rule process_exif_images:
     input:
         r_script = "code/R/02process_exif.R",
-        fv_files ="data/raw_dropbox_links_metazoa_content.tsv",
-        ai_files ="data/raw_dropbox_links_plantae_content.tsv",
-        biota_file = "data/biota_data_processed.tsv",
+        fv_files ="data/species/raw/raw_dropbox_links_metazoa_content.tsv",
+        ai_files ="data/species/raw/raw_dropbox_links_plantae_content.tsv",
+        biota_file = "data/biota/processed/biota_data_processed.tsv",
         pspecies = "data/protected_species/coord_plantae_pe.tsv",
         check_errors_labels = "code/R/03check_errors_labels.R"
     output:
-        "data/coord_invertebrates.tsv",
-        "data/coord_plantae.tsv"
+        "data/species/processed/coord_invertebrates.tsv",
+        "data/species/processed/coord_plantae.tsv"
     log:
         "tests/week_names_label_errors.txt"
     conda:
@@ -148,8 +149,8 @@ rule figures_and_stats:
         script_r = "code/R/09statistics.R",
         gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
         gc_pne_shp = "data/gran_canaria_shp/gc_pne.shp",
-        invertebrates = "data/coord_invertebrates.tsv",
-        plantae = "data/coord_plantae.tsv" 
+        invertebrates = "data/species/processed/coord_invertebrates.tsv",
+        plantae = "data/species/processed/coord_plantae.tsv" 
     output:
         "figures/GC_mapa.png",
         "figures/n_plantae_metazoa.png",
@@ -176,14 +177,14 @@ rule webpage_html:
         gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
         gc_pne_shp = "data/gran_canaria_shp/gc_pne.shp", 
         jarbot = "data/gran_canaria_shp/jardin_botanico.shp",
-        invertebrates = "data/coord_invertebrates.tsv",
-        plantae = "data/coord_plantae.tsv", 
+        invertebrates = "data/species/processed/coord_invertebrates.tsv",
+        plantae = "data/species/processed/coord_plantae.tsv", 
         pspecies_layer = "data/protected_species/protected_species_layer.shp", 
         gc_map_png = "figures/GC_mapa.png",
         n_plantae_metazoa_png = "figures/n_plantae_metazoa.png",
         category_invertebrates_png = "figures/n_category_invertebrates.png",
         category_plantae_png = "figures/n_category_plantae.png",
-        tables = "code/R/10tables.R"
+        tables = "code/R/10tables.R",
     output:
         "index.html",
         "invertebrates.html",

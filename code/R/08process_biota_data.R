@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-df_biota <- readr::read_delim("data/biota_species.csv", delim = ";", 
+df_biota <- readr::read_delim("data/biota/raw/biota_species.csv", delim = ";", 
                               locale=readr::locale(encoding="latin1")) |> 
     dplyr::select(
         "id_biota" = `Código`,
@@ -16,5 +16,5 @@ df_biota <- readr::read_delim("data/biota_species.csv", delim = ";",
         "order" = Orden ,
         "presence" = Presencia 
     ) |>
-    readr::write_tsv("data/biota_data_processed.tsv")
+    readr::write_tsv("data/biota/processed/biota_data_processed.tsv")
 

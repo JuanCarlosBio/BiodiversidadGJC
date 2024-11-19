@@ -9,7 +9,7 @@ print("==============================================================")
 print(">>> THIS ARE THE ERRORS THAT YOU HAVE HAD IN PLANTAE THIS WEEK")
 print("==============================================================")
 
-read_tsv("data/raw_dropbox_links_plantae_content.tsv") %>%
+read_tsv("data/species/raw/raw_dropbox_links_plantae_content.tsv") %>%
     filter(!(str_detect(filename,  "NO CLASIFICADO"))) %>% 
     select(filename) %>%
     separate_wider_delim(filename, delim = "-",
@@ -26,7 +26,7 @@ print("==============================================================")
 print(">>> THIS ARE THE ERRORS THAT YOU HAVE HAD IN METAZOA THIS WEEK")
 print("==============================================================")
 
-read_tsv("data/raw_dropbox_links_metazoa_content.tsv") %>%
+read_tsv("data/species/raw/raw_dropbox_links_metazoa_content.tsv") %>%
     filter(!(str_detect(filename,  "NO CLASIFICADO"))) %>% 
     select(filename) %>%
     separate_wider_delim(filename, delim = "-",
