@@ -85,7 +85,7 @@ Mapa interactivo formado por varias capas:
   - Por defecto sin capa 
   - Espacios Naturales Protegidos (ENP) 
   - Zonas de Especial Conservación (ZEC) 
-  - <u>Especies Protegidas</u> 
+  - Especies Protegidas 
 - **CAPAS EN PRIMER PLANO**:
   - Especies (<span style='color: green'><u>nativas no protegidas</u></span>, <span style='color: red'><u>introducidas</u></span> y <span style='color: orange'><u>traslocadas</u></span>)
   - Leyendas 
@@ -100,7 +100,7 @@ bscols(
   "",
   filter_select(
     id = "species",
-    label = "BUSCA LA/s ESPECIE/s QUE TE INTERESEN",
+    label = htmltools::HTML("BUSCA LA/s ESPECIE/s QUE TE INTERESEN"),
     sharedData = sd,
     group = ~specie,
     ""
