@@ -99,7 +99,7 @@ map <- leaflet() |>
       textsize = "15px",
       direction = "auto"
     ),
-    group = "Espacios Naturales<br>Protegidos") |>
+    group = "Espacios Naturales Protegidos") |>
   addPolygons(data = zec_map,  
               fillColor = ~pal_zec(des_zon),
               color = "transparent",
@@ -184,16 +184,16 @@ map <- leaflet() |>
             values = ~n, 
             title = "<strong>Especies protegidas</strong>", 
             opacity=1, 
-            group = "Leyenda especies<br>protegidas") |>
+            group = "Leyenda especies protegidas") |>
   addLegend(data = species, "bottomright", pal = pal_species,
             values = ~category, title = "<strong>Especies NO protegidas</strong>", 
             opacity=1, group = "Leyenda Especies") |> 
   addLayersControl(baseGroups = c("SIN CAPA", 
-                                  "Espacios Naturales<br>Protegidos", 
+                                  "Espacios Naturales Protegidos", 
                                   "Red Natura 2000", 
                                   "Especies Protegidas"), 
                    overlayGroups = c("Especies", "Leyenda Especies", 
-                                     "Leyenda especies<br>protegidas"),
+                                     "Leyenda especies protegidas"),
                    options = layersControlOptions(collapsed = T, autoZIndex = TRUE))  |>
   addResetMapButton() |>
   addScaleBar("bottomleft", scaleBarOptions(metric = TRUE, imperial = FALSE)) |>

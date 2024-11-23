@@ -73,7 +73,7 @@ map <- leaflet() |>
                 textsize = "15px",
                 direction = "auto"
               ),
-              group = "Espacios Naturales<br>Protegidos") |>
+              group = "Espacios Naturales Protegidos") |>
   addPolygons(data = zec_map,  
               fillColor = ~pal_zec(des_zon),
               color = "transparent",
@@ -104,21 +104,20 @@ map <- leaflet() |>
                    popup = paste0("<p style='text-align:left;'>", 
                                   "<strong>Identificador (ID</strong>): ", species$id,
                                   glue("<br><a href={url_biota}{species$id_biota}><strong>Biota:</strong> {species$id_biota}</a>"),
-                                  "<br>=========================",
+                                  "<br>-----",
                                   "<br><strong>Filo:</strong> ", species$phylo,
                                   "<br><strong>Clase:</strong> ", species$class,
                                   "<br><strong>Orden:</strong> ", species$order,
                                   "<br><strong>Familia:</strong> ", species$family,
                                   "<br><strong>Especie:</strong> ", glue("<i>{species$specie}</i>"), " ", species$author, # No funciona unfortunately
                                   "<br><strong>Nomb. común:</strong> ", species$name, 
-                                  "<br>=========================",
+                                  "<br>-----",
                                   "<br><strong>Género Endémico</strong>: ", species$endemic_genus, 
                                   "<br><strong>Especie Endémica:</strong> ", species$endemic_specie,
                                   "<br><strong>Subespecie Endémica:</strong> ", species$endemic_subspecie,
                                   "<br><strong>Origen:</strong> ", species$origin, 
-                                  "<br>=========================",
+                                  "<br>-----",
                                   "<br><strong>Fecha:</strong> ", species$gpsdatetime,
-                                  "<br>=========================",
                                   "</p>") |> lapply(htmltools::HTML), 
                    label = paste0(glue("<i>{species$specie}</i>"),
                                  glue("<br>---------------------------------------------------------------------"),
@@ -131,7 +130,7 @@ map <- leaflet() |>
             values = ~category, title = "<strong>Leyenda:</strong>", 
             opacity=1, group = "Leyenda") |>
   addLayersControl(baseGroups = c("SIN CAPA", 
-                                  "Espacios Naturales<br>Protegidos", 
+                                  "Espacios Naturales Protegidos", 
                                   "Red Natura 2000" 
                                   ), 
                    overlayGroups = c("Especies", "Leyenda"),

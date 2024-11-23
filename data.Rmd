@@ -131,5 +131,11 @@ gt_endemism
 <button class="button" onclick="window.location.href='./flora'">MAPA FLORA Y VEGETACIÓN</button>
 </div>
 
-Última actualización el `r format(lubridate::today(), "%d/%m/%Y")`  
-Sitio [<u>**desarrollado**</u>](`r rmarkdown::metadata$github_repo`) por [<u>**Juan Carlos García Estupiñán**</u>](`r rmarkdown::metadata$github`) [<u>**&#x2709; GMAIL**</u>](mailto:`r rmarkdown::metadata$email_adress`)
+
+
+<footer style="text align: center; margin-top: 20px; font-size: small; color: gray">
+  <hr>
+  <p><em>Última actualización el `r format(lubridate::today(), "%d/%m/%Y")`</em></p>
+  <p>Sitio [<u>**desarrollado**</u>](`r rmarkdown::metadata$github_repo`) por [<u>**Juan Carlos García Estupiñán**</u>](`r rmarkdown::metadata$github`)</p>
+  <p><h4><u>Contacta conmigo:</u>[**&#x2709; GMAIL**](mailto:`r rmarkdown::metadata$email_adress`)</h4></p>
+</footer>
