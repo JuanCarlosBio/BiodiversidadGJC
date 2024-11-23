@@ -6,6 +6,7 @@ rule targets:
         "data/islands_shp/eennpp.shp",
         "data/jardin_botanico.kml",
         "data/biota/raw/biota_species.csv",
+        "data/biota/raw/centinela_species.csv", 
         "data/protected_species/coord_plantae_pe.tsv",
         "data/protected_species/protected_species_layer.shp",
         "data/gran_canaria_shp/gc_muni.shp",
@@ -73,7 +74,8 @@ rule download_biota_data:
     input:
         bash_script = "code/bash/03download_biota_data.sh"
     output:
-        "data/biota/raw/biota_species.csv"
+        "data/biota/raw/biota_species.csv", 
+        "data/biota/raw/centinela_species.csv" 
     conda:
         "code/enviroments/env.yml"
     shell:
@@ -130,18 +132,21 @@ rule process_exif_images:
         ai_files ="data/species/raw/raw_dropbox_links_plantae_content.tsv",
         biota_file = "data/biota/processed/biota_data_processed.tsv",
         pspecies = "data/protected_species/coord_plantae_pe.tsv",
-        check_errors_labels = "code/R/03check_errors_labels.R"
+        check_errors_labels = "code/R/03check_errors_labels.R",
+        check_centinela = "code/R/11check_centinela.R"
     output:
         "data/species/processed/coord_invertebrates.tsv",
         "data/species/processed/coord_plantae.tsv"
     log:
-        "tests/week_names_label_errors.txt"
+        check_labels = "tests/week_names_label_errors.txt",
+        check_centinela = "tests/check_centinela.txt"
     conda:
         "code/enviroments/env.yml"
     shell:
         """
         Rscript {input.r_script}
-        Rscript {input.check_errors_labels} > {log}
+        Rscript {input.check_errors_labels} > {log.check_labels}
+        Rscript {input.check_centinela} > {log.check_centinela}
         """  
 
 rule figures_and_stats:

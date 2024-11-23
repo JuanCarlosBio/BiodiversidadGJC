@@ -1,0 +1,4 @@
+[1] "-------------------------------------------------------------------"
+[1] ">>> There should only be 'Especie protegida' - 'Especie traslocada'"
+[1] "-------------------------------------------------------------------"
+[1] "Especie protegida"  "Especie traslocada"

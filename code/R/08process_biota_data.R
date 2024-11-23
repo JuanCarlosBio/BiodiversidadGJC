@@ -4,6 +4,7 @@ df_biota <- readr::read_delim("data/biota/raw/biota_species.csv", delim = ";",
                               locale=readr::locale(encoding="latin1")) |> 
     dplyr::select(
         "id_biota" = `Código`,
+        scientific_name = Especie,
         "name"=`Nombre común/vulgar`,
         "medium"=Medio ,
         "class" = Clase,
