@@ -55,11 +55,11 @@ enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") %>%
 
 ## Crear una capa de especies Protegidas (flora)
 protected_species <- read_sf("data/protected_species/protected_species_layer.shp") |>
-  group_by(specie, name, id_biota, geometry) |> 
+  group_by(scientific, id_biota, geometry) |> 
   summarise(n = n()) |>  
   ungroup() |>
   group_by(geometry) |>
-  summarise(species = paste0(glue("<i><a href='https://www.biodiversidadcanarias.es/biota/especie/{id_biota}'>{specie}</i></a> ({name})"), collapse = "<br>> "),
+  summarise(species = paste0(glue("<i><a href='https://www.biodiversidadcanarias.es/biota/especie/{id_biota}'>{scientific}</i></a>"), collapse = "<br>> "),
             n = n())
 
 ## Crear una capa las zonas ZEC de Gran Canaria (IDECanarias)

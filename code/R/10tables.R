@@ -19,23 +19,23 @@ url_biota <- "https://www.biodiversidadcanarias.es/biota/especie/"
 # Processing the data 
 #----------------------------------------------------------------------#
 table_invertebrates <- invertebrates %>%
-    drop_na(author) %>%
+    drop_na(scientific_name) %>%
     mutate(name = ifelse(is.na(name), "-", as.character(name)),
            class = str_to_title(class)) %>%
-    group_by(specie, author, name, id_biota, family,
+    group_by(scientific_name, name, id_biota, family,
              endemicity, origin, category) %>%
     count() %>%
-    arrange(specie, family) %>%
+    arrange(scientific_name, family) %>%
     select(-n)
 
 table_plantae <- plantae %>%
-    drop_na(author) %>%
+    drop_na(scientific_name) %>%
     mutate(name = ifelse(is.na(name), "-", as.character(name)),
            division = str_to_title(division)) %>%
-    group_by(specie, author, name, id_biota, family,
+    group_by(scientific_name, name, id_biota, family,
              endemicity, origin, category) %>%
     count() %>%
-    arrange(specie, family) %>%
+    arrange(scientific_name, family) %>%
     select(-n)
 
 #----------------------------------------------------------------------#
@@ -45,7 +45,7 @@ gt_invertebrates <- table_invertebrates %>%
     as_tibble() %>% 
     mutate(id_biota = glue("[Link Biota {id_biota}]({url_biota}{id_biota})"),
            id_biota = map(id_biota, md),
-           specie = map(glue("*{specie}*"), md)) %>%
+           scientific_name = map(glue("*{scientific_name}*"), md)) %>%
     gt() %>%
     cols_align(
         align = "center"
@@ -54,8 +54,7 @@ gt_invertebrates <- table_invertebrates %>%
         title = md("**Tabla de las especies de invertebrados**")
     ) %>%
     cols_label(
-        specie = md("**ESPECIE**"),
-        author = md("**AUTOR**"),
+        scientific_name = md("**ESPECIE**"),
         name = md("**NOMBRE COMÚN**"),
         family = md("**FAMILIA**"),
         id_biota = md("**LINK BIOTA**"),
@@ -78,7 +77,7 @@ gt_plantae <- table_plantae %>%
     as_tibble() %>% 
     mutate(id_biota = glue("[Link Biota {id_biota}]({url_biota}{id_biota})"),
            id_biota = map(id_biota, md),
-           specie = map(glue("*{specie}*"), md)) %>%
+           scientific_name = map(glue("*{scientific_name}*"), md)) %>%
     gt() %>%
     cols_align(
         align = "center"
@@ -87,8 +86,7 @@ gt_plantae <- table_plantae %>%
         title = md("**Tabla de las especies de invertebrados**")
     ) %>%
     cols_label(
-        specie = md("**ESPECIE**"),
-        author = md("**AUTOR**"),
+        scientific_name = md("**ESPECIE**"),
         name = md("**NOMBRE COMÚN**"),
         family = md("**FAMILIA**"),
         id_biota = md("**LINK BIOTA**"),

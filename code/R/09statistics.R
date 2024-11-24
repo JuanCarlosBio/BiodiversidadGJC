@@ -37,17 +37,13 @@ enp_map_processed <- enp_map |>
                                        "Sitio de Interés Científico")))
 
 invertebrates_processed <- invertebrates |>
-  mutate(author = case_when(author == "NULL" ~ "",
-                            author != "NULL" ~ as.character(author)),
-         family = str_to_title(family),
+  mutate(family = str_to_title(family),
          order = str_to_title(order),
          class = str_to_title(class), 
          phylo = str_to_title(phylo))
 
 plantae_processed <- plantae |> 
-  mutate(author = case_when(author == "NULL" ~ "",
-                            author != "NULL" ~ as.character(author)),
-         family = str_to_title(family),
+  mutate(family = str_to_title(family),
          order = str_to_title(order),
          class = str_to_title(class), 
          division = str_to_title(division))
@@ -58,8 +54,12 @@ plantae_processed <- plantae |>
 
 exif_data_ai |>
   select(filename) |>
-  mutate(clasificados = case_when(str_detect(filename, pattern = "NO CLASIFICADO") ~ "no clasificada",
-                                  !(str_detect(filename, pattern = "NO CLASIFICADO")) ~ "clasificada")) |>
+  mutate(
+    clasificados = case_when(
+      str_detect(filename, pattern = "NO CLASIFICADO") ~ "no clasificada",
+      !(str_detect(filename, pattern = "NO CLASIFICADO")) ~ "clasificada"
+    )
+  ) |>
   group_by(clasificados) |>
   count() -> tabla_n_ai
 
@@ -190,24 +190,24 @@ ggsave(plot= metazoa_plantae_plot,
 ##----------------------------------------------------------------------------#
 
 endemic_invertebrates <- invertebrates |>
-  select(endemic_genus, endemic_specie, endemic_subspecie, latitude, longitude, specie) 
+  select(endemic_genus, endemic_specie, endemic_subspecie, latitude, longitude, scientific_name) 
 
 n_endemic_invertebrates <- endemic_invertebrates |>
-  group_by(endemic_genus, endemic_specie, endemic_subspecie, specie) |>
+  group_by(endemic_genus, endemic_specie, endemic_subspecie, scientific_name) |>
   count() |>
   mutate(organism = "invertebrates") |>
   ungroup() |>
-  pivot_longer(-c(organism, specie, n)) 
+  pivot_longer(-c(organism, scientific_name, n)) 
 
 endemic_plantae <- plantae |>
-  select(endemic_genus, endemic_specie, endemic_subspecie, latitude, longitude, specie) 
+  select(endemic_genus, endemic_specie, endemic_subspecie, latitude, longitude, scientific_name) 
 
 n_endemic_plantae <- endemic_plantae |>
-  group_by(endemic_genus, endemic_specie, endemic_subspecie, specie) |>
+  group_by(endemic_genus, endemic_specie, endemic_subspecie, scientific_name) |>
   count() |>
   mutate(organism = "plantae") |>
   ungroup() |>
-  pivot_longer(-c(organism, specie, n))
+  pivot_longer(-c(organism, scientific_name, n))
 
 endemic_organisms <- rbind(n_endemic_invertebrates, n_endemic_plantae)
 

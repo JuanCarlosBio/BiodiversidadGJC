@@ -160,7 +160,7 @@ map <- leaflet() |>
                                   "<br><strong>Clase:</strong> ", species$class,
                                   "<br><strong>Orden:</strong> ", species$order,
                                   "<br><strong>Familia:</strong> ", species$family,
-                                  "<br><strong>Especie:</strong> ", glue("<i>{species$specie}</i>"), " ", species$author,
+                                  "<br><strong>Especie:</strong> ", glue("<i>{species$scientific_name}</i>"),
                                   "<br><strong>Nomb. común:</strong> ", species$name,
                                   "<br>-----<br>",
                                   "<strong>Género Endémico</strong>: ", species$endemic_genus, 
