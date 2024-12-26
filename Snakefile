@@ -138,8 +138,8 @@ rule process_exif_images:
         "data/species/processed/coord_invertebrates.tsv",
         "data/species/processed/coord_plantae.tsv"
     log:
-        check_labels = "tests/week_names_label_errors.txt",
-        check_centinela = "tests/check_centinela.txt"
+        check_labels = "logs/week_names_label_errors.txt",
+        check_centinela = "logs/check_centinela.txt"
     conda:
         "code/enviroments/env.yml"
     shell:
