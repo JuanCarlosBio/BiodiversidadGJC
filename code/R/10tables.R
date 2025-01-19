@@ -68,9 +68,13 @@ gt_invertebrates <- table_invertebrates %>%
     opt_stylize(
     ) %>%
     opt_interactive(
-        use_search = TRUE,
-        use_resizers = TRUE,
-        use_compact_mode = TRUE
+    use_search = TRUE,
+    use_filters = TRUE,
+    use_resizers = TRUE,
+    use_highlight = TRUE,
+    use_compact_mode = TRUE,
+    use_text_wrapping = FALSE,
+    use_page_size_select = TRUE
     ) 
 
 gt_plantae <- table_plantae %>% 
@@ -101,7 +105,11 @@ gt_plantae <- table_plantae %>%
         color = "blue"
     ) %>%
     opt_interactive(
-        use_search = TRUE,
-        use_resizers = TRUE,
-        use_compact_mode = TRUE
+    use_search = TRUE,
+    use_filters = TRUE,
+    use_resizers = TRUE,
+    use_highlight = TRUE,
+    use_compact_mode = TRUE,
+    use_text_wrapping = FALSE,
+    use_page_size_select = TRUE
     )

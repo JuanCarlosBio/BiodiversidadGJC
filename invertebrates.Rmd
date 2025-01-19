@@ -111,9 +111,10 @@ map
 
 ## **TABLA DE LAS ESPECIES DE <span style='color: #870909'><u>METAZOOS (INVERTEBRADOS)</u></span>:**
 
-### **Busca en la tabla la/s especie/s que estés interesado (*"<u>search</u>"*):**
+### **Busca en la tabla las especies que estés interesado (*"<u>search</u>"*):**
 
 * **<u>Truco</u>**: Por otro lado puedes buscar por palabras clave, como *"especies nativa"*, *"especie traslocada"*
+* También puedes usar los <u>buscadores encima de cada columna</u> para una búsqueda más específica.
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 source("code/R/10tables.R")

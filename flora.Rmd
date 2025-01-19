@@ -100,7 +100,7 @@ bscols(
   "",
   filter_select(
     id = "species",
-    label = htmltools::HTML("BUSCA LA/s ESPECIE/s QUE TE INTERESEN"),
+    label = htmltools::HTML("BUSCA LAS ESPECIES QUE TE INTERESEN"),
     sharedData = sd,
     group = ~specie,
     ""
@@ -110,9 +110,10 @@ bscols(
 map
 ```
 
-### **Busca en la tabla la/s especie/s que estés interesado (*"<u>search</u>"*):**
+### **Busca en la tabla las especies que estés interesado (*"<u>search</u>"*):**
 
 * **<u>Truco</u>**: puedes buscar por palabras clave, como *"especies nativa"*, *"especie traslocada"*
+* También puedes usar los <u>buscadores encima de cada columna</u> para una búsqueda más específica.
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 source("code/R/10tables.R")
