@@ -6,5 +6,6 @@
 [1] "=============================================================="
 [1] ">>> THIS ARE THE ERRORS THAT YOU HAVE HAD IN METAZOA THIS WEEK"
 [1] "=============================================================="
-[1] id              filename_ok     filename_pieces
-<0 rows> (or 0-length row.names)
+                       id filename_ok filename_pieces
+1 IMG_20250118_215954.jpg       FALSE               1
+2 IMG_20250119_141018.jpg       FALSE               1
