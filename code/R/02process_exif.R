@@ -108,15 +108,20 @@ rp_species <- read_and_processed_species_data <- function(path, id_specie_start)
 
 }
 
-rp_species(
+metazoa <- rp_species(
     path="data/species/raw/raw_dropbox_links_metazoa_content.tsv", 
-    id_specie_start="^AI"
-    ) |> 
-    readr::write_tsv("data/species/processed/coord_invertebrates.tsv") 
+    id_specie_start="^MENP"
+    ) 
+# |> 
+# readr::write_tsv("data/species/processed/coord_invertebrates.tsv") 
 
-rp_species(
+plantae <- rp_species(
     path="data/species/raw/raw_dropbox_links_plantae_content.tsv", 
-    id_specie_start="^FV"
-    ) |>
+    id_specie_start="^PANP"
+    ) 
+# |>
+# bind_rows(protected_species_layer) |>
+
+rbind(metazoa, plantae) |>
     bind_rows(protected_species_layer) |>
-    readr::write_tsv("data/species/processed/coord_plantae.tsv")
+    readr::write_tsv("data/species/processed/coord_species.tsv")

@@ -4,7 +4,7 @@
 
 library(tidyverse)
 
-species <- read_tsv("data/species/processed/coord_plantae.tsv")
+species <- read_tsv("data/species/processed/coord_species.tsv")
 
 centinela_species <- read_delim(
   "data/biota/raw/centinela_species.csv", 

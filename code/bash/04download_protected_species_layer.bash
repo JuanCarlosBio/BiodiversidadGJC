@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-link="https://drive.google.com/uc?export=download&id=1rOR8LDOg3Mhlq3xbOEOwRy-3jMY57N2b"
+#link="https://drive.google.com/file/d/-/view?usp=sharing"
+link="https://drive.google.com/uc?export=download&id=1CjFJabXYeJl_bThrHcECo3qvevEwYIr-"
 
 wget -P data/ -O data/temp.zip $link -q ; unzip data/temp.zip -d data/
 
