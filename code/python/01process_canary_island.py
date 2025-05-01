@@ -15,9 +15,9 @@ def main():
 
     ##-----------------------------------------------------------------##
     ## Procesar los datos para obtener SHPs específicos de Gran Canaria
-    gc_muni = canary_islands[canary_islands["isla"] == "GRAN CANARIA"]
-    gc_pne = pne[pne["codigo"].str.startswith("C")]
-    gc_zec = zec[zec["ISLA"] == "GRAN CANARIA"]
+    gc_muni = canary_islands[canary_islands["isla"].isin(["GRAN CANARIA", "TENERIFE"])]
+    gc_pne = pne[pne["codigo"].str.contains(r"^[CT]")]
+    gc_zec = zec[zec["ISLA"].isin(["GRAN CANARIA", "TENERIFE"])]
 
     ## Arrglar el archivo de Espacios Naturales de Gran Canaria
     gc_filter1 = gc_pne[gc_pne["codigo"].isin(["C-01", "C-21", "C-20", "C-14",

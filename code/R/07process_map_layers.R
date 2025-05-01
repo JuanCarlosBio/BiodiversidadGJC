@@ -34,14 +34,14 @@ f_species <- function(data){
 }
 
 ## Trípticos informativos de Los ENPs que se implementarán en la capa de los ENPs
-pne_info <- system("python code/python/02protected_natural_spaces_info.py | grep ^C-", intern = T)
+pne_info <- system("python3 code/python/02protected_natural_spaces_info.py | grep ^C-", intern = T)
 df_pne_info <- data.frame(info = pne_info)
 ## Capa de los ENPs de la Isla de Gran Canaria a partir de los datos de IDECanarias
 df_pne_processed <- df_pne_info |> 
   mutate(codigo = str_remove(info, "%.*"),
          codigo = str_replace(codigo, "^C-(\\d)$", "C-0\\1"))
 
-enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") %>%
+enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") %>% 
   st_transform(map, crs = 4326) %>%
   mutate(categoria = factor(categoria,
                             levels = c("Monumento Natural", 
@@ -50,8 +50,9 @@ enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") %>%
                                        "Parque Rural", 
                                        "Reserva Natural Especial",
                                        "Reserva Natural Integral", 
-                                       "Sitio de Interés Científico"))) %>%
-  inner_join(., df_pne_processed, by="codigo")  
+                                       "Sitio de Interés Científico",
+                                       "Parque Nacional"))) %>% 
+  left_join(., df_pne_processed, by="codigo")  
 
 ## Crear una capa de especies Protegidas (flora)
 protected_species <- read_sf("data/protected_species/protected_species_layer.shp") |>
@@ -87,3 +88,4 @@ pal_zec <- colorFactor(
   palette = c("#88c185", "#b4fcae", "#fedd86", "#feebb8", "#eaeaea"),
   domain = zec_map$des_zon
 )
+

@@ -4,7 +4,7 @@ import geopandas as gpd
 import pandas as pd
 from shapely.geometry import Point
 
-df_plantae = pd.read_csv("data/species/processed/coord_plantae.tsv", delimiter="\t")
+df_plantae = pd.read_csv("data/species/processed/coord_species.tsv", delimiter="\t")
 df_plantae = df_plantae[df_plantae["category"] != "Especie protegida"]
 
 gc_pne = gpd.read_file("data/gran_canaria_shp/gc_pne.shp").to_crs(4326)

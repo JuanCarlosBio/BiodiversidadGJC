@@ -18,8 +18,11 @@ suppressMessages(suppressWarnings({
 ## Loading the data ##
 exif_data_ai <- read_tsv("data/species/raw/raw_dropbox_links_metazoa_content.tsv")
 exif_data_fv <- read_tsv("data/species/raw/raw_dropbox_links_plantae_content.tsv")
-invertebrates <- read_tsv("data/species/processed/coord_invertebrates.tsv")
-plantae <- read_tsv("data/species/processed/coord_plantae.tsv") 
+
+# invertebrates <- read_tsv("data/species/processed/coord_invertebrates.tsv")
+# plantae <- read_tsv("data/species/processed/coord_plantae.tsv") 
+species <- read_tsv("data/species/processed/coord_species.tsv")
+
 enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp")
 map <- read_sf("data/gran_canaria_shp/gc_muni.shp") |>
   st_transform(map, crs = 4326) 
@@ -34,15 +37,18 @@ enp_map_processed <- enp_map |>
                                        "Parque Rural", 
                                        "Reserva Natural Especial",
                                        "Reserva Natural Integral", 
-                                       "Sitio de Interés Científico")))
+                                       "Sitio de Interés Científico",
+                                       "Parque Nacional")))
 
-invertebrates_processed <- invertebrates |>
+invertebrates_processed <- species |>
+  filter(domain == "Metazoa") |>
   mutate(family = str_to_title(family),
          order = str_to_title(order),
          class = str_to_title(class), 
          phylo = str_to_title(phylo))
 
-plantae_processed <- plantae |> 
+plantae_processed <- species |> 
+  filter(domain == "Plantae") |>
   mutate(family = str_to_title(family),
          order = str_to_title(order),
          class = str_to_title(class), 
@@ -63,7 +69,7 @@ exif_data_ai |>
   group_by(clasificados) |>
   count() -> tabla_n_ai
 
-plantae |>
+plantae_processed |>
   rename_all(tolower) |>
   nrow() -> tabla_n_fv
 
@@ -98,11 +104,12 @@ species_plot <- coord_invert_plantae |>
                "Parque Rural", 
                "Reserva Natural Especial",
                "Reserva Natural Integral", 
-               "Sitio de Interés Científico"),
+               "Sitio de Interés Científico",
+               "Parque Nacional"),
     values = c("#004078", "#80a0bd", 
                "#f78000", "#e60000", 
                "#00913f", "#034a31", 
-               "#BADBCA")) +
+               "#BADBCA", "yellow")) +
   labs(
     title = "<span style = 'color: #870909'>ANIMALES</span> Y <span style = 'color: forestgreen'>PLANTAS</span> IDENTIFICADOS!!!"
   ) +
@@ -128,10 +135,10 @@ ggsave(plot= species_plot,
 ## Númerod de especies encontradas según su Reino
 ##----------------------------------------------------------------------------#
 
-invertebrates_domain <- invertebrates |>
+invertebrates_domain <- invertebrates_processed |>
   select(domain, id_biota)
 
-plantae_domain <- plantae |>
+plantae_domain <- plantae_processed |>
   select(domain,id_biota)
 
 plantaed_invertebratesd <- rbind(invertebrates_domain, plantae_domain)
@@ -189,7 +196,7 @@ ggsave(plot= metazoa_plantae_plot,
 ## Segundo gráfico nº 2 de metazoos y plantae
 ##----------------------------------------------------------------------------#
 
-endemic_invertebrates <- invertebrates |>
+endemic_invertebrates <- invertebrates_processed |>
   select(endemic_genus, endemic_specie, endemic_subspecie, latitude, longitude, scientific_name) 
 
 n_endemic_invertebrates <- endemic_invertebrates |>
@@ -199,7 +206,7 @@ n_endemic_invertebrates <- endemic_invertebrates |>
   ungroup() |>
   pivot_longer(-c(organism, scientific_name, n)) 
 
-endemic_plantae <- plantae |>
+endemic_plantae <- plantae_processed|>
   select(endemic_genus, endemic_specie, endemic_subspecie, latitude, longitude, scientific_name) 
 
 n_endemic_plantae <- endemic_plantae |>
@@ -267,7 +274,7 @@ gt_endemism <- endemism_table |>
 ##----------------------------------------------------------------------------#
 
 # Procesado de datos
-category_invertebrates <- invertebrates |>
+category_invertebrates <- invertebrates_processed |>
   group_by(id_biota, category) |>
   count() |>
   ungroup() |>
@@ -277,7 +284,7 @@ category_invertebrates <- invertebrates |>
                            levels = c("Especie nativa", "Especie protegida", "Especie introducida"),
                            labels = c("Nativas", "Protegidas", "Introducidas")))
 
-category_plantae <- plantae |>
+category_plantae <- plantae_processed |>
   group_by(id_biota, category) |>
   count() |>
   ungroup() |>
