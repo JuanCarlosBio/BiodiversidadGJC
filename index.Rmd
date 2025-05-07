@@ -91,23 +91,18 @@ Esta es una WEB personal de especies de **<u>flora</u>** y **<u>fauna</u>** en l
 
 </center>
 
-## <strong>MAPAS INTERACTIVOS CON LOS ORGANISMOS</strong> 🗺️️
+## <strong>MAPAS INTERACTIVOS CON LOS ORGANISMOS</strong> (inventario) 🗺️️
 
-### Mapa de especies de <span style='color: #870909'><u>INVERTEBRADOS</u></span> 🐌 🐜
+### **Documento las siguientes especies:** 
 
-* Aquí documento las especies de invertebrados que he observado en Gran Canaria.
+* <span style='color: #870909'><u>ANIMALES</u></span>, actualmente sólo <u>invertebrados</u> 🐌 🐜, pero tengo pensado empezar a subir vertebrados en un futuro.
 
-### Mapa de especies de <span style='color: green'><u>FLORA y VEGETACIÓN</u></span> 🌺 🌱
-
-* Aquí documento las especies de flora y vegetación que he Observado en Gran Canaria.
+* <span style='color: green'><u>FLORA y VEGETACIÓN</u></span> 🌺 🌱
 
 <div style="text-align: center;">
-<button class="button" onclick="window.location.href='./invertebrates'">MAPA INVERTEBRADOS</button>
-<button class="button" onclick="window.location.href='./flora'">MAPA FLORA Y VEGETACIÓN</button>
-<button class="button" onclick="window.location.href='./data'">Descarga de datos y estadísticas</button>
+<button class="button" onclick="window.location.href='./species'">MAPA INTERACTIVO E INVENTARIO</button>
+<button class="button" onclick="window.location.href='./data'">DESCARGA DE DATOS Y ESTADÍSTICAS</button>
 </div>
-
-
 
 <footer style="text align: center; margin-top: 20px; font-size: small; color: gray">
   <hr>

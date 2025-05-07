@@ -122,17 +122,15 @@ gt_species
 
 <div style="text-align: center;">
 <button class="button" onclick="window.location.href='./'">INICIO</button>
-<button class="button" onclick="window.location.href='./invertebrates'">MAPA INVERTEBRADOS</button>
+<!--<button class="button" onclick="window.location.href='./invertebrates'">MAPA INVERTEBRADOS</button>-->
 <button class="button" onclick="window.location.href='./data'">Descarga de datos y estadísticas</button>
 </div>
 
-<footer style="text align: center; margin-top: 20px; font-size: small; color: gray">
+<footer style="text-align: center; margin-top: 20px; font-size: small; color: gray">
   <hr>
   <p><em>Última actualización el `r format(lubridate::today(), "%d/%m/%Y")`</em></p>
   <p>Sitio [<u>**desarrollado**</u>](`r rmarkdown::metadata$github_repo`) por [<u>**Juan Carlos García Estupiñán**</u>](`r rmarkdown::metadata$github`)</p>
   <p>Puede ser interesante: [Inventario de especies de cada Espacio Natural Protegido](https://juancarlosbio.github.io/inventario_especies_enp/)</p>
   <p><h4><u>Contacta conmigo:</u>[**&#x2709; GMAIL**](mailto:`r rmarkdown::metadata$email_adress`)</h4></p>
 </footer>
-
-  
 
