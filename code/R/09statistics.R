@@ -129,7 +129,7 @@ species_plot <- coord_invert_plantae |>
 
 ggsave(plot= species_plot, 
        "figures/GC_mapa.png",
-       width = 1.5, height = 1.5)  
+       width = 2, height = 2)  
 
 ##----------------------------------------------------------------------------#
 ## Númerod de especies encontradas según su Reino

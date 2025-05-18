@@ -100,29 +100,29 @@ map <- leaflet() |>
       direction = "auto"
     ),
     group = "Espacios Naturales Protegidos") |>
-  addPolygons(data = zec_map,  
-              fillColor = ~pal_zec(des_zon),
-              color = "transparent",
-              dashArray = "3",
-              highlightOptions = highlightOptions(weight = 5,
-                                                  color = "#666",
-                                                  fillOpacity = .7,
-                                                  dashArray = "",
-                                                  bringToFront = FALSE),              
-              label = paste0("<p align='left'>",
-                             "<strong>Código:</strong> ", zec_map$cod_zec, 
-                             glue("<br><strong>Nombre de la ZEC:</strong> <u>{zec_map$nom_zec}</u>"),
-                             glue("<br><strong>Zonificación:</strong> <u>{zec_map$des_zon}</u> ({zec_map$tip_zon})"),
-                             "</p>") |> 
-                lapply(htmltools::HTML),
-              labelOptions = labelOptions(
-                style = list("font-weight" = "normal",
-                             padding = "3px 8px"),
-                textsize = "15px",
-                direction = "auto"
-              ),              
-              weight = 0, fillOpacity = .5,
-              group = "Red Natura 2000") |>
+#  addPolygons(data = zec_map,  
+#              fillColor = ~pal_zec(des_zon),
+#              color = "transparent",
+#              dashArray = "3",
+#              highlightOptions = highlightOptions(weight = 5,
+#                                                  color = "#666",
+#                                                  fillOpacity = .7,
+#                                                  dashArray = "",
+#                                                  bringToFront = FALSE),              
+#              label = paste0("<p align='left'>",
+#                             "<strong>Código:</strong> ", zec_map$cod_zec, 
+#                             glue("<br><strong>Nombre de la ZEC:</strong> <u>{zec_map$nom_zec}</u>"),
+#                             glue("<br><strong>Zonificación:</strong> <u>{zec_map$des_zon}</u> ({zec_map$tip_zon})"),
+#                             "</p>") |> 
+#                lapply(htmltools::HTML),
+#              labelOptions = labelOptions(
+#                style = list("font-weight" = "normal",
+#                             padding = "3px 8px"),
+#                textsize = "15px",
+#                direction = "auto"
+#              ),              
+#              weight = 0, fillOpacity = .5,
+#              group = "Red Natura 2000") |>
   addPolygons(data = protected_species,
               fillColor = ~pal_protected_especies(n),
               color = "transparent",
@@ -196,7 +196,7 @@ map <- leaflet() |>
             opacity=1, group = "Leyenda Especies") |> 
   addLayersControl(baseGroups = c("SIN CAPA", 
                                   "Espacios Naturales Protegidos", 
-                                  "Red Natura 2000", 
+                                  #"Red Natura 2000", 
                                   "Especies Protegidas"), 
                    overlayGroups = c("Especies", "Leyenda Especies", 
                                      "Leyenda especies protegidas"),
