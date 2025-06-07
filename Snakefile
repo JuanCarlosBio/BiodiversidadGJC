@@ -14,11 +14,7 @@ rule targets:
         "data/gran_canaria_shp/jardin_botanico.shp",
         "data/biota/processed/biota_data_processed.tsv", 
         "data/species/processed/coord_species.tsv",
-#        "data/species/processed/coord_invertebrates.tsv",
-#        "data/species/processed/coord_plantae.tsv",
         "index.html",
-#        "invertebrates.html",
-#        "flora.html",
         "species.html",
         "data.html",
         "figures/GC_mapa.png",
@@ -137,8 +133,6 @@ rule process_exif_images:
         check_centinela = "code/R/11check_centinela.R"
     output:
         "data/species/processed/coord_species.tsv"
-#        "data/species/processed/coord_invertebrates.tsv",
-#        "data/species/processed/coord_plantae.tsv"
     log:
         check_labels = "logs/week_names_label_errors.txt",
         check_centinela = "logs/check_centinela.txt"
@@ -156,8 +150,6 @@ rule figures_and_stats:
         script_r = "code/R/09statistics.R",
         gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
         gc_pne_shp = "data/gran_canaria_shp/gc_pne.shp",
-        # invertebrates = "data/species/processed/coord_invertebrates.tsv",
-        # plantae = "data/species/processed/coord_plantae.tsv" 
         species = "data/species/processed/coord_species.tsv"
     output:
         "figures/GC_mapa.png",
@@ -174,20 +166,14 @@ rule figures_and_stats:
 rule webpage_html:
     input:
         rmd_index = "index.Rmd",
-#        rmd_invertebrates = "invertebrates.Rmd",
-#        rmd_flora = "flora.Rmd",
         rmd_species = "species.Rmd",
         rmd_data = "data.Rmd",
-#         r_script_invertebrates = "code/R/04plot_invertebrates.R",
-#         r_script_flora = "code/R/05plot_flora.R",
         r_script_process_layers = "code/R/07process_map_layers.R",
         py_pns_info_script = "code/python/02protected_natural_spaces_info.py",
         count_species_py_script = "code/python/03_count_pne_species.py",
         gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
         gc_pne_shp = "data/gran_canaria_shp/gc_pne.shp", 
         jarbot = "data/gran_canaria_shp/jardin_botanico.shp",
-#        invertebrates = "data/species/processed/coord_invertebrates.tsv",
-#        plantae = "data/species/processed/coord_plantae.tsv", 
         species = "data/species/processed/coord_species.tsv",
         pspecies_layer = "data/protected_species/protected_species_layer.shp", 
         gc_map_png = "figures/GC_mapa.png",
@@ -197,15 +183,11 @@ rule webpage_html:
         tables = "code/R/10tables.R",
     output:
         "index.html",
-        # "invertebrates.html",
-        # "flora.html",
         "species.html",
         "data.html"
     conda:
         "code/enviroments/env.yml"
     shell:
-        # R -e "rmarkdown::render('{input.rmd_invertebrates}')"
-        # R -e "rmarkdown::render('{input.rmd_flora}')"
         """
         R -e "rmarkdown::render('{input.rmd_index}')"
         R -e "rmarkdown::render('{input.rmd_species}')"

@@ -75,7 +75,7 @@ body {
 
 <center>
 <div style="background-color: #F4F4F4; text-align: center;">
-# **Mapa de especies de <u><span style='color: green'>PLANTAS</span> y <span style='color: #870909'></span></u> de Canarias** 
+# **Mapa de especies de <u><span style='color: green'>PLANTAS</span> y <span style='color:  #870909'>ANIMALES</span></u> de Canarias** 
 </div>
 </center>
 
