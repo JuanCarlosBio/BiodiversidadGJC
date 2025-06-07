@@ -75,7 +75,7 @@ body {
 
 <center>
 <div style="background-color: #F4F4F4; text-align: center;">
-# **Mapa de especies de <span style='color: green'><u>FLORA Y VEGETACIÓN</u></span>**
+# **Mapa de especies de <u><span style='color: green'>PLANTAS</span> y <span style=''></u>**
 </div>
 </center>
 

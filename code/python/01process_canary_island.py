@@ -21,7 +21,8 @@ def main():
 
     ## Arrglar el archivo de Espacios Naturales de Gran Canaria
     gc_filter1 = gc_pne[gc_pne["codigo"].isin(["C-01", "C-21", "C-20", "C-14",
-                                               "C-15", "C-02", "C-05", "C-04"])] 
+                                           "C-15", "C-02", "C-05", "C-04",
+                                           "T-12", "T-0", "T-35", "T-29"])] 
 
     gc_filter2 = gpd.overlay(gc_pne, gc_filter1, how="difference")
 
