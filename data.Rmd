@@ -74,7 +74,7 @@ body {
 }
 ```
 
-# <strong>Descarga las fotografías de las especies en los mapas interativos</strong> 
+# <strong>Especies clasificadas a partir de las fotografías en el mapa</strong> 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 source("code/R/09statistics.R")
@@ -82,14 +82,14 @@ source("code/R/09statistics.R")
 
 <center>
 
-  |         **MAPA**             | **Nº CLASIFICADAS** |  **DESCARGA**      | 
-  | :--------------------------: | :-----------------: |  :---------------: |
-  | *Mapa de invertebrados*      | `r tabla_n_ai$n[1]` |   [imágenes de invertebrados](https://www.dropbox.com/scl/fo/l468a8h01ig4ls8468pmu/AHEIUVWfH_E8WMbAF4mLHmI?rlkey=ggn9xajw53jji5tl63acppd8u&st=16usfqrf&dl=1) | 
-  | *Mapa de flora y vegetación* | `r tabla_n_fv[1]` |   [imágenes de flora y vegetación](https://www.dropbox.com/scl/fo/rxpvaa2g0rmy4qgb8ws86/ANZK8JFmhui6oZSm9QtqcVw?rlkey=4stj5ob4e3j7sxomvumq0903l&st=f3nucvc4&dl=1) |
+  |         **Organismos**       | **Nº CLASIFICADAS** | 
+  | :--------------------------: | :-----------------: | 
+  | *Animales*                   | `r tabla_n_ai$n[1]` | 
+  | *Plantas*                    | `r tabla_n_fv[1]`   | 
 
 </center>
 
-* ***Nota aclaratoria:*** en las imágenes de plantas no se incluyen especies protegidas.
+---
 
 # **Estadísticas de los organismos**
 
@@ -101,11 +101,15 @@ source("code/R/09statistics.R")
 
 </center>
 
+---
+
 ## Tabla de la endemicidad de las especies de plantas y animales identificadas:
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 gt_endemism
 ```
+
+---
 
 ## Especies categorizadas según su *origen* y *protección*:
 
