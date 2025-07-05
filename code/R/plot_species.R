@@ -44,7 +44,7 @@ pal_species <- colorFactor(
 )
 
 ## La capa de especies protegidas se colorearás según el siguente intervalo:
-bins <- c(1, 2, 4, 6, Inf)
+bins <- c(1, 4, 7, 10, Inf)
 pal_protected_especies <- colorBin("YlOrRd", domain = protected_species$n, bins = bins)
 
 ## Para poder filtrar las especies, tenemos que crear un objeto SharedData,

@@ -169,6 +169,7 @@ rule webpage_html:
         rmd_species = "species.Rmd",
         rmd_data = "data.Rmd",
         r_script_process_layers = "code/R/07process_map_layers.R",
+        r_script_mapping = "code/R/plot_species.R",
         py_pns_info_script = "code/python/02protected_natural_spaces_info.py",
         count_species_py_script = "code/python/03_count_pne_species.py",
         gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
