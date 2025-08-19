@@ -79,7 +79,7 @@ jardin_botanico <- read_sf("data/gran_canaria_shp/jardin_botanico.shp")
 
 ## Definir los colores para los ENPs
 pal_pne <- colorFactor(
-  palette = c("#004078", "#80a0bd", "#f78000", "#e60000", "#00913f", "#034a31", "#BADBCA"),
+  palette = c("#004078", "#80a0bd", "#f78000", "#e60000", "#00913f", "#034a31", "#BADBCA", "#fffb39"),
   domain = enp_map$categoria
 )
 
