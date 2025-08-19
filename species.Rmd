@@ -71,6 +71,20 @@ body {
     box-shadow: 0 3px #666;
     transform: translateY(2px);
 }
+
+/* 🔽 NUEVO: barra fija abajo */
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #f4f4f4;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  padding: 8px 0;
+  z-index: 9999;
+}
+
 ```
 
 <center>
@@ -123,7 +137,7 @@ gt_species
 <div style="text-align: center;">
 <button class="button" onclick="window.location.href='./'">INICIO</button>
 <!--<button class="button" onclick="window.location.href='./invertebrates'">MAPA INVERTEBRADOS</button>-->
-<button class="button" onclick="window.location.href='./data'">Descarga de datos y estadísticas</button>
+<button class="button" onclick="window.location.href='./data'">DATOS/ESTADÍSTICAS</button>
 </div>
 
 <footer style="text align: left; margin-top: 20px; font-size: small; color: gray">

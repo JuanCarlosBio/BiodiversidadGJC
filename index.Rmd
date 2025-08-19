@@ -67,6 +67,21 @@ body {
     box-shadow: 0 3px #666;
     transform: translateY(2px);
 }
+
+
+/* 🔽 NUEVO: barra fija abajo */
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #f4f4f4;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  padding: 8px 0;
+  z-index: 9999;
+}
+
 ```
 
 <center>
@@ -114,7 +129,7 @@ Esta es una WEB personal de especies de **<u>flora</u>** y **<u>fauna</u>** en l
 
 <div style="text-align: center;">
 <button class="button" onclick="window.location.href='./species'">MAPA INTERACTIVO E INVENTARIO</button>
-<button class="button" onclick="window.location.href='./data'">DESCARGA DE DATOS Y ESTADÍSTICAS</button>
+<button class="button" onclick="window.location.href='./data'">DATOS/ESTADÍSTICAS</button>
 </div>
 
 <footer style="text align: center; margin-top: 20px; font-size: small; color: gray">

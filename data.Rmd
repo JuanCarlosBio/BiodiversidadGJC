@@ -72,6 +72,21 @@ body {
     box-shadow: 0 3px #666;
     transform: translateY(2px);
 }
+
+
+/* 🔽 NUEVO: barra fija abajo */
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #f4f4f4;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  padding: 8px 0;
+  z-index: 9999;
+}
+
 ```
 
 # <strong>Especies clasificadas a partir de las fotografías en el mapa</strong> 
