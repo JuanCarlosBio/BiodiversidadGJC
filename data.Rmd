@@ -89,7 +89,7 @@ body {
 
 ```
 
-# <strong>Especies clasificadas a partir de las fotografías en el mapa</strong> 
+# <strong>Número de puntos de especies clasificadas a partir de las fotografías en el mapa</strong> 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 source("code/R/09statistics.R")
@@ -128,7 +128,7 @@ gt_endemism
 
 ## Especies categorizadas según su *origen* y *protección*:
 
-### Gráfico para las especies de invertebrados:
+### Gráfico para las especies de animales:
 
 <center>
 

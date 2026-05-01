@@ -96,7 +96,7 @@ body {
 
 ## ***BIENVENID@ A ESTA WEB*** 👨‍💻
 
-Esta es una WEB personal de especies de **<u>flora</u>** y **<u>fauna</u>** en la isla de **Gran Canaria** 🏝️ originalmente, pero que ampliaré a Tenerife (¿y qizás a otras islas? 👀)  
+Esta es una WEB personal de especies de **<u>flora</u>** y **<u>fauna</u>** en la isla de **Gran Canaria** 🏝️ originalmente, pero que ampliaré a otras islas.  
 
 * Las coordenadas se obtendrán ***in situ*** a partir de **fotografías** &#128247; 
 
@@ -114,7 +114,7 @@ Esta es una WEB personal de especies de **<u>flora</u>** y **<u>fauna</u>** en l
   <tr>
     <td style="vertical-align: top; padding: 10px; border: none;">
       <center><strong><span style="color: #870909;"><u>ANIMALES</u></span></strong> 🐌 🐜</center><br>
-      Actualmente sólo <u>invertebrados</u>, pero tengo pensado empezar a subir <u>vertebrados</u> en un futuro.
+      Especies de <u>invertebrados</u> y <u>vertebrados</u> terrestres.
     </td>
     <td style="vertical-align: top; padding: 10px; border: none;">
       <center><strong><span style="color: green;"><u>FLORA y VEGETACIÓN</u></span></strong> 🌺</center><br>

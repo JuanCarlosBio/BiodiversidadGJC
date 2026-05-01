@@ -136,7 +136,7 @@ gt_species <- table_species %>%
         align = "center"
     ) %>%
     tab_header(
-        title = md("**Tabla de las especies de invertebrados**")
+        title = md("**Tabla de las especies de especies**")
     ) %>%
     cols_label(
         scientific_name = md("**ESPECIE**"),
