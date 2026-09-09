@@ -7,8 +7,8 @@ rule targets:
         "data/biota/raw/biota_species.csv",
         "data/biota/raw/centinela_species.csv",
         "data/jardin_botanico.kml",
-        "data/protected_species/coord_plantae_pe.tsv",
-        "data/protected_species/protected_species_layer.shp",
+        #"data/protected_species/coord_plantae_pe.tsv",
+        #"data/protected_species/protected_species_layer.shp",
         "data/gran_canaria_shp/gc_muni.shp",
         "data/gran_canaria_shp/gc_pne.shp",
         "data/gran_canaria_shp/jardin_botanico.shp",
@@ -66,19 +66,20 @@ rule download_biota_data:
 
 rule download_extra_layers:
     input:
-        jarbot_script = "code/bash/02download_jarbot.bash",
-        protected_species_script = "code/bash/04download_protected_species_layer.bash"
+        jarbot_script = "code/bash/02download_jarbot.bash"#,
+        #protected_species_script = "code/bash/04download_protected_species_layer.bash"
     output:
-        "data/jardin_botanico.kml",
-        "data/protected_species/coord_plantae_pe.tsv",
-        "data/protected_species/protected_species_layer.shp"
+        "data/jardin_botanico.kml"#,
+        #"data/protected_species/coord_plantae_pe.tsv",
+        #"data/protected_species/protected_species_layer.shp"
     conda:
         "code/enviroments/env.yml"
     shell:
         """
  		bash {input.jarbot_script}
- 		bash {input.protected_species_script}
  		"""
+ 		#bash {input.protected_species_script}
+
 
 rule process_canary_islands_shp:
     input:
