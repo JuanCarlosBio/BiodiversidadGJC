@@ -23,7 +23,7 @@ url_pne_info <- "https://descargas.grancanaria.com/jardincanario/ESPACIOS%20NATU
 
 ## Función para crear un TSV con los datos de mis imágenes + los datos de BIOTA
 f_species <- function(data){
-    df_speices <- read_tsv(glue("data/species/processed/{data}")) |>
+    df_speices <- read_csv(glue("data/species/processed/{data}")) |>
         mutate(family = str_to_title(family),
             order = str_to_title(order),
             class = str_to_title(class), 
@@ -54,8 +54,8 @@ enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp") %>%
                                        "Parque Nacional"))) %>% 
   left_join(., df_pne_processed, by="codigo")  
 
-## Crear una capa de especies Protegidas (flora)
-protected_species <- read_sf("data/protected_species/protected_species_layer.shp") |>
+## Crear una capa de especies Protegidas
+protected_species <- read_sf("data/gran_canaria_shp/processed/protected_species_layer.shp") |>
   group_by(scientific, id_biota, geometry) |> 
   summarise(n = n()) |>  
   ungroup() |>
@@ -73,9 +73,6 @@ zec_map <- read_sf("data/gran_canaria_shp/gc_zec.shp") |>
                                      "Zona de restauración prioritaria",
                                      "Zona de restauración",
                                      "Zona de transición")))
-
-## Delimitar el jardín botánico
-jardin_botanico <- read_sf("data/gran_canaria_shp/jardin_botanico.shp")
 
 ## Definir los colores para los ENPs
 pal_pne <- colorFactor(

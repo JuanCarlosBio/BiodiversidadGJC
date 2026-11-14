@@ -9,6 +9,13 @@ code/nombrar/
 data/*
 !data/README.txt
 
+# metadata files
+metadata/dropbox_links_metazoa_protected.csv
+metadata/dropbox_links_plantae_protected.csv
+
+# results
+results/
+
 # reset program
 reset.bash
 

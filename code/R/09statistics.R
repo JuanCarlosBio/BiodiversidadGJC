@@ -21,7 +21,7 @@ exif_data_fv <- read_tsv("data/species/raw/raw_dropbox_links_plantae_content.tsv
 
 # invertebrates <- read_tsv("data/species/processed/coord_invertebrates.tsv")
 # plantae <- read_tsv("data/species/processed/coord_plantae.tsv") 
-species <- read_tsv("data/species/processed/coord_species.tsv")
+species <- read_csv("data/species/processed/species_data_base.csv")
 
 enp_map <- read_sf("data/gran_canaria_shp/gc_pne.shp")
 map <- read_sf("data/gran_canaria_shp/gc_muni.shp") |>

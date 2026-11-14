@@ -16,7 +16,6 @@ suppressMessages(suppressWarnings({
 ## algún campo más
 
 data_biota <- read_tsv("data/biota/processed/biota_data_processed.tsv")
-protected_species_layer <- read_tsv("data/protected_species/coord_plantae_pe.tsv")
 
 ##==============================================================================
 ## INFORMACIÓN:
@@ -108,6 +107,8 @@ rp_species <- read_and_processed_species_data <- function(path, id_specie_start)
 
 }
 
+## Process species non protected data
+
 metazoa <- rp_species(
     path="data/species/raw/raw_dropbox_links_metazoa_content.tsv", 
     id_specie_start="^MENP"
@@ -122,6 +123,22 @@ plantae <- rp_species(
 # |>
 # bind_rows(protected_species_layer) |>
 
+## Process species protected data
+
+metazoa_protected <- rp_species(
+    path="data/species/raw/raw_dropbox_links_metazoa_protected_content.tsv", 
+    id_specie_start="^MEEP"
+    ) 
+# |> 
+# readr::write_tsv("data/species/processed/coord_invertebrates.tsv") 
+
+plantae_protected <- rp_species(
+    path="data/species/raw/raw_dropbox_links_plantae_protected_content.tsv", 
+    id_specie_start="^PAEP"
+    ) 
+# |>
+# bind_rows(protected_species_layer) |>
+
 rbind(metazoa, plantae) |>
-    bind_rows(protected_species_layer) |>
+    rbind(metazoa_protected, plantae_protected) |>
     readr::write_tsv("data/species/processed/coord_species.tsv")

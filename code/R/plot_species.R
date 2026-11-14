@@ -9,21 +9,22 @@ source("code/R/07process_map_layers.R")
 ## URL donde pongo fotos para las etiquetas de las especies
 url_photos_species <- "https://raw.githubusercontent.com/biologyphotos/flora_gc/refs/heads/main/"
 
-## Cargamos las especies, en este caso de metazoos (organismos invertebrados)
-species <- f_species("coord_species.tsv") |>
+## Cargamos las especies
+species <- f_species("species_data_base.csv") |>
   filter(category != "Especie protegida") |>
   mutate(species_photos = glue("{url_photos_species}{id_biota}.jpg"))
 
 ## Creamos un recuento de especies en los ENP y lo añadiremos a la etiqueta
 system("python3 code/python/03_count_pne_species.py")
 species_pne <- read_csv("data/species/pne_species_count.csv")
-protected_species_pne <- read_csv("data/protected_species/temp_protected_species.csv")
+protected_species_pne <- read_csv("data/gran_canaria_shp/processed/temp_protected_species.csv")
 all_species_pne <- rbind(species_pne, protected_species_pne)
 
-## Capa de las especies protegidas de flora, formada por las especies y número de estas
+## Capa de las especies protegidas formada por las especies y número de estas
 enp_map <- enp_map |> 
   left_join(all_species_pne, by = "codigo") |>
-  mutate(category = str_replace_all(tolower(category), pattern = " ", replacement = "_")) |>
+  mutate(category = str_replace_all(tolower(category), pattern = " ", replacement = "_")) |> 
+  distinct() |>
   pivot_wider(
     names_from = "category", 
     values_from = n,
@@ -57,11 +58,11 @@ sd <- SharedData$new(data = species)
 ## MAPA INTERACTIVO DE LEAFLET
 ##==============================================
 map <- leaflet() |>
-  setView(-15.6, 27.95, zoom = 10) |>
+  setView(-15.6, 27.95, zoom = 8) |>
 #  addTiles() |>
   addProviderTiles(
     providers$Esri.WorldImagery,
-    options = providerTileOptions(minZoom = 10) 
+    options = providerTileOptions(minZoom = 8) 
   ) |>
   addProviderTiles(
     providers$CartoDB.VoyagerOnlyLabels,
@@ -147,8 +148,6 @@ map <- leaflet() |>
                                                   bringToFront = FALSE),
               weight = 0, fillOpacity = .9,
               group = "Especies Protegidas") |>
-  addPolygons(data = jardin_botanico, 
-              fillColor = "yellow", fillOpacity = .5, weight = 1) |>
   addCircleMarkers(data = sd, 
                    lat = ~latitude, lng = ~longitude,
                    popup = paste0(
