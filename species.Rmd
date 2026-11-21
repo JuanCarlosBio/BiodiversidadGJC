@@ -29,27 +29,52 @@ knitr::opts_chunk$set(echo = TRUE)
 .author, .title {
     display: none;
 }
+
 .main-container {
   max-width: 1600px;
   margin-left: auto;
   margin-right: auto;
   background-color: #fff3d8;
 }
+
 body {
-  background-color: #dbc79b;
+  background-color: #fff3d8;
   color: #000000;
-  font-family: "Roboto"; sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 16px;
-//    background-image: url('https://github.com/JuanCarlosBio/cosas_mias/blob/main/IMG_20240428_173528.jpg?raw=true');
+  font-size: 18px;
   background-size: 100%;
+}
+
+/* Color de fondo de la navbar */
+.navbar-inverse {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Nombre de la web */
+.navbar-inverse .navbar-brand {
+    color: #F6CA48 !important;
+}
+
+/* Enlaces */
+.navbar-inverse .navbar-nav > li > a {
+    color: #F6CA48 !important;
+}
+
+/* Efecto hover */
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-brand:hover {
+    color: #F6CA48 !important;
+    background-color: #3D684B !important;
 }
 
 .button {
     display: inline-block;
     padding: 8px 16px;
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
@@ -72,6 +97,7 @@ body {
     transform: translateY(2px);
 }
 
+
 /* 🔽 NUEVO: barra fija abajo */
 .fixed-bottom {
   position: fixed;
@@ -88,23 +114,40 @@ body {
 ```
 
 <center>
-<div style="background-color: #F4F4F4; text-align: center;">
+
 # **Mapa de especies de <u><span style='color: green'>PLANTAS</span> y <span style='color:  #870909'>ANIMALES</span></u> de Canarias** 
-</div>
+
+<hr style="border: 1px solid #317EAC;">
+
 </center>
 
 
+
+<div style="background-color: #88e098; padding: 15px; border-radius: 15px;">
+
 Mapa interactivo formado por varias capas:
 
-- **CAPAS BÁSICAS**:
-  - Por defecto sin capa 
-  - Espacios Naturales Protegidos (ENP) 
-  - Especies Protegidas 
-- **CAPAS EN PRIMER PLANO**:
-  - Especies (<span style='color: green'><u>nativas no protegidas</u></span>, <span style='color: red'><u>introducidas</u></span> y <span style='color: orange'><u>traslocadas</u></span>)
-  - Leyendas 
+<table style="width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 10px 0; color: black;">
+  <tr>
+    <td style="width: 50%; vertical-align: top; padding: 15px; border: 1px solid transparent; border-radius: 15px; background-color: ;">
+      <strong>CAPAS BÁSICAS</strong>:<br>
+      &bull; Por defecto sin capa<br> 
+      &bull; Espacios Naturales Protegidos (ENP)<br> 
+      &bull; Especies Protegidas<br>
+    </td>
+    <td style="width: 50%; vertical-align: top; padding: 15px; border: 1px solid transparent; border-radius: 15px; background-color: ;">
+      <strong>CAPAS EN SEGUNDO PLANO:</strong><br>
+  &bull; Especies (<span style='color: green'><u>nativas no protegidas</u></span>, <span style='color: red'><u>introducidas</u></span> y <span style='color: orange'><u>traslocadas</u></span>)<br>
+  &bull; Leyendas
+    </td>
+  </tr>
+</table>
 
 Ayuda para el manejo del mapa &#10132; [documentación](`r rmarkdown::metadata$documentation`).
+
+</div>
+
+<br>
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE, out.width = '100%'}
 source("code/R/plot_species.R")
@@ -124,15 +167,24 @@ bscols(
 map
 ```
 
-### **Busca en la tabla las especies que estés interesado (*"<u>search</u>"*):**
+### **MI INVENTARIO DE ESPECIES**
 
-* **<u>Truco</u>**: puedes buscar por palabras clave, como *"especies nativa"*, *"especie traslocada"*
+<div style="background-color: #88e098; padding: 15px; border-radius: 15px;">
+
+<strong>Esta es una tabla con todas las especies que he identificado hasta la fecha.</strong> 
+
+<i>Busca filtrando en la tabla las especies o campos (*"<u>search</u>"*):</i>
+
+* <strong><u>Truco</u></strong>: puedes buscar por palabras clave, como <i>"especies nativa"</i>, <i>"especie traslocada"</i>
 * También puedes usar los <u>buscadores encima de cada columna</u> para una búsqueda más específica.
+
+</div>
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 source("code/R/10tables.R")
 gt_species
 ```
+<br>
 
 <div style="text-align: center;">
 <button class="button" onclick="window.location.href='./'">INICIO</button>

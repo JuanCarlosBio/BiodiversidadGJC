@@ -36,16 +36,40 @@ knitr::opts_chunk$set(echo = TRUE)
   margin-left: auto;
   margin-right: auto;
   background-color: #fff3d8;
-  min-height: calc(100vh - 1px);
 }
 
 body {
-  background-color: #dbc79b;
+  background-color: #fff3d8;
   color: #000000;
-  font-family: "Roboto"; sans-serif;
-  font-size: 15px;
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-style: normal;
+  font-size: 18px;
+  background-size: 100%;
+}
+
+/* Color de fondo de la navbar */
+.navbar-inverse {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Nombre de la web */
+.navbar-inverse .navbar-brand {
+    color: #F6CA48 !important;
+}
+
+/* Enlaces */
+.navbar-inverse .navbar-nav > li > a {
+    color: #FFFFFF !important;
+}
+
+/* Efecto hover */
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-brand:hover {
+    color: #F6CA48 !important;
+    background-color: #3D684B !important;
 }
 
 .button {
@@ -60,6 +84,7 @@ body {
     background-color: #2777f7;
     border: none;
     border-radius: 12px;
+    box-shadow: 0 0px #999;
     margin: 10px;
 }
 

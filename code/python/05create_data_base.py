@@ -16,6 +16,11 @@ gc_zec = (
       .to_crs(epsg = 4326)
   )
 
+gc_muni = (
+    gpd.read_file("data/gran_canaria_shp/gc_muni.shp")
+      .to_crs(epsg = 4326)
+)
+
 # Create a geometry column from the latitude and longitude
 geometry = [
     Point(xy) for xy in zip(df_species['longitude'], df_species['latitude'])
@@ -48,7 +53,22 @@ species_pne_zec = gpd.sjoin(
 
 species_pne_zec = species_pne_zec.drop(columns=["index_right"])
 
-species_pne_zec = species_pne_zec[species_pne_zec.geometry.distance(Point(-15.6, 27.96)) < 5]
+gc_muni = gc_muni.rename(
+    columns={col: f"{col}_muni" for col in gc_muni.columns if col != "geometry"}
+)
 
-species_pne_zec.to_csv("data/species/processed/species_data_base.csv", index=False)
-species_pne_zec.to_file("data/species/gran_canaria_shp/processed/species_data_base.shp", index=False)
+species_pne_zec_muni = gpd.sjoin(
+    species_pne_zec,
+    gc_muni,
+    how="left",
+    predicate="within",
+    lsuffix="left",
+    rsuffix="right"
+)
+
+species_pne_zec_muni = species_pne_zec_muni.drop(columns=["index_right"])
+
+species_pne_zec_muni = species_pne_zec_muni[species_pne_zec_muni.geometry.distance(Point(-15.6, 27.96)) < 5]
+
+species_pne_zec_muni.to_csv("data/species/processed/species_data_base.csv", index=False)
+species_pne_zec_muni.to_file("data/species/gran_canaria_shp/processed/species_data_base.shp", index=False)

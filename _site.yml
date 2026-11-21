@@ -1,0 +1,16 @@
+name: "BiodiversidadGJC"
+
+navbar:
+  title: "BiodiversidadGJC"
+  type: inverse
+  right:
+    - text: "Inicio"
+      href: index.html
+    - text: "Mapa"
+      href: species.html
+    - text: "Estadísticas"
+      href: data.html
+
+output:
+  html_document:
+    theme: cerulean

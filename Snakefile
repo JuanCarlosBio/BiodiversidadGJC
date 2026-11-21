@@ -151,7 +151,8 @@ rule species_tabular_data_base:
         py_script = "code/python/05create_data_base.py",
         coord_species = "data/species/processed/coord_species.tsv",
         gc_pne_shp = "data/gran_canaria_shp/gc_pne.shp",
-        gc_zec_shp = "data/gran_canaria_shp/gc_zec.shp"
+        gc_zec_shp = "data/gran_canaria_shp/gc_zec.shp",
+        gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp"
     output:
         "data/species/processed/species_data_base.csv",
         "data/species/gran_canaria_shp/processed/species_data_base.shp"

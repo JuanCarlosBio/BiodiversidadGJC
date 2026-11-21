@@ -58,7 +58,7 @@ sd <- SharedData$new(data = species)
 ## MAPA INTERACTIVO DE LEAFLET
 ##==============================================
 map <- leaflet() |>
-  setView(-15.6, 27.95, zoom = 8) |>
+  setView(-15.6, 28.5, zoom = 8) |>
 #  addTiles() |>
   addProviderTiles(
     providers$Esri.WorldImagery,

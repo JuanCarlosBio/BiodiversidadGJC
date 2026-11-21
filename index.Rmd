@@ -1,6 +1,7 @@
 ---
 title: BiodiversidadGJC
 author: Juan Carlos García Estupiñán
+
 output: 
     html_document:
         theme: cerulean
@@ -33,13 +34,37 @@ knitr::opts_chunk$set(echo = TRUE)
 }
 
 body {
-  background-color: #dbc79b;
+  background-color: #fff3d8;
   color: #000000;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-style: normal;
   font-size: 18px;
   background-size: 100%;
+}
+
+/* Color de fondo de la navbar */
+.navbar-inverse {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Nombre de la web */
+.navbar-inverse .navbar-brand {
+    color: #F6CA48 !important;
+}
+
+/* Enlaces */
+.navbar-inverse .navbar-nav > li > a {
+    color: #F6CA48 !important;
+}
+
+/* Efecto hover */
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-brand:hover {
+    color: #F6CA48 !important;
+    background-color: #3D684B !important;
 }
 
 .button {
@@ -86,9 +111,9 @@ body {
 
 <center>
 
-<div style="background-color: #F4F4F4; text-align: center;">
+
 # **<span style='color: green'>Biodiversidad</span><span style='color: #fcc938'>G</span><span style='color: #e8002d'>J</span><span style='color: #1e68a4'>C</span>**
-</div>
+
 
 <hr style="border: 1px solid #317EAC;">
 
@@ -96,9 +121,40 @@ body {
 
 ## ***BIENVENID@ A ESTA WEB*** 👨‍💻
 
-Esta es una WEB personal de especies de **<u>flora</u>** y **<u>fauna</u>** en la isla de **Gran Canaria** 🏝️ originalmente, pero que ampliaré a otras islas.  
+<div style="background-color: #88e098; padding: 15px; border-radius: 15px;">
+
+Esta es una WEB personal de especies de **<u>flora</u>** y **<u>fauna</u>** en la isla de **Gran Canaria** 🏝️ originalmente, pero que he ido ampliando a otras islas.  
+
+Las Islas con especies y su número son:
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+suppressMessages(suppressWarnings({
+  library(dplyr)
+  library(stringr)
+  library(readr)
+  library(tidyr)
+}))
+
+species <- read_csv("data/species/processed/species_data_base.csv")
+
+## We calculate the number of species / Island
+num_species_island <- species %>%
+  group_by(isla_muni) %>%
+  count() %>%
+  ungroup() 
+
+gc <- subset(num_species_island, isla_muni == "GRAN CANARIA")[,2]
+tf <- subset(num_species_island, isla_muni == "TENERIFE")[,2]
+fv <- subset(num_species_island, isla_muni == "FUERTEVENTURA")[,2]
+lz <- subset(num_species_island, isla_muni == "LANZAROTE")[,2]
+
+```
+* Gran Canaria (`r gc`), Tenerife (`r tf`), Fuerteventura (`r fv`) y Lanzarote (`r lz`)
 
 * Las coordenadas se obtendrán ***in situ*** a partir de **fotografías** &#128247; 
+
+</div>
 
 <center>
 
@@ -110,15 +166,29 @@ Esta es una WEB personal de especies de **<u>flora</u>** y **<u>fauna</u>** en l
 
 ### **Documento las siguientes especies:** 
 
-<table style="width: 100%; border-collapse: collapse; color: black;">
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+num_species_domain <- species %>%
+  group_by(domain) %>%
+  count() %>%
+  ungroup() 
+
+metazoa <- num_species_domain$n[1] 
+plantae <- num_species_domain$n[2] 
+```
+
+<table style="width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 10px 0; color: black;">
   <tr>
-    <td style="vertical-align: top; padding: 10px; border: none;">
+    <td style="width: 50%; vertical-align: top; padding: 15px; border: 1px solid transparent; border-radius: 15px; background-color: #FFF1F0;">
       <center><strong><span style="color: #870909;"><u>ANIMALES</u></span></strong> 🐌 🐜</center><br>
       Especies de <u>invertebrados</u> y <u>vertebrados</u> terrestres.
+      <br><br>
+      En total <strong><u>`r metazoa`</u></strong> especies de animales identificadas.
     </td>
-    <td style="vertical-align: top; padding: 10px; border: none;">
+    <td style="width: 50%; vertical-align: top; padding: 15px; border: 1px solid transparent; border-radius: 15px; background-color: #F0F7EE;">
       <center><strong><span style="color: green;"><u>FLORA y VEGETACIÓN</u></span></strong> 🌺</center><br>
       Principalmente <u>fanerógamas</u> y de <u>criptógamas</u> helechos, pero me gustaría hacerlo también de <u>briófitos</u>.
+      <br><br>
+      En total <strong><u>`r plantae`</u></strong> especies de plantas identificadas.
     </td>
   </tr>
 </table>
