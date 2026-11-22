@@ -6,6 +6,7 @@ rule targets:
         "data/species/raw/raw_dropbox_links_plantae_protected_content.tsv",
         "data/islands_shp/municipios.shp",
         "data/islands_shp/eennpp.shp",
+        "data/islands_shp/ZEC.shp",
         "data/biota/raw/biota_species.csv",
         "data/biota/raw/centinela_species.csv",
         "data/gran_canaria_shp/gc_muni.shp",
@@ -30,7 +31,7 @@ rule targets:
         "figures/gc_grid_plot.png",
         "index.html",
         "species.html",
-        "data.html",
+        "data.html"
 
 rule download_images:
     input:
@@ -58,6 +59,7 @@ rule download_canary_islands_shp:
     output:
         "data/islands_shp/municipios.shp",
         "data/islands_shp/eennpp.shp",
+        "data/islands_shp/ZEC.shp"
     conda:
         "code/enviroments/env.yml"
     shell:
@@ -86,7 +88,7 @@ rule process_canary_islands_shp:
     output:
         "data/gran_canaria_shp/gc_muni.shp",
         "data/gran_canaria_shp/gc_pne.shp",
-        "data/gran_canaria_shp/gc_zec.shp"
+        "data/gran_canaria_shp/gc_zec.shp",
         "data/gran_canaria_shp/gc_grid_empty.shp"
     conda:
         "code/enviroments/env.yml"
@@ -198,6 +200,7 @@ rule webpage_html:
         rmd_index = "index.Rmd",
         rmd_species = "species.Rmd",
         rmd_data = "data.Rmd",
+        rmd_contact = "contact.Rmd",
         r_script_process_layers = "code/R/07process_map_layers.R",
         r_script_mapping = "code/R/plot_species.R",
         py_pns_info_script = "code/python/02protected_natural_spaces_info.py",
@@ -214,7 +217,8 @@ rule webpage_html:
     output:
         "index.html",
         "species.html",
-        "data.html"
+        "data.html",
+        "contact.html"
     conda:
         "code/enviroments/env.yml"
     shell:
@@ -222,4 +226,5 @@ rule webpage_html:
         R -e "rmarkdown::render('{input.rmd_index}')"
         R -e "rmarkdown::render('{input.rmd_species}')"
         R -e "rmarkdown::render('{input.rmd_data}')"
+        R -e "rmarkdown::render('{input.rmd_contact}')"
         """  

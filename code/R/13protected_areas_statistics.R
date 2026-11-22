@@ -9,6 +9,7 @@ library(sf)
 species_db <- read_csv("data/species/processed/species_data_base.csv")
 eennpp <- st_read("data/gran_canaria_shp/gc_pne.shp") 
 municipios <- st_read("data/gran_canaria_shp/gc_muni.shp")
+zec <- st_read("data/gran_canaria_shp/gc_zec.shp")
 
 ## How many species per islands do I have?
 
@@ -180,7 +181,7 @@ plot_observations <- observations %>%
   scale_fill_manual(values = c("gray33", "red")) +
   labs(
     title = "Porcentaje de observaciones en los ENP",
-    x = "En Espacio Natural Protegido",
+    x = "En Espacio Natural Protegido¿?",
     y = "Porcentaje"
   ) +
   theme_minimal() +
@@ -244,7 +245,7 @@ plot_gc_species_pne <- gc_species_pne %>%
   theme(
     panel.background = element_rect(color = "transparent", fill = "transparent"),
     plot.background = element_rect(color = "transparent", fill = "transparent"),    
-    plot.title = element_markdown(face = "bold", size = 18, hjust = 0,
+    plot.title = element_markdown(face = "bold", size = 18, hjust = 1,
                                   margin = margin(b = .75, unit = "cm")),
     axis.title = element_text(face = "bold", size = 18),
     axis.title.x = element_text(margin = margin(t = .5, unit = "cm")), 
@@ -273,7 +274,10 @@ gc_species_pne_nombre <- gc_observations_pne %>%
 y_species_gc_pne_nombre_axis <- max(gc_species_pne_nombre$n) + (max(gc_species_pne_nombre$n) * 0.2)
 
 plot_gc_species_pne_nombre <- gc_species_pne_nombre %>%
-  mutate(nombre = glue("{nombre} ({codigo})")) %>%
+  mutate(nombre = str_replace(nombre, 
+         pattern = "Barranco",
+         replacement = "Bco."),
+         nombre = glue("{nombre} ({codigo})")) %>%
   ggplot(aes(n, reorder(nombre, n), fill = categoria)) +
   geom_col(show.legend = FALSE, color = "black", size = 1) +
   geom_text(aes(n, nombre, label = n),
@@ -290,7 +294,7 @@ plot_gc_species_pne_nombre <- gc_species_pne_nombre %>%
     values = gc_species_pne_nombre$colores
   ) +
   labs(
-    title = "Número de especies por SITIO ENP en Gran Canaria",
+    title = NULL,
     x = "Número de Especies",
     y = NULL
   ) +
@@ -302,14 +306,14 @@ plot_gc_species_pne_nombre <- gc_species_pne_nombre %>%
                                   margin = margin(b = .75, unit = "cm")),
     axis.title = element_text(face = "bold"),
     axis.title.x = element_text(size = 14, margin = margin(t = .5, unit = "cm")), 
-    axis.title.y = element_text(size = 12, margin = margin(r = .5, unit = "cm")),     
+    axis.text.y = element_text(size = 11, margin = margin(r = .5, unit = "cm")),     
     axis.text = element_text(face = "bold", size = 12, color = "black"),
     axis.text.x = element_markdown(),
     axis.ticks = element_blank(),
     axis.line = element_line(linewidth = 1.5),     
   )
 
-## Mapa de Gran Canaria
+## Mapa de Gran Canaria ENP
 
 gc_eennpp <- eennpp %>%
   filter(str_detect(codigo, "C-"))
@@ -338,9 +342,112 @@ plot_gc_eennpp <- gc_eennpp %>%
     pannel.background = element_rect(color = "transparent", fill = "transparent")    
   )
 
-gc_grid_plot <- plot_grid(plot_gc_species_pne_nombre, plot_gc_eennpp)
+gc_grid_plot <- plot_grid(plot_gc_species_pne_nombre, plot_gc_eennpp,
+  rel_widths = c(1.75, 1))
 
 ggsave(plot= gc_grid_plot, 
        "figures/gc_grid_plot.png",
-       width = 12, height = 7)  
+       width = 14, height = 7)  
 
+##----------------------
+## Estudio de Zonas ZEC
+##----------------------
+
+##-------------------------
+## Estudio de Gran Canaria
+##-------------------------
+
+## Especies en cada espacio natural protegido de Gran Canaria
+gc_species_zec_nombre <- gc_observations_pne %>%
+  filter(str_detect(COD_LIC, "^ES")) %>%
+  group_by(COD_LIC, NOMZEC, id_biota) %>%
+  count() %>%
+  ungroup() %>%
+  group_by(COD_LIC, NOMZEC) %>%
+  count() %>%
+  ungroup()  %>%  
+  arrange(desc(n)) 
+
+y_species_gc_zec_nombre_axis <- max(gc_species_zec_nombre$n) + (max(gc_species_zec_nombre$n) * 0.2)
+
+plot_gc_species_zec_nombre <- gc_species_zec_nombre %>%
+  mutate(NOMZEC = str_replace(NOMZEC, pattern = "Barranco", replacement = "Bco"),
+         NOMZEC = str_replace(NOMZEC, pattern = "Ojeda, Inagua y Pajonales", 
+                              replacement = "Inagua"), 
+         nombre = glue("{NOMZEC} {COD_LIC}"))  %>%
+  ggplot(aes(n, reorder(NOMZEC, n), fill = n)) +
+  geom_col(show.legend = FALSE, color = "black", size = 1) +
+  geom_text(aes(n, NOMZEC, label = n),
+            position = "identity",
+            color = "black", 
+            fontface = "bold",
+            size=6, 
+            show.legend = FALSE,
+            hjust = -.25) +  
+  scale_x_continuous(expand = expansion(0),
+                     limits = c(0, y_species_gc_pne_nombre_axis)) +
+  scale_fill_gradient(
+    low = "white",
+    high = "#4CE600"
+  ) +
+  labs(
+    title = NULL,
+    x = "Número de Especies",
+    y = NULL
+  ) +
+  theme_classic() +
+  theme(
+    panel.background = element_rect(color = "transparent", fill = "transparent"),
+    plot.background = element_rect(color = "transparent", fill = "transparent"),
+    plot.title = element_markdown(face = "bold", size = 18, hjust = 0.25,
+                                  margin = margin(b = .75, unit = "cm")),
+    axis.title = element_text(face = "bold"),
+    axis.title.x = element_text(size = 16, margin = margin(t = .5, unit = "cm")), 
+    axis.text.y = element_text(size = 11, margin = margin(r = .5, unit = "cm")),     
+    axis.text = element_text(face = "bold", size = 11, color = "black"),
+    axis.text.x = element_markdown(),
+    axis.ticks = element_blank(),
+    axis.line = element_line(linewidth = 1.5),     
+  )
+
+ggsave(plot= plot_gc_species_zec_nombre, 
+       "figures/plot_gc_species_zec.png",
+       width = 8, height = 5)  
+
+## Mapa de Gran Canaria ENP
+
+gc_zec <-  zec %>%
+  filter(str_detect(NUM_ZEC, "_GC"))
+
+gc_zec_species <- gc_zec %>%
+  filter(AMBITO == "Terrestre") %>%
+  left_join(gc_species_zec_nombre, by = "COD_LIC") %>%
+  mutate(n = tidyr::replace_na(n, 0)) %>%
+  st_as_sf() %>%
+  ggplot() +
+  geom_sf(data = gc_municipios, fill = "#fff3d8") +
+  geom_sf(aes(fill = n)) +
+  geom_sf_text(
+    aes(label = n),
+    stat = "sf_coordinates",
+    size = 3,
+    color = "black"
+  ) +
+  labs(fill = "Nº Especies") +
+  scale_fill_gradient(low = "white", high = "#4CE600") +
+  theme_map() +
+  theme(
+    plot.background = element_rect(color = "transparent", fill = "transparent"),
+    pannel.background = element_rect(color = "transparent", fill = "transparent"),
+    legend.position = "Bottom"
+  )
+
+gc_grid_plot_zec <- plot_grid(
+  plot_gc_species_zec_nombre,
+  gc_zec_species,
+  rel_widths = c(1.75, .75)
+)
+
+ggsave(plot= gc_grid_plot_zec, 
+       "figures/gc_grid_plot_zec.png",
+       width = 16, height = 7)  

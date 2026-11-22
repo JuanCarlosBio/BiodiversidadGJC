@@ -116,7 +116,7 @@ species_plot <- coord_invert_plantae |>
   theme_test() +
   theme(
     plot.title = element_markdown(size = 4, face = "bold", hjust = .5),
-    plot.background = element_rect(color = "#fff3d8", fill = "#fff3d8"),
+    plot.background = element_blank(),
     panel.background = element_rect(color= "#cfe8fc", fill = "#cfe8fc"),
     axis.text = element_blank(),
     axis.ticks = element_blank()

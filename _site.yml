@@ -10,6 +10,8 @@ navbar:
       href: species.html
     - text: "Estadísticas"
       href: data.html
+    - text: "Contacto"
+      href: contact.html
 
 output:
   html_document:

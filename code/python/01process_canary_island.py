@@ -10,7 +10,7 @@ def main():
     ## Cargar los archivos SHP de las islas canarias de IDECanarias
     canary_islands = gpd.read_file("data/islands_shp/municipios.shp")
     pne = gpd.read_file("data/islands_shp/eennpp.shp")
-    zec = gpd.read_file("data/islands_shp/IC_n2000_ZECZonificacion.shp")
+    zec = gpd.read_file("data/islands_shp/ZEC.shp")
     ##-----------------------------------------------------------------##
 
     ##-----------------------------------------------------------------##
@@ -20,10 +20,10 @@ def main():
                                                           "FUERTEVENTURA", 
                                                           "LANZAROTE"])]
     gc_pne = pne[pne["codigo"].str.contains(r"^[CTFL]")]
-    gc_zec = zec[zec["ISLA"].isin(["GRAN CANARIA", 
-                                   "TENERIFE", 
-                                   "FUERTEVENTURA", 
-                                   "LANZAROTE"])]
+    gc_zec = zec[zec["ISLA"].isin(["Gran Canaria", 
+                                   "Tenerife", 
+                                   "Fuerteventura", 
+                                   "Lanzarote"])]
 
     ## Arrglar el archivo de Espacios Naturales de Gran Canaria
     gc_filter1 = gc_pne[gc_pne["codigo"].isin([

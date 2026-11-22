@@ -10,8 +10,8 @@ data/*
 !data/README.txt
 
 # metadata files
-metadata/dropbox_links_metazoa_protected.csv
-metadata/dropbox_links_plantae_protected.csv
+metadata/*
+!metadata/README.txt
 
 # results
 results/

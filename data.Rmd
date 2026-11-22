@@ -62,7 +62,7 @@ body {
 
 /* Enlaces */
 .navbar-inverse .navbar-nav > li > a {
-    color: #FFFFFF !important;
+    color: #F6CA48 !important;
 }
 
 /* Efecto hover */
@@ -70,6 +70,14 @@ body {
 .navbar-inverse .navbar-brand:hover {
     color: #F6CA48 !important;
     background-color: #3D684B !important;
+}
+
+#TOC {
+  max-width: fit-content;
+  left: 0 !important;
+  right: auto !important;
+  font-size: 0.9em;
+  white-space: normal;
 }
 
 .button {
@@ -169,7 +177,7 @@ gt_endemism
 
 </center>
 
-# Número de especies por isla
+# **Número de especies por isla**
 
 ![](figures/plot_species_per_islands.png)
 
@@ -177,7 +185,7 @@ gt_endemism
 
 ![](figures/plot_species_per_islands_type.png)
 
-# Espacios Protegidos
+# **Espacios Protegidos**
 
 En esta base de datos se guarda información de especies que aparecen en la ***Red de Espacios Naturales Protegidos*** (**ENP**) de Canarias, así como de las ***Zonas de Especial Conservación*** (**ZEC**) de la **Red Natura 2000**.
 
@@ -187,9 +195,128 @@ En esta base de datos se guarda información de especies que aparecen en la ***R
 
 ### Estudio detallado de las especies en los ENP de ***Gran Canaria***
 
-![](figures/plot_gc_species_pne.png)
+<div style="figures/plot_gc_species_pne.png">
+  <img 
+    src="figures/plot_gc_species_pne.png"
+    alt="Distribución de especies en los ENP de Gran Canaria"
+    style="width: 100%; max-width: 100%; cursor: zoom-in; border-radius: 6px;"
+    onclick="openImage(this.src)"
+  >
+</div>
 
-![](figures/gc_grid_plot.png)
+<div id="imageModal" 
+     onclick="this.style.display='none'"
+     style="display:none;
+            position:fixed;
+            z-index:9999;
+            padding:30px;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            background:rgba(255,243,216,0.85);
+            cursor:zoom-out;
+            align-items:center;
+            justify-content:center;">
+
+  <img id="modalImage"
+       style="max-width:95%;
+              max-height:95%;
+              object-fit:contain;
+              border-radius:5px;">
+</div>
+
+**De la información anterior, me interesa saber los sitios en concreto de estos ENP en los que he encontrado especies.**
+
+Esta información se encuentra en el siguiente gráfico, en el que recomiendo pulsar para ver zoom:
+
+<div style="text-align: center;">
+  <img 
+    src="figures/gc_grid_plot.png"
+    alt="Distribución de especies en los ENP de Gran Canaria"
+    style="width: 100%; max-width: 100%; cursor: zoom-in; border-radius: 6px;"
+    onclick="openImage(this.src)"
+  >
+</div>
+
+<div id="imageModal" 
+     onclick="this.style.display='none'"
+     style="display:none;
+            position:fixed;
+            z-index:9999;
+            padding:30px;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            background:rgba(255,243,216,0.85);
+            cursor:zoom-out;
+            align-items:center;
+            justify-content:center;">
+
+
+  <img id="modalImage"
+       style="max-width:95%;
+              max-height:95%;
+              object-fit:contain;
+              border-radius:5px;">
+</div>
+
+<script>
+function openImage(src) {
+  document.getElementById("modalImage").src = src;
+  document.getElementById("imageModal").style.display = "flex";
+}
+</script>
+
+## Zonas de Especial Conservación
+
+En Canarias hay zonas de conservación, que son áreas protegidas determinadas por la Unión Europea.
+
+### Isla de Gran Canaria
+
+En este apartado, muestro las estadísticas de mis especies en cada zona de La isla.
+
+Se trata de la mi Isla de procedencia, por lo que es en la cuál tengo más observaciones. Como en el gráfico de los ENP, recomiendo pulsar el zoom para ver mejor los datos:
+
+<div style="text-align: center;">
+  <img 
+    src="figures/gc_grid_plot_zec.png"
+    alt="Distribución de especies en los ENP de Gran Canaria"
+    style="width: 100%; max-width: 100%; cursor: zoom-in; border-radius: 6px;"
+    onclick="openImage(this.src)"
+  >
+</div>
+
+<div id="imageModal" 
+     onclick="this.style.display='none'"
+     style="display:none;
+            position:fixed;
+            z-index:9999;
+            padding:30px;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            background:rgba(255,243,216,0.85);
+            cursor:zoom-out;
+            align-items:center;
+            justify-content:center;">
+
+
+  <img id="modalImage"
+       style="max-width:95%;
+              max-height:95%;
+              object-fit:contain;
+              border-radius:5px;">
+</div>
+
+<script>
+function openImage(src) {
+  document.getElementById("modalImage").src = src;
+  document.getElementById("imageModal").style.display = "flex";
+}
+</script>
 
 <div style="text-align: center;">
 <button class="button" onclick="window.location.href='./'">INICIO</button>
