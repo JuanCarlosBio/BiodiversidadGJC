@@ -169,6 +169,28 @@ gt_endemism
 
 </center>
 
+# Número de especies por isla
+
+![](figures/plot_species_per_islands.png)
+
+## Número de especies de animales y plantas por isla
+
+![](figures/plot_species_per_islands_type.png)
+
+# Espacios Protegidos
+
+En esta base de datos se guarda información de especies que aparecen en la ***Red de Espacios Naturales Protegidos*** (**ENP**) de Canarias, así como de las ***Zonas de Especial Conservación*** (**ZEC**) de la **Red Natura 2000**.
+
+## Porcentaje de Especies que he observado en ENP y fuera de ellos:
+
+![](figures/plot_observations.png)
+
+### Estudio detallado de las especies en los ENP de ***Gran Canaria***
+
+![](figures/plot_gc_species_pne.png)
+
+![](figures/gc_grid_plot.png)
+
 <div style="text-align: center;">
 <button class="button" onclick="window.location.href='./'">INICIO</button>
 <button class="button" onclick="window.location.href='./species'">MAPA INTERACTIVO E INVENTARIO</button>

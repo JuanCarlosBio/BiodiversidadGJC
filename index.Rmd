@@ -168,12 +168,12 @@ lz <- subset(num_species_island, isla_muni == "LANZAROTE")[,2]
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 num_species_domain <- species %>%
-  group_by(domain) %>%
+  group_by(domain, id_biota) %>%
   count() %>%
   ungroup() 
 
-metazoa <- num_species_domain$n[1] 
-plantae <- num_species_domain$n[2] 
+metazoa <- nrow(filter(num_species_domain, domain == "Metazoa"))
+plantae <- nrow(filter(num_species_domain, domain == "Plantae"))
 ```
 
 <table style="width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 10px 0; color: black;">

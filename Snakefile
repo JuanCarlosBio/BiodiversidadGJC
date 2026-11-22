@@ -23,6 +23,11 @@ rule targets:
         "figures/n_plantae_metazoa.png",
         "figures/n_category_invertebrates.png",
         "figures/n_category_plantae.png",
+        "figures/plot_species_per_islands.png",
+        "figures/plot_species_per_islands_type.png",
+        "figures/plot_observations.png",
+        "figures/plot_gc_species_pne.png",
+        "figures/gc_grid_plot.png",
         "index.html",
         "species.html",
         "data.html",
@@ -166,6 +171,7 @@ rule species_tabular_data_base:
 rule figures_and_stats:
     input:
         script_r = "code/R/09statistics.R",
+        script_r_protectd_areas = "code/R/13protected_areas_statistics.R",
         gc_muni_shp = "data/gran_canaria_shp/gc_muni.shp",
         gc_pne_shp = "data/gran_canaria_shp/gc_pne.shp",
         species = "data/species/processed/species_data_base.csv"
@@ -173,12 +179,18 @@ rule figures_and_stats:
         "figures/GC_mapa.png",
         "figures/n_plantae_metazoa.png",
         "figures/n_category_invertebrates.png",
-        "figures/n_category_plantae.png"
+        "figures/n_category_plantae.png",
+        "figures/plot_species_per_islands.png",
+        "figures/plot_species_per_islands_type.png",
+        "figures/plot_observations.png",
+        "figures/plot_gc_species_pne.png",
+        "figures/gc_grid_plot.png"
     conda:
         "code/enviroments/env.yml"
     shell:
         """
         Rscript {input.script_r}
+        Rscript {input.script_r_protectd_areas}
         """
 
 rule webpage_html:
@@ -198,7 +210,7 @@ rule webpage_html:
         n_plantae_metazoa_png = "figures/n_plantae_metazoa.png",
         category_invertebrates_png = "figures/n_category_invertebrates.png",
         category_plantae_png = "figures/n_category_plantae.png",
-        tables = "code/R/10tables.R",
+        tables = "code/R/10tables.R"
     output:
         "index.html",
         "species.html",
